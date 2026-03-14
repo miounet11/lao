@@ -16,33 +16,33 @@
 
 ---
 
-你已经登录了知乎、微博、B站、豆瓣、小红书、Reddit、Twitter、YouTube — bb-browser 让 AI Agent **直接用你的登录态**。
+你已经登录了微博、知乎、B站、小红书、Twitter、GitHub、LinkedIn — bb-browser 让 AI Agent **直接用你的登录态**。
 
 ```bash
-bb-browser site zhihu/hot                    # 知乎热榜
-bb-browser site weibo/hot                    # 微博热搜
-bb-browser site bilibili/popular             # B站热门
-bb-browser site douban/top250                # 豆瓣 Top 250
-bb-browser site youtube/transcript VIDEO_ID  # YouTube 字幕全文
-bb-browser site reddit/thread URL            # Reddit 讨论树
-bb-browser site twitter/user elonmusk        # Twitter 用户资料
-bb-browser site xiaohongshu/search 美食       # 小红书搜索
+bb-browser site twitter/search "AI agent"       # 搜索推文
+bb-browser site zhihu/hot                        # 知乎热榜
+bb-browser site arxiv/search "transformer"       # 搜论文
+bb-browser site eastmoney/stock "茅台"            # 实时股票行情
+bb-browser site boss/search "AI 工程师"           # 搜职位
+bb-browser site wikipedia/summary "Python"       # 维基百科摘要
+bb-browser site youtube/transcript VIDEO_ID      # YouTube 字幕全文
+bb-browser site stackoverflow/search "async"     # 搜 StackOverflow
 ```
 
-**10 个平台，50+ 个命令，全部用你真实浏览器的登录态。** [完整列表 →](https://github.com/epiral/bb-sites)
+**35 个平台，97 个命令，全部用你真实浏览器的登录态。** [完整列表 →](https://github.com/epiral/bb-sites)
 
-## 为什么它不一样
+## 核心理念
 
-所有浏览器自动化工具都能点按钮、填表单，bb-browser 也能。但真正的杀手锏是 **Site Adapters** — 预置命令把任何网站变成 CLI/API，直接用你的登录态。
+互联网是为浏览器构建的。AI Agent 一直试图通过 API 访问它 — 但 99% 的网站不提供 API。
 
-原理：adapter 在你的浏览器 tab 里跑 `eval`，用你的 Cookie 调 `fetch()`，或者直接调用页面自己的 Vue/Pinia store action。网站以为是你在操作。因为**就是你**。
+bb-browser 翻转了这个逻辑：**不是让网站适配机器，而是让机器使用人的界面。** adapter 在你的浏览器 tab 里跑 `eval`，用你的 Cookie 调 `fetch()`，或者直接调用页面的 webpack 模块。网站以为是你在操作。因为**就是你**。
 
 | | Playwright / Selenium | 爬虫库 | bb-browser |
 |---|---|---|---|
 | 浏览器 | 无头、隔离环境 | 没有浏览器 | 你的真实 Chrome |
 | 登录态 | 没有，要重新登录 | 偷 Cookie | 已经在了 |
 | 反爬检测 | 容易被识别 | 猫鼠游戏 | 无法检测 — 它就是用户 |
-| 小红书签名 | 无法复制 | 需要逆向 | 页面自己签名 |
+| 复杂鉴权 | 无法复制 | 需要逆向 | 页面自己处理 |
 
 ## 快速开始
 
@@ -60,7 +60,7 @@ npm install -g bb-browser
 ### 使用
 
 ```bash
-bb-browser site update    # 拉取 50+ 社区适配器
+bb-browser site update    # 拉取 97 个社区适配器
 bb-browser site list      # 看看有什么
 bb-browser site zhihu/hot # 开搞
 ```
@@ -78,30 +78,61 @@ bb-browser site zhihu/hot # 开搞
 }
 ```
 
-## Site Adapters — 核心能力
+## 35 个平台，97 个命令
 
 社区驱动，通过 [bb-sites](https://github.com/epiral/bb-sites) 维护。每个命令一个 JS 文件。
 
-| 平台 | 命令 | 认证方式 |
-|------|------|----------|
-| **知乎** | me, hot, question, search | Cookie |
-| **B站** | me, popular, ranking, search, video, comments, feed, history, trending | Cookie |
-| **微博** | me, hot, feed, user, user_posts, post, comments | Cookie |
-| **豆瓣** | search, movie, movie-hot, movie-top, top250, comments | Cookie |
-| **小红书** | me, feed, search, note, comments, user_posts | Pinia store |
-| **YouTube** | search, video, comments, channel, feed, transcript | innertube |
-| **Reddit** | me, posts, thread, context | Cookie |
-| **Twitter/X** | user, thread | Bearer + CSRF |
-| **GitHub** | me, repo, issues, issue-create, pr-create, fork | Cookie |
-| **Hacker News** | top, thread | 公开 API |
+| 类别 | 平台 | 命令 |
+|------|------|------|
+| **搜索引擎** | Google、百度、Bing、DuckDuckGo、搜狗微信 | search |
+| **社交媒体** | Twitter/X、Reddit、微博、小红书、即刻、LinkedIn、虎扑 | search、feed、thread、user、notifications、hot |
+| **新闻资讯** | BBC、Reuters、36氪、今日头条、东方财富 | headlines、search、newsflash、hot |
+| **技术开发** | GitHub、StackOverflow、HackerNews、CSDN、博客园、V2EX、Dev.to、npm、PyPI、arXiv | search、issues、repo、top、thread、package |
+| **视频平台** | YouTube、B站 | search、video、transcript、popular、comments、feed |
+| **影音娱乐** | 豆瓣、IMDb、Genius、起点中文网 | movie、search、top250 |
+| **财经股票** | 东方财富、Yahoo Finance | stock、news |
+| **求职招聘** | BOSS直聘、LinkedIn | search、detail、profile |
+| **知识百科** | Wikipedia、知乎、Open Library | search、summary、hot、question |
+| **消费购物** | 什么值得买 | search |
+| **实用工具** | 有道翻译、GSMArena、Product Hunt、携程 | translate、手机参数、热门产品 |
 
-### 自己做一个
+## 10 分钟，CLI 化任何网站
 
 ```bash
 bb-browser guide    # 完整教程
 ```
 
-跟你的 AI Agent 说「帮我把 XX 网站 CLI 化」— 它会读 guide，用 `network --with-body` 抓包逆向 API，写 adapter，测试，然后自己提 PR 到社区仓库。全程自动。
+跟你的 AI Agent 说：*「帮我把 XX 网站 CLI 化」*。它会读 guide，用 `network --with-body` 抓包逆向，写 adapter，测试，然后提 PR 到社区仓库。全程自动。
+
+三种 adapter 复杂度：
+
+| 层级 | 认证方式 | 代表 | 耗时 |
+|------|----------|------|------|
+| **Tier 1** | Cookie（直接 fetch） | Reddit、GitHub、V2EX | ~1 分钟 |
+| **Tier 2** | Bearer + CSRF token | Twitter、知乎 | ~3 分钟 |
+| **Tier 3** | Webpack 注入 / Pinia store | Twitter 搜索、小红书 | ~10 分钟 |
+
+实测：**20 个 AI Agent 并发运行，每个独立逆向一个网站并产出可用的 adapter。** 将一个新网站纳入 Agent 可访问范围的边际成本趋近于零。
+
+## 对 AI Agent 意味着什么
+
+没有 bb-browser，AI Agent 的世界是：**文件系统 + 终端 + 少数有 API key 的服务。**
+
+有了 bb-browser：**文件系统 + 终端 + 整个互联网。**
+
+一个 Agent 现在可以在一分钟内：
+
+```bash
+# 跨平台调研任何话题
+bb-browser site arxiv/search "retrieval augmented generation"
+bb-browser site twitter/search "RAG"
+bb-browser site github search rag-framework
+bb-browser site stackoverflow/search "RAG implementation"
+bb-browser site zhihu/search "RAG"
+bb-browser site 36kr/newsflash
+```
+
+六个平台，六个维度，结构化 JSON。比任何人类研究员都快、都广。
 
 ## 同时也是完整的浏览器自动化工具
 

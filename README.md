@@ -16,33 +16,33 @@
 
 ---
 
-You're already logged into Reddit, Twitter, YouTube, Zhihu, Bilibili, Weibo, Douban, Xiaohongshu — bb-browser lets AI agents **use that directly**.
+You're already logged into Twitter, Reddit, YouTube, Zhihu, Bilibili, LinkedIn, GitHub — bb-browser lets AI agents **use that directly**.
 
 ```bash
-bb-browser site zhihu/hot                    # 知乎热榜
-bb-browser site weibo/hot                    # 微博热搜
-bb-browser site bilibili/popular             # B站热门
-bb-browser site douban/top250                # 豆瓣 Top 250
-bb-browser site youtube/transcript VIDEO_ID  # YouTube 字幕全文
-bb-browser site reddit/thread URL            # Reddit 讨论树
-bb-browser site twitter/user elonmusk        # Twitter 用户资料
-bb-browser site xiaohongshu/search 美食       # 小红书搜索
+bb-browser site twitter/search "AI agent"       # search tweets
+bb-browser site zhihu/hot                        # trending on Zhihu
+bb-browser site arxiv/search "transformer"       # search papers
+bb-browser site eastmoney/stock "茅台"            # real-time stock quote
+bb-browser site boss/search "AI engineer"        # search jobs
+bb-browser site wikipedia/summary "Python"       # Wikipedia summary
+bb-browser site youtube/transcript VIDEO_ID      # full transcript
+bb-browser site stackoverflow/search "async"     # search SO questions
 ```
 
-**50+ commands across 10 platforms.** All using your real browser's login state. [Full list →](https://github.com/epiral/bb-sites)
+**97 commands across 35 platforms.** All using your real browser's login state. [Full list →](https://github.com/epiral/bb-sites)
 
-## Why this is different
+## The idea
 
-Every browser automation tool can click buttons and fill forms. bb-browser does that too. But the real power is **site adapters** — pre-built commands that turn any website into a CLI/API, using your browser's login state.
+The internet was built for browsers. AI agents have been trying to access it through APIs — but 99% of websites don't offer one.
 
-How it works under the hood: the adapter runs `eval` inside your browser tab. It calls `fetch()` with your cookies, or invokes the page's own Vue/Pinia store actions. The website thinks it's you. Because it **is** you.
+bb-browser flips this: **instead of forcing websites to provide machine interfaces, let machines use the human interface directly.** The adapter runs `eval` inside your browser tab, calls `fetch()` with your cookies, or invokes the page's own webpack modules. The website thinks it's you. Because it **is** you.
 
 | | Playwright / Selenium | Scraping libs | bb-browser |
 |---|---|---|---|
 | Browser | Headless, isolated | No browser | Your real Chrome |
 | Login state | None, must re-login | Cookie extraction | Already there |
 | Anti-bot | Detected easily | Cat-and-mouse | Invisible — it IS the user |
-| XHS signing | Can't replicate | Reverse engineer | Page signs it itself |
+| Complex auth | Can't replicate | Reverse engineer | Page handles it itself |
 
 ## Quick Start
 
@@ -60,7 +60,7 @@ npm install -g bb-browser
 ### Use
 
 ```bash
-bb-browser site update    # pull 50+ community adapters
+bb-browser site update    # pull 97 community adapters
 bb-browser site list      # see what's available
 bb-browser site zhihu/hot # go
 ```
@@ -78,30 +78,61 @@ bb-browser site zhihu/hot # go
 }
 ```
 
-## Site Adapters — the core feature
+## 35 platforms, 97 commands
 
 Community-driven via [bb-sites](https://github.com/epiral/bb-sites). One JS file per command.
 
-| Platform | Commands | Auth |
-|----------|----------|------|
-| **Reddit** | me, posts, thread, context | Cookie |
-| **Twitter/X** | user, thread | Bearer + CSRF |
-| **GitHub** | me, repo, issues, issue-create, pr-create, fork | Cookie |
-| **Hacker News** | top, thread | Public API |
-| **Zhihu** | me, hot, question, search | Cookie |
-| **Bilibili** | me, popular, ranking, search, video, comments, feed, history, trending | Cookie |
-| **Weibo** | me, hot, feed, user, user_posts, post, comments | Cookie |
-| **Douban** | search, movie, movie-hot, movie-top, top250, comments | Cookie |
-| **YouTube** | search, video, comments, channel, feed, transcript | innertube |
-| **Xiaohongshu** | me, feed, search, note, comments, user_posts | Pinia store |
+| Category | Platforms | Commands |
+|----------|-----------|----------|
+| **Search** | Google, Baidu, Bing, DuckDuckGo, Sogou WeChat | search |
+| **Social** | Twitter/X, Reddit, Weibo, Xiaohongshu, Jike, LinkedIn, Hupu | search, feed, thread, user, notifications, hot |
+| **News** | BBC, Reuters, 36kr, Toutiao, Eastmoney | headlines, search, newsflash, hot |
+| **Dev** | GitHub, StackOverflow, HackerNews, CSDN, cnblogs, V2EX, Dev.to, npm, PyPI, arXiv | search, issues, repo, top, thread, package |
+| **Video** | YouTube, Bilibili | search, video, transcript, popular, comments, feed |
+| **Entertainment** | Douban, IMDb, Genius, Qidian | movie, search, top250 |
+| **Finance** | Eastmoney, Yahoo Finance | stock quote, news |
+| **Jobs** | BOSS Zhipin, LinkedIn | search, detail, profile |
+| **Knowledge** | Wikipedia, Zhihu, Open Library | search, summary, hot, question |
+| **Shopping** | SMZDM | search deals |
+| **Tools** | Youdao, GSMArena, Product Hunt, Ctrip | translate, phone specs, trending products |
 
-### Create your own
+## 10 minutes to add any website
 
 ```bash
 bb-browser guide    # full tutorial
 ```
 
-Tell your AI agent "turn XX website into a CLI" — it reads the guide, reverse-engineers the API with `network --with-body`, writes the adapter, tests it, and submits a PR. All autonomously.
+Tell your AI agent: *"turn XX website into a CLI"*. It reads the guide, reverse-engineers the API with `network --with-body`, writes the adapter, tests it, and submits a PR. All autonomously.
+
+Three tiers of adapter complexity:
+
+| Tier | Auth method | Example | Time |
+|------|-------------|---------|------|
+| **1** | Cookie (fetch directly) | Reddit, GitHub, V2EX | ~1 min |
+| **2** | Bearer + CSRF token | Twitter, Zhihu | ~3 min |
+| **3** | Webpack injection / Pinia store | Twitter search, Xiaohongshu | ~10 min |
+
+We tested this: **20 AI agents ran in parallel, each independently reverse-engineered a website and produced a working adapter.** The marginal cost of adding a new website to the agent-accessible internet is approaching zero.
+
+## What this means for AI agents
+
+Without bb-browser, an AI agent's world is: **files + terminal + a few APIs with keys.**
+
+With bb-browser: **files + terminal + the entire internet.**
+
+An agent can now, in under a minute:
+
+```bash
+# Cross-platform research on any topic
+bb-browser site arxiv/search "retrieval augmented generation"
+bb-browser site twitter/search "RAG"
+bb-browser site github search rag-framework
+bb-browser site stackoverflow/search "RAG implementation"
+bb-browser site zhihu/search "RAG"
+bb-browser site 36kr/newsflash
+```
+
+Six platforms, six dimensions, structured JSON. Faster and broader than any human researcher.
 
 ## Also a full browser automation tool
 

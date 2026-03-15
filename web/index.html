@@ -3,136 +3,401 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser</title>
-  <meta name="description" content="Install and use iatlas-browser from the web, terminal, MCP, or local API.">
+  <title>iatlas-browser | Browser Automation, MCP Browser Server, Local Browser API</title>
+  <meta
+    name="description"
+    content="iatlas-browser is a browser automation tool for AI agents and terminal workflows. Control your real Chrome session, expose browser actions through MCP, and use a local browser API without rebuilding login state."
+  >
+  <meta
+    name="keywords"
+    content="browser automation,mcp browser,mcp server chrome,ai agent browser tool,chrome automation,authenticated browser api,local browser api,terminal browser automation,chrome extension automation"
+  >
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/">
+  <link rel="alternate" hreflang="en" href="https://miaoda.vip/">
+  <link rel="alternate" hreflang="zh-CN" href="https://miaoda.vip/zh-cn/">
+  <link rel="alternate" hreflang="ja" href="https://miaoda.vip/ja/">
+  <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
+  <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="iatlas-browser | Browser Automation for AI Agents and Real Chrome Sessions">
+  <meta
+    property="og:description"
+    content="Install iatlas-browser, connect it to your live Chrome session, and use terminal commands, MCP, or a local browser API to control websites with real login state."
+  >
+  <meta property="og:url" content="https://miaoda.vip/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="iatlas-browser | Browser Automation, MCP, and Local Browser API">
+  <meta
+    name="twitter:description"
+    content="Use your real Chrome session as an API for CLI tools, AI agents, MCP clients, and authenticated browser workflows."
+  >
   <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "iatlas-browser",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "macOS, Linux, Windows",
+          "description": "A browser automation tool that connects AI agents and terminal workflows to a real Chrome session through a local daemon, browser extension, MCP server, and local browser API.",
+          "downloadUrl": "https://miaoda.vip/install.sh",
+          "softwareVersion": "0.5.0",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is iatlas-browser?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "iatlas-browser is a local browser automation layer that lets terminal tools and AI agents control your real Chrome session instead of launching a separate headless browser."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is it different from Playwright or Selenium?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It focuses on your existing logged-in browser session, so it can work with current cookies, tabs, page state, and user context without rebuilding authentication in a fresh browser."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use it with MCP clients or through an API?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. iatlas-browser can run as an MCP server for tools like Cursor or Claude Desktop, and its local daemon also exposes an HTTP API for status and browser commands."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
 </head>
 <body>
   <main class="page">
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Language switcher">
+        <a class="is-active" href="/">English</a>
+        <a href="/zh-cn/">中文</a>
+        <a href="/ja/">日本語</a>
+        <a href="/es/">Español</a>
+      </nav>
+    </header>
+
     <section class="hero">
-      <p class="eyebrow">miaoda.vip × iatlas-browser</p>
-      <h1>Your browser session, exposed as a local tool layer.</h1>
-      <p class="lede">
-        Install from one command, load the Chrome extension, then use
-        <code>iatlas-browser</code> from the terminal, MCP clients, or the local HTTP API.
-      </p>
+      <div class="hero-copy">
+        <p class="eyebrow">Browser automation for AI agents, MCP clients, and terminal workflows</p>
+        <h1>Turn your real Chrome session into a local browser API.</h1>
+        <p class="lede">
+          <strong>iatlas-browser</strong> connects terminal tools and AI agents to the browser session you
+          already use. Instead of rebuilding authentication in headless Chrome, it works with your live tabs,
+          cookies, and page state through a local daemon and extension.
+        </p>
       <div class="hero-actions">
-        <a class="button primary" href="/install.sh">Download install.sh</a>
-        <a class="button" href="/downloads/iatlas-browser-extension.zip">Download extension zip</a>
-        <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
+          <a class="button primary" href="/install.sh">Download install.sh</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">Download extension zip</a>
+          <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">One-line install</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copy command</button>
+        <ul class="compact-list">
+          <li>Installs into <code>~/.iatlas-browser/src</code></li>
+          <li>Builds the CLI, daemon, MCP entrypoint, and extension bundle</li>
+          <li>Creates local MCP snippets and API example files</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="badge-row" aria-label="Key topics">
+      <span>Browser automation</span>
+      <span>Chrome automation</span>
+      <span>MCP browser server</span>
+      <span>AI agent browser tool</span>
+      <span>Authenticated browser API</span>
+      <span>Local browser API</span>
+    </section>
+
+    <section class="grid three">
+      <article class="card accent">
+        <h2>Why people search for this</h2>
+        <p>
+          Many teams need browser automation that keeps the <strong>real login state</strong>. That usually means
+          dashboards, internal tools, social platforms, or web apps where cookies and dynamic page state matter.
+        </p>
+      </article>
+      <article class="card">
+        <h2>What problem it solves</h2>
+        <p>
+          Standard automation tools often start from a clean browser. iatlas-browser starts from the browser you
+          already trust, then exposes it as CLI commands, an MCP server, and a local HTTP interface.
+        </p>
+      </article>
+      <article class="card">
+        <h2>Who it is for</h2>
+        <p>
+          AI agent builders, automation engineers, browser tool developers, and anyone who needs a practical
+          way to interact with authenticated websites from scripts or agent runtimes.
+        </p>
+      </article>
+    </section>
+
+    <section class="section">
+      <div class="cta signup-card">
+        <div>
+          <p class="kicker">Open API access</p>
+          <h2>Create an API key with email and start immediately</h2>
+          <p>
+            The hosted interface is now available on <code>https://miaoda.vip/v1/</code>. Each email-bound API key gets
+            <strong>1000 open requests per day</strong>. You can call it from scripts, apps, or agent runtimes.
+          </p>
+          <form
+            class="signup-form"
+            data-loading-label="Creating key..."
+            data-success-label="API key created"
+            data-keep-safe-label="Store this key now. New registrations for the same email rotate the previous key."
+            data-invalid-email="Enter a valid email address."
+          >
+            <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <button type="submit">Get API key</button>
+          </form>
+          <div class="signup-result" data-state="idle"></div>
+        </div>
+        <div>
+          <p class="panel-label">Quota and endpoint model</p>
+          <ul class="quota-list">
+            <li><strong>Auth:</strong> `Authorization: Bearer &lt;apiKey&gt;` or `X-API-Key`</li>
+            <li><strong>Quota:</strong> 1000 requests per email per day</li>
+            <li><strong>Endpoints:</strong> `POST /v1/register`, `GET /v1/usage`, `POST /v1/open`</li>
+            <li><strong>Open target:</strong> public `http` and `https` URLs</li>
+          </ul>
+          <pre><code>curl -s https://miaoda.vip/v1/open \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com","mode":"metadata"}'</code></pre>
+        </div>
       </div>
     </section>
 
-    <section class="grid">
-      <article class="card accent">
-        <h2>1. One-line install</h2>
-        <p>This installs the repo into <code>~/.iatlas-browser/src</code>, builds it, and bootstraps local files.</p>
-        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
-        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copy</button>
-      </article>
-
-      <article class="card">
-        <h2>2. Load the extension</h2>
-        <p>After install, load the unpacked extension in Chrome:</p>
-        <pre><code>chrome://extensions/</code></pre>
-        <p class="subtle">Use the generated path: <code>~/.iatlas-browser/extension</code></p>
-      </article>
-
-      <article class="card">
-        <h2>3. Start local runtime</h2>
-        <pre><code>iatlas-browser daemon
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Install and first run</p>
+        <h2>Get from zero to first browser command quickly</h2>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>1. Install the tool</h3>
+          <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+          <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copy</button>
+        </article>
+        <article class="card">
+          <h3>2. Load the Chrome extension</h3>
+          <pre><code>chrome://extensions/</code></pre>
+          <p class="subtle">Load the unpacked folder at <code>~/.iatlas-browser/extension</code>.</p>
+        </article>
+        <article class="card">
+          <h3>3. Start the local runtime</h3>
+          <pre><code>iatlas-browser daemon
 iatlas-browser doctor</code></pre>
-        <button class="copy" data-copy="iatlas-browser daemon
+          <button class="copy" data-copy="iatlas-browser daemon
 iatlas-browser doctor">Copy</button>
-      </article>
-
-      <article class="card">
-        <h2>4. Use immediately</h2>
-        <pre><code>iatlas-browser open https://example.com
+        </article>
+        <article class="card">
+          <h3>4. Use browser commands</h3>
+          <pre><code>iatlas-browser open https://example.com
 iatlas-browser snapshot -i
-iatlas-browser mcp-config cursor
-iatlas-browser api-guide</code></pre>
-        <button class="copy" data-copy="iatlas-browser open https://example.com
+iatlas-browser get title</code></pre>
+          <button class="copy" data-copy="iatlas-browser open https://example.com
 iatlas-browser snapshot -i
-iatlas-browser mcp-config cursor
-iatlas-browser api-guide">Copy</button>
-      </article>
+iatlas-browser get title">Copy</button>
+        </article>
+      </div>
     </section>
 
-    <section class="split">
-      <article class="panel">
-        <div class="panel-head">
-          <h2>MCP quick start</h2>
-          <a href="/mcp/cursor.json">cursor.json</a>
-        </div>
-        <p>Paste this into Cursor, Claude Desktop, or another MCP-compatible tool.</p>
-        <pre><code>{
-  "mcpServers": {
-    "iatlas-browser": {
-      "command": "npx",
-      "args": ["-y", "iatlas-browser", "--mcp"]
-    }
-  }
-}</code></pre>
-        <button class="copy" data-copy='{
-  "mcpServers": {
-    "iatlas-browser": {
-      "command": "npx",
-      "args": ["-y", "iatlas-browser", "--mcp"]
-    }
-  }
-}'>Copy</button>
-      </article>
-
-      <article class="panel">
-        <div class="panel-head">
-          <h2>Local API quick start</h2>
-          <a href="/api/examples.sh">examples.sh</a>
-        </div>
-        <p>The daemon exposes a local HTTP API on <code>127.0.0.1:19824</code>.</p>
-        <pre><code>curl -s http://127.0.0.1:19824/status
-
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Core explanation</p>
+        <h2>What iatlas-browser actually does</h2>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Terminal browser automation</h3>
+          <p>
+            Run commands such as <code>open</code>, <code>snapshot</code>, <code>click</code>,
+            <code>fill</code>, <code>network</code>, and <code>fetch</code> against the current browser context.
+          </p>
+          <pre><code>iatlas-browser open https://app.example.com
+iatlas-browser snapshot -i
+iatlas-browser click @3</code></pre>
+        </article>
+        <article class="panel">
+          <h3>MCP browser server</h3>
+          <p>
+            Expose the browser to agent frameworks and code assistants through MCP. This is useful for Cursor,
+            Claude Desktop, and other MCP-compatible tooling.
+          </p>
+          <pre><code>iatlas-browser mcp-config cursor
+iatlas-browser --mcp</code></pre>
+          <p><a href="/mcp/cursor.json">Download Cursor MCP snippet</a></p>
+        </article>
+        <article class="panel">
+          <h3>Local browser API</h3>
+          <p>
+            The daemon serves a local HTTP API on <code>127.0.0.1:19824</code>, making it easy to orchestrate
+            browser tasks from shell scripts or external applications.
+          </p>
+          <pre><code>curl -s http://127.0.0.1:19824/status
 curl -s http://127.0.0.1:19824/command \
   -H "Content-Type: application/json" \
   -d '{"id":"demo-open","action":"open","url":"https://example.com"}'</code></pre>
-        <button class="copy" data-copy='curl -s http://127.0.0.1:19824/status
-
-curl -s http://127.0.0.1:19824/command \
-  -H "Content-Type: application/json" \
-  -d '"'"'{"id":"demo-open","action":"open","url":"https://example.com"}'"'"''>Copy</button>
-      </article>
-    </section>
-
-    <section class="strip">
-      <div>
-        <h2>What this page provides</h2>
-        <ul>
-          <li>One-line installer at <code>/install.sh</code></li>
-          <li>Extension zip download</li>
-          <li>MCP config snippets</li>
-          <li>API usage examples</li>
-        </ul>
-      </div>
-      <div>
-        <h2>Repository</h2>
-        <p><a href="https://github.com/miounet11/lao">github.com/miounet11/lao</a></p>
+          <p><a href="/api/examples.sh">Download API examples</a></p>
+        </article>
+        <article class="panel">
+          <h3>Authenticated website access</h3>
+          <p>
+            This is the practical difference: iatlas-browser can reuse your current website session and page state.
+            That makes it useful for internal dashboards, admin panels, and websites with complex browser-side flows.
+          </p>
+        </article>
       </div>
     </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Use cases</p>
+        <h2>Common scenarios</h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>AI agents that need a browser</h3>
+          <p>Give an agent access to a real browser instead of faking API responses or scraping stale HTML.</p>
+        </article>
+        <article class="card">
+          <h3>Automation behind login</h3>
+          <p>Work with SaaS admin consoles, internal tools, and authenticated pages that break in fresh sessions.</p>
+        </article>
+        <article class="card">
+          <h3>Reverse engineering websites</h3>
+          <p>Inspect requests, console logs, page snapshots, and fetch calls while you are already logged in.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">Comparison</p>
+        <h2>How it differs from standard browser automation</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>Fresh headless browser</th>
+              <th>iatlas-browser</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Existing login session</td>
+              <td>Usually needs to be recreated</td>
+              <td>Uses your current browser session</td>
+            </tr>
+            <tr>
+              <td>Page state and live tabs</td>
+              <td>Separate environment</td>
+              <td>Works with the browser you already use</td>
+            </tr>
+            <tr>
+              <td>MCP integration</td>
+              <td>Needs custom glue</td>
+              <td>Built in</td>
+            </tr>
+            <tr>
+              <td>Local HTTP control</td>
+              <td>Custom service required</td>
+              <td>Built in daemon API</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Resources</p>
+        <h2>Installation, MCP, and API shortcuts</h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>Installer</h3>
+          <p>Use the web installer for a quick local setup.</p>
+          <p><a href="/install.sh">/install.sh</a></p>
+        </article>
+        <article class="card">
+          <h3>Extension bundle</h3>
+          <p>Download the packaged extension zip directly.</p>
+          <p><a href="/downloads/iatlas-browser-extension.zip">/downloads/iatlas-browser-extension.zip</a></p>
+        </article>
+        <article class="card">
+          <h3>MCP config files</h3>
+          <p><a href="/mcp/generic.json">generic.json</a> · <a href="/mcp/cursor.json">cursor.json</a> · <a href="/mcp/claude-desktop.json">claude-desktop.json</a></p>
+        </article>
+        <article class="card">
+          <h3>Open API docs</h3>
+          <p>Hosted API guide and request examples.</p>
+          <p><a href="/openapi/">/openapi/</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="section-head">
+        <p class="kicker">FAQ</p>
+        <h2>Questions people usually ask before installing</h2>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>Is this a cloud browser service?</h3>
+          <p>No. It runs locally and bridges your local tools to your local Chrome session.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Can it work with logged-in websites?</h3>
+          <p>Yes. That is one of the main reasons to use it.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Does it support AI coding tools and agents?</h3>
+          <p>Yes. The project includes an MCP mode and a local daemon API for agent-driven workflows.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Can I use it from scripts?</h3>
+          <p>Yes. Use the CLI directly or call the local API on <code>127.0.0.1:19824</code>.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>iatlas-browser on <a href="https://github.com/miounet11/lao">GitHub</a></p>
+      <p class="subtle">Keywords: browser automation, MCP browser server, AI agent browser tool, Chrome automation, authenticated browser API.</p>
+    </footer>
   </main>
 
-  <script>
-    for (const button of document.querySelectorAll('.copy')) {
-      button.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(button.dataset.copy || '');
-          const original = button.textContent;
-          button.textContent = 'Copied';
-          setTimeout(() => { button.textContent = original; }, 1200);
-        } catch {
-          button.textContent = 'Copy failed';
-        }
-      });
-    }
-  </script>
+  <script src="/site.js"></script>
 </body>
 </html>

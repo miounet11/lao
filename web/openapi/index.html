@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iatlas-browser Open API | Browser Open Endpoint, API Key, Usage Quota</title>
+  <meta
+    name="description"
+    content="Get an API key for the iatlas-browser Open API. Use email signup, 1000 requests per day, and public endpoints for /v1/register, /v1/usage, and /v1/open."
+  >
+  <meta
+    name="keywords"
+    content="browser open api,browser automation api,chrome open api,mcp api,browser metadata api,open webpage api,url open api"
+  >
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/openapi/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="iatlas-browser Open API | API Key, Quota, and /v1/open">
+  <meta property="og:description" content="Create an API key by email and call the hosted browser-open interface on miaoda.vip.">
+  <meta property="og:url" content="https://miaoda.vip/openapi/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Primary links">
+        <a href="/">Home</a>
+        <a class="is-active" href="/openapi/">Open API</a>
+        <a href="/zh-cn/">中文</a>
+        <a href="/ja/">日本語</a>
+        <a href="/es/">Español</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Hosted browser open api</p>
+        <h1>Create an API key and call <code>/v1/open</code>.</h1>
+        <p class="lede">
+          The hosted interface is designed for simple programmatic use. Register with email, receive an API key,
+          then call the public endpoint to open public URLs and receive metadata, text, or HTML.
+        </p>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">Get API key</p>
+        <form
+          class="signup-form"
+          data-loading-label="Creating key..."
+          data-success-label="API key created"
+          data-keep-safe-label="Store this key now. Re-registering the same email rotates the previous key."
+          data-invalid-email="Enter a valid email address."
+        >
+          <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button type="submit">Create API key</button>
+        </form>
+        <div class="signup-result" data-state="idle"></div>
+      </aside>
+    </section>
+
+    <section class="badge-row">
+      <span>browser open api</span>
+      <span>browser automation api</span>
+      <span>url open api</span>
+      <span>chrome automation api</span>
+      <span>browser metadata api</span>
+      <span>public api key access</span>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Endpoint summary</p>
+        <h2>Three endpoints, one key model</h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>POST /v1/register</h3>
+          <p>Create or rotate an email-bound API key.</p>
+          <pre><code>curl -s https://miaoda.vip/v1/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com"}'</code></pre>
+        </article>
+        <article class="card">
+          <h3>GET /v1/usage</h3>
+          <p>Check the current daily usage for the authenticated key.</p>
+          <pre><code>curl -s https://miaoda.vip/v1/usage \
+  -H "Authorization: Bearer $API_KEY"</code></pre>
+        </article>
+        <article class="card">
+          <h3>POST /v1/open</h3>
+          <p>Open a public URL and request metadata, text, or HTML.</p>
+          <pre><code>curl -s https://miaoda.vip/v1/open \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com","mode":"metadata"}'</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">Request details</p>
+        <h2>How the hosted browser-open interface behaves</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>url</code></td>
+              <td>Absolute public <code>http</code> or <code>https</code> URL.</td>
+            </tr>
+            <tr>
+              <td><code>mode</code></td>
+              <td><code>metadata</code>, <code>text</code>, or <code>html</code>.</td>
+            </tr>
+            <tr>
+              <td><code>timeoutMs</code></td>
+              <td>Optional timeout, capped server-side.</td>
+            </tr>
+            <tr>
+              <td>Auth</td>
+              <td><code>Authorization: Bearer &lt;apiKey&gt;</code> or <code>X-API-Key</code>.</td>
+            </tr>
+            <tr>
+              <td>Quota</td>
+              <td>1000 requests per email-bound API key per day.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Mode examples</p>
+        <h2>What you get back from <code>/v1/open</code></h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>metadata</h3>
+          <p>Returns title, meta description, final URL, status, and a text excerpt.</p>
+        </article>
+        <article class="card">
+          <h3>text</h3>
+          <p>Returns stripped text content for quick indexing or downstream processing.</p>
+        </article>
+        <article class="card">
+          <h3>html</h3>
+          <p>Returns the response body for public textual pages within the server-side body limit.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><a href="/v1/docs">JSON docs endpoint</a></p>
+      <p class="subtle">SEO topics: browser open api, browser automation api, url open api, browser metadata api.</p>
+    </footer>
+  </main>
+
+  <script src="/site.js"></script>
+</body>
+</html>

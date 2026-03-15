@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iatlas-browser | ブラウザ自動化、MCP ブラウザサーバー、ローカル Browser API</title>
+  <meta
+    name="description"
+    content="iatlas-browser は、AI エージェントやターミナル自動化から実際の Chrome セッションを操作するためのブラウザ自動化ツールです。既存のログイン状態をそのまま使い、MCP とローカル API にも対応します。"
+  >
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/ja/">
+  <link rel="alternate" hreflang="en" href="https://miaoda.vip/">
+  <link rel="alternate" hreflang="zh-CN" href="https://miaoda.vip/zh-cn/">
+  <link rel="alternate" hreflang="ja" href="https://miaoda.vip/ja/">
+  <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
+  <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="iatlas-browser | 実際の Chrome を使うブラウザ自動化">
+  <meta
+    property="og:description"
+    content="AI エージェント、MCP クライアント、ターミナルワークフローから、ログイン済みの Chrome セッションをそのまま操作できます。"
+  >
+  <meta property="og:url" content="https://miaoda.vip/ja/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Language switcher">
+        <a href="/">English</a>
+        <a href="/zh-cn/">中文</a>
+        <a class="is-active" href="/ja/">日本語</a>
+        <a href="/es/">Español</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">AI エージェント、MCP、ターミナル向けのブラウザ自動化</p>
+        <h1>実際に使っている Chrome をローカル Browser API にする。</h1>
+        <p class="lede">
+          <strong>iatlas-browser</strong> は新しいヘッドレスブラウザを起動するのではなく、
+          すでに使っている Chrome セッションをそのまま扱います。ログイン状態、Cookie、タブ、
+          ページ状態を維持したまま自動化できます。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="/install.sh">install.sh を取得</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">拡張機能 zip</a>
+          <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">クイックインストール</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">コピー</button>
+        <ul class="compact-list">
+          <li>ローカルにインストール</li>
+          <li>CLI と拡張機能をビルド</li>
+          <li>MCP と API の設定ファイルを生成</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="cta signup-card">
+        <div>
+          <p class="kicker">Open API</p>
+          <h2>メールで API キーを発行</h2>
+          <p>
+            <code>https://miaoda.vip/v1/</code> でホスト API を利用できます。メールにひもづく API キーごとに、
+            1 日あたり <strong>1000 リクエスト</strong> まで使えます。
+          </p>
+          <form
+            class="signup-form"
+            data-loading-label="作成中..."
+            data-success-label="API キーを発行しました"
+            data-keep-safe-label="このキーは今保存してください。同じメールで再登録すると旧キーは置き換わります。"
+            data-invalid-email="有効なメールアドレスを入力してください。"
+          >
+            <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <button type="submit">API キーを取得</button>
+          </form>
+          <div class="signup-result" data-state="idle"></div>
+        </div>
+        <div>
+          <p class="panel-label">API 概要</p>
+          <ul class="quota-list">
+            <li><strong>認証:</strong> `Authorization: Bearer &lt;apiKey&gt;`</li>
+            <li><strong>上限:</strong> 1 日 1000 リクエスト</li>
+            <li><strong>エンドポイント:</strong> `POST /v1/register`, `GET /v1/usage`, `POST /v1/open`</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">何が便利か</p>
+        <h2>ログイン済みサイトの自動化に強い</h2>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>既存の認証状態を再利用</h3>
+          <p>社内ツール、管理画面、SaaS ダッシュボードなど、再ログインが面倒なサイトに向いています。</p>
+        </article>
+        <article class="panel">
+          <h3>AI ツールへの接続が簡単</h3>
+          <p>MCP モードとローカル API があるため、エージェントから実ブラウザを扱う入口を作りやすいです。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">最初の手順</p>
+        <h2>セットアップの流れ</h2>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>1. インストール</h3>
+          <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+          <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">コピー</button>
+        </article>
+        <article class="card">
+          <h3>2. 拡張機能を読み込む</h3>
+          <pre><code>chrome://extensions/</code></pre>
+          <p class="subtle"><code>~/.iatlas-browser/extension</code> を指定します。</p>
+        </article>
+        <article class="card">
+          <h3>3. デーモン起動</h3>
+          <pre><code>iatlas-browser daemon
+iatlas-browser doctor</code></pre>
+          <button class="copy" data-copy="iatlas-browser daemon
+iatlas-browser doctor">コピー</button>
+        </article>
+        <article class="card">
+          <h3>4. コマンド実行</h3>
+          <pre><code>iatlas-browser open https://example.com
+iatlas-browser snapshot -i</code></pre>
+          <button class="copy" data-copy="iatlas-browser open https://example.com
+iatlas-browser snapshot -i">コピー</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">接続方法</p>
+        <h2>CLI、MCP、ローカル API</h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>CLI</h3>
+          <p>ブラウザ操作、スナップショット、クリック、ネットワーク確認などを直接実行できます。</p>
+        </article>
+        <article class="card">
+          <h3>MCP</h3>
+          <p>Cursor や Claude Desktop 用に使える MCP 設定を出力できます。</p>
+          <p><a href="/mcp/cursor.json">cursor.json</a></p>
+        </article>
+        <article class="card">
+          <h3>API</h3>
+          <p>ローカル HTTP API を使って外部スクリプトから制御できます。</p>
+          <p><a href="/api/examples.sh">examples.sh</a></p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><a href="https://github.com/miounet11/lao">GitHub repository</a></p>
+      <p class="subtle">SEO キーワード: ブラウザ自動化, MCP ブラウザ, Chrome 自動化, ローカル Browser API。</p>
+    </footer>
+  </main>
+
+  <script src="/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://miaoda.vip/sitemap.xml

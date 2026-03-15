@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iatlas-browser | Automatización de navegador, servidor MCP y API local</title>
+  <meta
+    name="description"
+    content="iatlas-browser conecta agentes de IA y flujos de trabajo de terminal con tu sesión real de Chrome. Reutiliza el estado autenticado del navegador y expone control por CLI, MCP y API local."
+  >
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/es/">
+  <link rel="alternate" hreflang="en" href="https://miaoda.vip/">
+  <link rel="alternate" hreflang="zh-CN" href="https://miaoda.vip/zh-cn/">
+  <link rel="alternate" hreflang="ja" href="https://miaoda.vip/ja/">
+  <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
+  <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="iatlas-browser | Automatización sobre tu sesión real de Chrome">
+  <meta
+    property="og:description"
+    content="Usa tu navegador real como una capa local para agentes, automatización de terminal, MCP y una API HTTP local."
+  >
+  <meta property="og:url" content="https://miaoda.vip/es/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Language switcher">
+        <a href="/">English</a>
+        <a href="/zh-cn/">中文</a>
+        <a href="/ja/">日本語</a>
+        <a class="is-active" href="/es/">Español</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Automatización de navegador para agentes de IA, clientes MCP y terminal</p>
+        <h1>Convierte tu sesión real de Chrome en una API local de navegador.</h1>
+        <p class="lede">
+          <strong>iatlas-browser</strong> evita el problema típico de recrear autenticación en un navegador nuevo.
+          En su lugar, conecta tus herramientas con el navegador que ya estás usando.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="/install.sh">Descargar install.sh</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">Descargar extensión</a>
+          <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">Instalación rápida</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copiar</button>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="cta signup-card">
+        <div>
+          <p class="kicker">Open API</p>
+          <h2>Genera tu API key con email</h2>
+          <p>
+            El servicio público está disponible en <code>https://miaoda.vip/v1/</code>. Cada email recibe una API key
+            con <strong>1000 solicitudes diarias</strong>.
+          </p>
+          <form
+            class="signup-form"
+            data-loading-label="Creando clave..."
+            data-success-label="API key creada"
+            data-keep-safe-label="Guárdala ahora. Si registras el mismo email otra vez, la clave anterior se reemplaza."
+            data-invalid-email="Introduce un email válido."
+          >
+            <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <button type="submit">Obtener API key</button>
+          </form>
+          <div class="signup-result" data-state="idle"></div>
+        </div>
+        <div>
+          <p class="panel-label">Resumen de API</p>
+          <ul class="quota-list">
+            <li><strong>Auth:</strong> `Authorization: Bearer &lt;apiKey&gt;`</li>
+            <li><strong>Límite:</strong> 1000 solicitudes por día</li>
+            <li><strong>Endpoints:</strong> `POST /v1/register`, `GET /v1/usage`, `POST /v1/open`</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Qué resuelve</p>
+        <h2>Automatización con sesión autenticada y contexto real</h2>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>Útil para sitios con login complejo</h3>
+          <p>Paneles internos, SaaS, herramientas administrativas y sitios donde el estado del navegador importa.</p>
+        </article>
+        <article class="panel">
+          <h3>Útil para agentes y herramientas de desarrollo</h3>
+          <p>Se puede usar desde CLI, como servidor MCP o como API local sobre <code>127.0.0.1:19824</code>.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Primeros pasos</p>
+        <h2>Instalar, conectar y ejecutar</h2>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>1. Instalar</h3>
+          <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+          <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copiar</button>
+        </article>
+        <article class="card">
+          <h3>2. Cargar la extensión</h3>
+          <pre><code>chrome://extensions/</code></pre>
+          <p class="subtle">Selecciona <code>~/.iatlas-browser/extension</code>.</p>
+        </article>
+        <article class="card">
+          <h3>3. Iniciar el daemon</h3>
+          <pre><code>iatlas-browser daemon
+iatlas-browser doctor</code></pre>
+        </article>
+        <article class="card">
+          <h3>4. Ejecutar comandos</h3>
+          <pre><code>iatlas-browser open https://example.com
+iatlas-browser snapshot -i</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Integraciones</p>
+        <h2>MCP y API local</h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>MCP</h3>
+          <p>Ideal para Cursor, Claude Desktop y otras herramientas compatibles con MCP.</p>
+          <p><a href="/mcp/cursor.json">cursor.json</a></p>
+        </article>
+        <article class="card">
+          <h3>API local</h3>
+          <p>La API HTTP local sirve para scripts, orquestadores y herramientas propias.</p>
+          <p><a href="/api/examples.sh">examples.sh</a></p>
+        </article>
+        <article class="card">
+          <h3>CLI</h3>
+          <p>Abre páginas, toma snapshots, inspecciona red y ejecuta acciones desde terminal.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><a href="https://github.com/miounet11/lao">Repositorio en GitHub</a></p>
+      <p class="subtle">Palabras clave SEO: automatización de navegador, servidor MCP, API local de navegador, automatización de Chrome.</p>
+    </footer>
+  </main>
+
+  <script src="/site.js"></script>
+</body>
+</html>

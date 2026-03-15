@@ -103,6 +103,18 @@ importers:
         specifier: ^5.3.0
         version: 5.9.3
 
+  packages/openapi:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.19.7
+      tsup:
+        specifier: ^8.0.0
+        version: 8.5.1(postcss@8.5.6)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
   packages/shared:
     devDependencies:
       '@types/node':

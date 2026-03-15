@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iatlas-browser | 浏览器自动化、MCP 浏览器服务、本地浏览器 API</title>
+  <meta
+    name="description"
+    content="iatlas-browser 是面向 AI Agent、终端工作流和自动化工程的浏览器自动化工具。直接连接你正在使用的 Chrome，会话、Cookie、标签页和页面状态都能复用，并可通过 MCP 或本地 API 调用。"
+  >
+  <meta
+    name="keywords"
+    content="浏览器自动化,MCP浏览器,MCP服务,AI Agent 浏览器工具,Chrome 自动化,本地浏览器API,登录态自动化,终端浏览器控制"
+  >
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/zh-cn/">
+  <link rel="alternate" hreflang="en" href="https://miaoda.vip/">
+  <link rel="alternate" hreflang="zh-CN" href="https://miaoda.vip/zh-cn/">
+  <link rel="alternate" hreflang="ja" href="https://miaoda.vip/ja/">
+  <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
+  <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="iatlas-browser | 面向 AI Agent 的真实浏览器自动化">
+  <meta
+    property="og:description"
+    content="连接真实 Chrome 会话，把浏览器暴露为终端命令、MCP 服务和本地 HTTP API，适合登录态复杂、页面状态复杂的网站自动化。"
+  >
+  <meta property="og:url" content="https://miaoda.vip/zh-cn/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Language switcher">
+        <a href="/">English</a>
+        <a class="is-active" href="/zh-cn/">中文</a>
+        <a href="/ja/">日本語</a>
+        <a href="/es/">Español</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">面向 AI Agent、MCP 客户端与终端工作流的浏览器自动化</p>
+        <h1>把你正在使用的 Chrome 变成一个本地浏览器 API。</h1>
+        <p class="lede">
+          <strong>iatlas-browser</strong> 不是再起一个全新的无头浏览器，而是直接连接你已经在使用的
+          浏览器上下文。这样你现有的登录态、Cookie、标签页、页面状态和用户环境都可以直接复用。
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="/install.sh">下载安装脚本</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">下载扩展压缩包</a>
+          <a class="button" href="/openapi/">Open API 文档</a>
+          <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">一键安装</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">复制命令</button>
+        <ul class="compact-list">
+          <li>安装到 <code>~/.iatlas-browser/src</code></li>
+          <li>自动构建 CLI、Daemon、MCP 入口和扩展</li>
+          <li>生成 MCP 配置示例与 API 示例脚本</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="badge-row">
+      <span>浏览器自动化</span>
+      <span>Chrome 自动化</span>
+      <span>MCP 浏览器服务</span>
+      <span>AI Agent 浏览器工具</span>
+      <span>登录态自动化</span>
+      <span>本地浏览器 API</span>
+    </section>
+
+    <section class="section">
+      <div class="cta signup-card">
+        <div>
+          <p class="kicker">Open API</p>
+          <h2>填写邮箱，立即领取 API Key</h2>
+          <p>
+            现在可以直接通过 <code>https://miaoda.vip/v1/</code> 调用托管接口。每个邮箱绑定一个 API Key，
+            默认每天提供 <strong>1000 次 open 请求</strong>。
+          </p>
+          <form
+            class="signup-form"
+            data-loading-label="正在生成..."
+            data-success-label="API Key 已生成"
+            data-keep-safe-label="请立刻保存。相同邮箱再次申请时会轮换旧 Key。"
+            data-invalid-email="请输入有效邮箱地址。"
+          >
+            <input type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+            <button type="submit">获取 API Key</button>
+          </form>
+          <div class="signup-result" data-state="idle"></div>
+        </div>
+        <div>
+          <p class="panel-label">接口说明</p>
+          <ul class="quota-list">
+            <li><strong>认证：</strong>`Authorization: Bearer &lt;apiKey&gt;`</li>
+            <li><strong>配额：</strong>每邮箱每天 1000 次</li>
+            <li><strong>端点：</strong>`POST /v1/register`、`GET /v1/usage`、`POST /v1/open`</li>
+            <li><strong>目标：</strong>公开的 `http` / `https` 地址</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">为什么这个工具有价值</p>
+        <h2>核心逻辑：不是模拟浏览器，而是接管你真实在用的浏览器</h2>
+      </div>
+      <div class="grid two">
+        <article class="panel">
+          <h3>直接复用登录态</h3>
+          <p>
+            很多网站的难点不是 DOM 操作，而是登录态、风控、前端动态校验和页面上下文。iatlas-browser
+            的重点就是跳过“重新登录”和“重建环境”这一步。
+          </p>
+        </article>
+        <article class="panel">
+          <h3>给终端和 Agent 提供统一接口</h3>
+          <p>
+            你可以用命令行直接操作，也可以走 MCP 接给 Cursor / Claude Desktop，还可以通过本地 HTTP
+            API 接给你自己的服务或脚本。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">快速开始</p>
+        <h2>从安装到第一次执行命令</h2>
+      </div>
+      <div class="grid two">
+        <article class="card">
+          <h3>1. 安装</h3>
+          <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+          <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">复制</button>
+        </article>
+        <article class="card">
+          <h3>2. 加载扩展</h3>
+          <pre><code>chrome://extensions/</code></pre>
+          <p class="subtle">选择 <code>~/.iatlas-browser/extension</code> 目录。</p>
+        </article>
+        <article class="card">
+          <h3>3. 启动本地运行时</h3>
+          <pre><code>iatlas-browser daemon
+iatlas-browser doctor</code></pre>
+          <button class="copy" data-copy="iatlas-browser daemon
+iatlas-browser doctor">复制</button>
+        </article>
+        <article class="card">
+          <h3>4. 立即使用</h3>
+          <pre><code>iatlas-browser open https://example.com
+iatlas-browser snapshot -i
+iatlas-browser mcp-config cursor</code></pre>
+          <button class="copy" data-copy="iatlas-browser open https://example.com
+iatlas-browser snapshot -i
+iatlas-browser mcp-config cursor">复制</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">三种接入方式</p>
+        <h2>CLI、MCP、API 都能直接用</h2>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>CLI 浏览器命令</h3>
+          <p>适合命令行自动化、调试、快照、点击、抓取、网络查看等场景。</p>
+          <pre><code>iatlas-browser snapshot -i
+iatlas-browser click @3</code></pre>
+        </article>
+        <article class="card">
+          <h3>MCP 浏览器服务</h3>
+          <p>适合接到 Cursor、Claude Desktop 或支持 MCP 的 Agent 运行时。</p>
+          <pre><code>iatlas-browser mcp-config cursor
+iatlas-browser --mcp</code></pre>
+          <p><a href="/mcp/cursor.json">下载 Cursor 配置</a></p>
+        </article>
+        <article class="card">
+          <h3>本地浏览器 API</h3>
+          <p>适合 shell 脚本、自动化服务、外部程序调用。</p>
+          <pre><code>curl -s http://127.0.0.1:19824/status</code></pre>
+          <p><a href="/api/examples.sh">下载 API 示例</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">差异点</p>
+        <h2>和传统浏览器自动化工具相比，最大的区别是什么</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>对比项</th>
+              <th>常规无头浏览器</th>
+              <th>iatlas-browser</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>登录态</td>
+              <td>通常需要重新构建</td>
+              <td>直接使用现有会话</td>
+            </tr>
+            <tr>
+              <td>页面上下文</td>
+              <td>独立环境</td>
+              <td>真实用户环境</td>
+            </tr>
+            <tr>
+              <td>Agent 接入</td>
+              <td>需要自建桥接层</td>
+              <td>内置 MCP</td>
+            </tr>
+            <tr>
+              <td>服务调用</td>
+              <td>通常需另起服务</td>
+              <td>内置本地 HTTP API</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="section-head">
+        <p class="kicker">常见问题</p>
+        <h2>安装前通常会问什么</h2>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>它适合登录复杂的网站吗？</h3>
+          <p>适合，这正是它最有价值的地方之一。</p>
+        </article>
+        <article class="faq-item">
+          <h3>可以给 Agent 用吗？</h3>
+          <p>可以，项目内置了 MCP 方式，也有本地 API。</p>
+        </article>
+        <article class="faq-item">
+          <h3>是不是云端浏览器？</h3>
+          <p>不是。它是本地桥接层，连接你的本地工具和你的本地浏览器。</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>仓库地址：<a href="https://github.com/miounet11/lao">github.com/miounet11/lao</a></p>
+      <p class="subtle">搜索关键词：浏览器自动化、MCP 浏览器、AI Agent 浏览器工具、登录态自动化、本地浏览器 API。</p>
+    </footer>
+  </main>
+
+  <script src="/site.js"></script>
+</body>
+</html>

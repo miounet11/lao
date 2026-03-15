@@ -604,6 +604,10 @@ thead th {
   min-height: 280px;
 }
 
+#site-runner-result {
+  min-height: 320px;
+}
+
 .mode-grid,
 .flow-grid {
   align-items: stretch;

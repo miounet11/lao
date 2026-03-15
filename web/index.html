@@ -326,6 +326,41 @@
 
     <section class="section">
       <div class="section-head">
+        <p class="kicker">Hosted Site Runner</p>
+        <h2>Run hosted adapters without leaving the landing page</h2>
+        <p class="subtle">
+          This uses the same hosted subset exposed by <code>POST /v1/sites/run</code>. It is for public, read-only,
+          remote-safe adapters only. The larger browser-state-sensitive adapter model still belongs to the local runtime.
+        </p>
+      </div>
+      <div class="cta demo-panel">
+        <div>
+          <form id="site-runner-form" class="catalog-filters">
+            <input id="site-runner-key" type="text" placeholder="Paste API key or create one above" autocomplete="off">
+            <select id="site-runner-name">
+              <option value="">Loading hosted adapters...</option>
+            </select>
+            <button type="submit" class="button primary">Run hosted adapter</button>
+          </form>
+          <textarea id="site-runner-args" class="json-input" spellcheck="false">{}</textarea>
+          <p class="subtle playground-note" id="site-runner-summary">
+            Loading the current hosted adapter list from <code>/v1/sites/hosted</code>.
+          </p>
+          <ul class="quota-list">
+            <li><strong>Execution:</strong> public hosted adapters only</li>
+            <li><strong>Request:</strong> <code>POST /v1/sites/run</code> with adapter name and JSON args</li>
+            <li><strong>More detail:</strong> browse the full <a href="/sites/">adapter catalog</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="panel-label">Live response</p>
+          <pre id="site-runner-result"><code>Choose a hosted adapter and run it with live arguments.</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
         <p class="kicker">Install and first run</p>
         <h2>Get from zero to first browser command quickly</h2>
       </div>

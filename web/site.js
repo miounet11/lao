@@ -21,6 +21,29 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;");
 }
 
+function setPreResult(element, value) {
+  element.innerHTML = `<code>${escapeHtml(value)}</code>`;
+}
+
+async function loadJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${url}`);
+  }
+  return response.json();
+}
+
+function syncApiKeyInput(input) {
+  input.value = loadApiKey();
+
+  document.addEventListener("iatlas-api-key", (event) => {
+    if (!(event instanceof CustomEvent) || !event.detail?.apiKey) {
+      return;
+    }
+    input.value = event.detail.apiKey;
+  });
+}
+
 document.addEventListener("click", async (event) => {
   const target = event.target;
   if (!(target instanceof HTMLElement)) {
@@ -266,14 +289,7 @@ function initOpenPlayground() {
     return;
   }
 
-  apiKeyInput.value = loadApiKey();
-
-  document.addEventListener("iatlas-api-key", (event) => {
-    if (!(event instanceof CustomEvent) || !event.detail?.apiKey) {
-      return;
-    }
-    apiKeyInput.value = event.detail.apiKey;
-  });
+  syncApiKeyInput(apiKeyInput);
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -303,7 +319,7 @@ function initOpenPlayground() {
     const originalButtonText = submitButton.textContent;
     submitButton.disabled = true;
     submitButton.textContent = "Running...";
-    result.textContent = "Running hosted open request...";
+    setPreResult(result, "Running hosted open request...");
 
     try {
       const response = await fetch("/v1/open", {
@@ -319,9 +335,9 @@ function initOpenPlayground() {
       });
 
       const payload = await response.json();
-      result.innerHTML = `<code>${escapeHtml(JSON.stringify(payload, null, 2))}</code>`;
+      setPreResult(result, JSON.stringify(payload, null, 2));
     } catch (error) {
-      result.textContent = error instanceof Error ? error.message : "Hosted open request failed";
+      setPreResult(result, error instanceof Error ? error.message : "Hosted open request failed");
     } finally {
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;
@@ -330,3 +346,126 @@ function initOpenPlayground() {
 }
 
 initOpenPlayground();
+
+async function initHostedSiteRunner() {
+  const form = document.getElementById("site-runner-form");
+  const apiKeyInput = document.getElementById("site-runner-key");
+  const nameInput = document.getElementById("site-runner-name");
+  const argsInput = document.getElementById("site-runner-args");
+  const summary = document.getElementById("site-runner-summary");
+  const result = document.getElementById("site-runner-result");
+
+  if (
+    !(form instanceof HTMLFormElement) ||
+    !(apiKeyInput instanceof HTMLInputElement) ||
+    !(nameInput instanceof HTMLSelectElement) ||
+    !(argsInput instanceof HTMLTextAreaElement) ||
+    !(summary instanceof HTMLElement) ||
+    !(result instanceof HTMLElement)
+  ) {
+    return;
+  }
+
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (!(submitButton instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  syncApiKeyInput(apiKeyInput);
+
+  let hostedItems = [];
+
+  try {
+    const payload = await loadJson("/v1/sites/hosted");
+    hostedItems = Array.isArray(payload.items) ? payload.items : [];
+
+    nameInput.innerHTML = "";
+
+    if (!hostedItems.length) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "No hosted adapters available";
+      nameInput.appendChild(option);
+      summary.textContent = "No hosted adapters are currently available from the live API.";
+      return;
+    }
+
+    for (const entry of hostedItems) {
+      const option = document.createElement("option");
+      option.value = entry.name;
+      option.textContent = `${entry.name} (${entry.platform})`;
+      nameInput.appendChild(option);
+    }
+
+    summary.textContent = `${hostedItems.length} hosted adapters loaded from the live API. The JSON editor below is seeded from each adapter's current API example.`;
+  } catch (error) {
+    summary.textContent = error instanceof Error ? error.message : "Failed to load hosted adapters";
+    return;
+  }
+
+  function syncArgs() {
+    const entry = hostedItems.find((item) => item.name === nameInput.value) || hostedItems[0];
+    if (!entry) {
+      argsInput.value = "{}";
+      return;
+    }
+
+    nameInput.value = entry.name;
+    argsInput.value = JSON.stringify(entry.execution?.apiExample?.body?.args ?? {}, null, 2);
+  }
+
+  nameInput.addEventListener("change", syncArgs);
+  syncArgs();
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const apiKey = apiKeyInput.value.trim();
+    if (!apiKey) {
+      setPreResult(result, "Create or paste an API key first.");
+      return;
+    }
+
+    if (!nameInput.value) {
+      setPreResult(result, "Choose a hosted adapter first.");
+      return;
+    }
+
+    let args;
+    try {
+      args = JSON.parse(argsInput.value || "{}");
+    } catch {
+      setPreResult(result, "Arguments must be valid JSON.");
+      return;
+    }
+
+    const originalButtonText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = "Running...";
+    setPreResult(result, "Running hosted adapter...");
+
+    try {
+      const response = await fetch("/v1/sites/run", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nameInput.value,
+          args,
+        }),
+      });
+
+      const payload = await response.json();
+      setPreResult(result, JSON.stringify(payload, null, 2));
+    } catch (error) {
+      setPreResult(result, error instanceof Error ? error.message : "Hosted adapter request failed");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
+  });
+}
+
+initHostedSiteRunner();

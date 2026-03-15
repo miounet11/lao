@@ -2,9 +2,7 @@
 
 # iatlas-browser
 
-### iAtlas Browser
-
-**Your browser is the API. No keys. No bots. No scrapers.**
+**A local browser bridge for terminal workflows and AI agents**
 
 [![npm](https://img.shields.io/npm/v/iatlas-browser?color=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/iatlas-browser)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org)
@@ -14,35 +12,93 @@
 
 </div>
 
----
+## Overview
 
-You're already logged into Twitter, Reddit, YouTube, Zhihu, Bilibili, LinkedIn, GitHub — iatlas-browser lets AI agents **use that directly**.
+`iatlas-browser` connects your terminal tools and AI agents to the Chrome session you are already using.
+
+Instead of launching a separate headless browser and recreating authentication, it talks to your real browser through a local daemon and a Chrome extension. That means it can work with the cookies, sessions, tabs, and page state you already have.
+
+Typical use cases:
+
+- automate websites that do not have usable APIs
+- query authenticated pages from an AI agent
+- inspect network calls from real browser traffic
+- build site-specific adapters on top of your live session
+- expose browser control through MCP for agent runtimes
+
+## Core Capabilities
+
+### 1. Direct browser operations
+
+You can drive tabs and page interactions from the CLI:
 
 ```bash
-iatlas-browser site twitter/search "AI agent"       # search tweets
-iatlas-browser site zhihu/hot                        # trending on Zhihu
-iatlas-browser site arxiv/search "transformer"       # search papers
-iatlas-browser site eastmoney/stock "茅台"            # real-time stock quote
-iatlas-browser site boss/search "AI engineer"        # search jobs
-iatlas-browser site wikipedia/summary "Python"       # Wikipedia summary
-iatlas-browser site youtube/transcript VIDEO_ID      # full transcript
-iatlas-browser site stackoverflow/search "async"     # search SO questions
+iatlas-browser open https://example.com
+iatlas-browser snapshot -i
+iatlas-browser click @3
+iatlas-browser fill @7 "hello world"
+iatlas-browser press Enter
+iatlas-browser screenshot
 ```
 
-**97 commands across 35 platforms.** All using your real browser's login state. [Full list →](https://github.com/epiral/bb-sites)
+### 2. Authenticated in-browser requests
 
-## The idea
+Need to call the same endpoint your browser session can already reach?
 
-The internet was built for browsers. AI agents have been trying to access it through APIs — but 99% of websites don't offer one.
+```bash
+iatlas-browser fetch https://example.com/api/me --json
+iatlas-browser eval "document.title"
+```
 
-iatlas-browser flips this: **instead of forcing websites to provide machine interfaces, let machines use the human interface directly.** The adapter runs `eval` inside your browser tab, calls `fetch()` with your cookies, or invokes the page's own webpack modules. The website thinks it's you. Because it **is** you.
+### 3. Site adapters
 
-| | Playwright / Selenium | Scraping libs | iatlas-browser |
-|---|---|---|---|
-| Browser | Headless, isolated | No browser | Your real Chrome |
-| Login state | None, must re-login | Cookie extraction | Already there |
-| Anti-bot | Detected easily | Cat-and-mouse | Invisible — it IS the user |
-| Complex auth | Can't replicate | Reverse engineer | Page handles it itself |
+`site` adapters let you package repeatable website actions as reusable commands:
+
+```bash
+iatlas-browser site update
+iatlas-browser site list
+iatlas-browser site twitter/search "browser agent"
+iatlas-browser site zhihu/hot
+iatlas-browser site youtube/transcript VIDEO_ID
+```
+
+### 4. Reverse engineering and diagnostics
+
+You can inspect what the browser is doing in real time:
+
+```bash
+iatlas-browser network requests --with-body --json
+iatlas-browser console
+iatlas-browser errors
+iatlas-browser trace start
+```
+
+### 5. MCP integration
+
+The project can run as an MCP server so coding agents and tool-using models can call it directly.
+
+## Why This Design Exists
+
+Most web automation tools assume one of these models:
+
+- a fresh headless browser
+- extracted cookies
+- unofficial APIs
+- HTML scraping
+
+`iatlas-browser` takes a different path:
+
+- use the browser session you already trust
+- keep actions local on your machine
+- use Chrome DevTools Protocol for stronger control
+- expose results in a form that is usable by both humans and agents
+
+This is especially useful for:
+
+- websites with hard-to-recreate authentication
+- tools behind company login
+- social platforms with dynamic clients
+- workflows where page state matters as much as raw HTML
 
 ## Quick Start
 
@@ -52,20 +108,52 @@ iatlas-browser flips this: **instead of forcing websites to provide machine inte
 npm install -g iatlas-browser
 ```
 
-### Chrome Extension
+### Build or download the extension
 
-1. Download from [Releases](https://github.com/miounet11/lao/releases/latest)
-2. Unzip → `chrome://extensions/` → Developer Mode → Load unpacked
+Option A: use a release build
 
-### Use
+1. Download the latest package from [Releases](https://github.com/miounet11/lao/releases/latest)
+2. Unzip it locally
+
+Option B: build from source
 
 ```bash
-iatlas-browser site update    # pull 97 community adapters
-iatlas-browser site list      # see what's available
-iatlas-browser site zhihu/hot # go
+pnpm install
+pnpm build
 ```
 
-### MCP (Claude Code / Cursor)
+The unpacked extension output will be in `extension/`.
+
+### Load the extension in Chrome
+
+1. Open `chrome://extensions/`
+2. Enable `Developer mode`
+3. Click `Load unpacked`
+4. Select the `extension/` directory
+
+### Start the daemon
+
+```bash
+iatlas-browser daemon
+```
+
+In another terminal, verify the local setup:
+
+```bash
+iatlas-browser doctor
+```
+
+### First commands
+
+```bash
+iatlas-browser open https://example.com
+iatlas-browser snapshot -i
+iatlas-browser get title
+```
+
+## MCP Setup
+
+Example configuration:
 
 ```json
 {
@@ -78,88 +166,115 @@ iatlas-browser site zhihu/hot # go
 }
 ```
 
-## 35 platforms, 97 commands
+## Command Groups
 
-Community-driven via [bb-sites](https://github.com/epiral/bb-sites). One JS file per command.
+Main command families:
 
-| Category | Platforms | Commands |
-|----------|-----------|----------|
-| **Search** | Google, Baidu, Bing, DuckDuckGo, Sogou WeChat | search |
-| **Social** | Twitter/X, Reddit, Weibo, Xiaohongshu, Jike, LinkedIn, Hupu | search, feed, thread, user, notifications, hot |
-| **News** | BBC, Reuters, 36kr, Toutiao, Eastmoney | headlines, search, newsflash, hot |
-| **Dev** | GitHub, StackOverflow, HackerNews, CSDN, cnblogs, V2EX, Dev.to, npm, PyPI, arXiv | search, issues, repo, top, thread, package |
-| **Video** | YouTube, Bilibili | search, video, transcript, popular, comments, feed |
-| **Entertainment** | Douban, IMDb, Genius, Qidian | movie, search, top250 |
-| **Finance** | Eastmoney, Yahoo Finance | stock quote, news |
-| **Jobs** | BOSS Zhipin, LinkedIn | search, detail, profile |
-| **Knowledge** | Wikipedia, Zhihu, Open Library | search, summary, hot, question |
-| **Shopping** | SMZDM | search deals |
-| **Tools** | Youdao, GSMArena, Product Hunt, Ctrip | translate, phone specs, trending products |
+- navigation: `open`, `back`, `forward`, `refresh`, `close`
+- interaction: `click`, `hover`, `fill`, `type`, `press`, `check`, `select`
+- inspection: `snapshot`, `get`, `screenshot`, `eval`
+- browser state: `tab`, `frame`, `dialog`, `wait`
+- debugging: `network`, `console`, `errors`, `trace`
+- platform: `daemon`, `status`, `stop`, `reload`, `doctor`
+- adapters: `site`, `guide`
 
-## 10 minutes to add any website
+Run help at any time:
 
 ```bash
-iatlas-browser guide    # full tutorial
+iatlas-browser --help
+iatlas-browser site --help
 ```
 
-Tell your AI agent: *"turn XX website into a CLI"*. It reads the guide, reverse-engineers the API with `network --with-body`, writes the adapter, tests it, and submits a PR. All autonomously.
+## Site Adapter System
 
-Three tiers of adapter complexity:
+`site` is the project’s higher-level workflow layer.
 
-| Tier | Auth method | Example | Time |
-|------|-------------|---------|------|
-| **1** | Cookie (fetch directly) | Reddit, GitHub, V2EX | ~1 min |
-| **2** | Bearer + CSRF token | Twitter, Zhihu | ~3 min |
-| **3** | Webpack injection / Pinia store | Twitter search, Xiaohongshu | ~10 min |
+An adapter is a small JavaScript unit that runs against a real website context and turns one web task into one command. Adapters can be:
 
-We tested this: **20 AI agents ran in parallel, each independently reverse-engineered a website and produced a working adapter.** The marginal cost of adding a new website to the agent-accessible internet is approaching zero.
+- private and stored locally
+- pulled from the shared community adapter collection
 
-## What this means for AI agents
+Default directories:
 
-Without iatlas-browser, an AI agent's world is: **files + terminal + a few APIs with keys.**
+- private adapters: `~/.iatlas-browser/sites`
+- shared adapters: `~/.iatlas-browser/bb-sites`
 
-With iatlas-browser: **files + terminal + the entire internet.**
-
-An agent can now, in under a minute:
+Useful commands:
 
 ```bash
-# Cross-platform research on any topic
-iatlas-browser site arxiv/search "retrieval augmented generation"
-iatlas-browser site twitter/search "RAG"
-iatlas-browser site github search rag-framework
-iatlas-browser site stackoverflow/search "RAG implementation"
-iatlas-browser site zhihu/search "RAG"
-iatlas-browser site 36kr/newsflash
+iatlas-browser site update
+iatlas-browser site search github
+iatlas-browser site run github/issues owner/repo
 ```
 
-Six platforms, six dimensions, structured JSON. Faster and broader than any human researcher.
-
-## Also a full browser automation tool
+To create a new adapter:
 
 ```bash
-iatlas-browser open https://example.com
-iatlas-browser snapshot -i                # accessibility tree
-iatlas-browser click @3                   # click element
-iatlas-browser fill @5 "hello"            # fill input
-iatlas-browser eval "document.title"      # run JS
-iatlas-browser fetch URL --json           # authenticated fetch
-iatlas-browser network requests --with-body --json  # capture traffic
-iatlas-browser screenshot                 # take screenshot
+iatlas-browser guide
 ```
 
-All commands support `--json` output and `--tab <id>` for concurrent multi-tab operations.
+## How It Works Internally
 
-## Architecture
+The system has four runtime layers:
 
+```text
+CLI / MCP client
+    ↓
+Local daemon (HTTP)
+    ↓
+Chrome extension (SSE + command execution)
+    ↓
+Chrome / current user session
 ```
-AI Agent (Claude Code, Codex, Cursor, etc.)
-       │ CLI or MCP (stdio)
-       ▼
-iatlas-browser CLI ──HTTP──▶ Daemon ──SSE──▶ Chrome Extension
-                                              │
-                                              ▼ chrome.debugger (CDP)
-                                         Your Real Browser
+
+More specifically:
+
+- the CLI or MCP server creates a structured request
+- the daemon receives it on a local HTTP endpoint
+- the extension stays connected to the daemon via SSE
+- the extension executes the action through Chrome APIs and CDP
+- the result is sent back to the daemon and returned to the caller
+
+The current implementation also uses accessibility-tree snapshots so the page structure is easier for agents to reason about than raw HTML.
+
+## Operational Notes
+
+### Use `127.0.0.1`
+
+The project defaults to `127.0.0.1:19824` for local communication. This avoids common `localhost` IPv4/IPv6 issues in some environments.
+
+### Multi-tab isolation
+
+Many commands support `--tab <id>` so concurrent workflows can target a specific tab safely.
+
+### MV3 lifecycle
+
+Chrome Manifest V3 service workers can sleep. The extension includes reconnect and keepalive behavior, but if something looks wrong, run:
+
+```bash
+iatlas-browser doctor
 ```
+
+## Development
+
+From the repository root:
+
+```bash
+pnpm install
+pnpm build
+```
+
+Key packages:
+
+- `packages/shared`
+- `packages/cli`
+- `packages/daemon`
+- `packages/extension`
+- `packages/mcp`
+
+Internal engineering notes:
+
+- `docs/iatlas-browser-architecture-and-iteration-guide.md`
 
 ## License
 

@@ -371,6 +371,48 @@ curl -s http://127.0.0.1:19824/command \
     </section>
 
     <section class="section">
+      <div class="section-head">
+        <p class="kicker">Interactive Demo</p>
+        <h2>Switch between real usage paths before you install</h2>
+        <p class="subtle">
+          These are not abstract examples. They match the actual shapes users hit first when they start with
+          local CLI automation, MCP integration, local HTTP control, or the hosted API subset.
+        </p>
+      </div>
+      <div class="cta demo-panel" data-demo-root>
+        <div>
+          <div class="demo-tabs" role="tablist" aria-label="Usage mode examples">
+            <button class="demo-tab is-active" type="button" data-demo-id="local-cli" aria-selected="true">Local CLI</button>
+            <button class="demo-tab" type="button" data-demo-id="mcp" aria-selected="false">MCP</button>
+            <button class="demo-tab" type="button" data-demo-id="local-api" aria-selected="false">Local API</button>
+            <button class="demo-tab" type="button" data-demo-id="hosted-api" aria-selected="false">Hosted API</button>
+          </div>
+          <p class="panel-label" id="demo-title">Local CLI for the browser you already control</p>
+          <p class="lede demo-lede" id="demo-summary">
+            Use direct terminal commands when you want the fastest path into your current authenticated browser session.
+          </p>
+          <ul class="quota-list demo-points" id="demo-points">
+            <li>Good for debugging, navigation, snapshots, clicks, and iterative browser work.</li>
+            <li>Runs through your local daemon and extension against your live Chrome session.</li>
+            <li>Best starting point when the job depends on existing tabs or login state.</li>
+          </ul>
+        </div>
+        <div>
+          <p class="panel-label">Example request</p>
+          <pre class="demo-shell"><code id="demo-code">iatlas-browser open https://app.example.com
+iatlas-browser snapshot -i
+iatlas-browser click @3</code></pre>
+          <div class="hero-actions demo-actions">
+            <button class="copy" id="demo-copy" data-copy="iatlas-browser open https://app.example.com
+iatlas-browser snapshot -i
+iatlas-browser click @3">Copy example</button>
+            <a class="button ghost" id="demo-link" href="/install.sh">Get install.sh</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
       <div class="cta signup-card">
         <div>
           <p class="kicker">Decision guide</p>

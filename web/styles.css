@@ -363,6 +363,10 @@ p {
   transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
+button {
+  border: 0;
+}
+
 .button:hover,
 .copy:hover,
 .signup-form button:hover,
@@ -538,6 +542,58 @@ thead th {
   gap: 18px;
   padding: 26px;
   border-radius: var(--radius-xl);
+}
+
+.demo-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 18px;
+}
+
+.demo-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.demo-tab {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(20, 35, 29, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.66);
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.demo-tab:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.demo-tab.is-active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #fff;
+  box-shadow: 0 14px 26px rgba(15, 118, 110, 0.16);
+}
+
+.demo-lede {
+  max-width: none;
+  margin-bottom: 16px;
+}
+
+.demo-shell {
+  min-height: 240px;
+}
+
+.demo-actions {
+  margin-top: 14px;
 }
 
 .mode-grid,
@@ -783,6 +839,7 @@ thead th {
 @media (max-width: 980px) {
   .hero,
   .signup-card,
+  .demo-panel,
   .grid.two,
   .grid.three,
   .faq-list {
@@ -816,11 +873,13 @@ thead th {
   .footer,
   .cta,
   .faq-item,
-  .signup-card {
+  .signup-card,
+  .demo-panel {
     border-radius: 22px;
   }
 
   .hero,
+  .demo-panel,
   .signup-card,
   .card,
   .panel {

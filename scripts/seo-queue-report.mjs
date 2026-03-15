@@ -1,11 +1,12 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { dateInTimezone, seoTimezone } from "./seo-config.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const contentRoot = path.join(repoRoot, "content");
-const reportDate = process.env.PUBLISH_DATE || new Date().toISOString().slice(0, 10);
+const reportDate = process.env.PUBLISH_DATE || dateInTimezone();
 const targetPerDay = Number(process.env.SEO_TARGET_PER_DAY || 5);
 
 function isPublished(post) {
@@ -50,7 +51,7 @@ const scheduled = posts.filter((post) => post.status === "scheduled" && post.pub
 const publishedToday = published.filter((post) => post.publishDate === reportDate);
 const remainingDays = scheduled.length === 0 ? 0 : Math.ceil(scheduled.length / targetPerDay);
 
-console.log(`SEO queue report for ${reportDate}`);
+console.log(`SEO queue report for ${reportDate} (${seoTimezone})`);
 console.log("");
 console.log(`Source files: ${files.join(", ")}`);
 console.log(`Total posts: ${posts.length}`);

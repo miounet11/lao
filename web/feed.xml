@@ -7,6 +7,41 @@
     <language>en-us</language>
     
     <item>
+      <title>Browser Agent for Admin Dashboards: Why Local Control Beats Detached Scraping</title>
+      <link>https://miaoda.vip/learn/browser-agent-for-admin-dashboards/</link>
+      <guid>https://miaoda.vip/learn/browser-agent-for-admin-dashboards/</guid>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Admin dashboards and internal tools are a strong fit for a local browser agent. Learn why stateful interfaces change the architecture choice.</description>
+    </item>
+    <item>
+      <title>Chrome Automation Without Rebuilding Cookies: A Better Local Workflow</title>
+      <link>https://miaoda.vip/learn/chrome-automation-without-rebuilding-cookies/</link>
+      <guid>https://miaoda.vip/learn/chrome-automation-without-rebuilding-cookies/</guid>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+      <description>If you are tired of recreating cookies and login flows in automation, this guide explains a local-first Chrome automation pattern that starts from your real session.</description>
+    </item>
+    <item>
+      <title>CLI Browser Automation for Engineers Who Want Fast Feedback Loops</title>
+      <link>https://miaoda.vip/learn/cli-browser-automation-for-engineers/</link>
+      <guid>https://miaoda.vip/learn/cli-browser-automation-for-engineers/</guid>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+      <description>CLI browser automation is still the fastest way to inspect, test, and iterate. Learn how to use a terminal-first browser workflow without losing session state.</description>
+    </item>
+    <item>
+      <title>GitHub Repo Adapter and Hosted API Examples for Fast Public Lookups</title>
+      <link>https://miaoda.vip/learn/github-repo-adapter-and-hosted-api-examples/</link>
+      <guid>https://miaoda.vip/learn/github-repo-adapter-and-hosted-api-examples/</guid>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Need a public GitHub repo lookup without building your own wrapper? Learn how hosted adapters fit into a broader browser automation stack.</description>
+    </item>
+    <item>
+      <title>Website Data Extraction: Real Browser Session vs HTML Scraping</title>
+      <link>https://miaoda.vip/learn/website-data-extraction-real-session-vs-scraping/</link>
+      <guid>https://miaoda.vip/learn/website-data-extraction-real-session-vs-scraping/</guid>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Data extraction changes when the target site depends on session state. This guide compares live-session extraction with traditional scraping approaches.</description>
+    </item>
+    <item>
       <title>Browser Automation With Login State: When Your Real Chrome Session Matters</title>
       <link>https://miaoda.vip/learn/browser-automation-with-login-state/</link>
       <guid>https://miaoda.vip/learn/browser-automation-with-login-state/</guid>

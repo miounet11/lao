@@ -1,14 +1,17 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { dateInTimezone, seoTimezone } from "./seo-config.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
-const webRoot = path.join(repoRoot, "web");
+const outputRoot = process.env.SEO_OUTPUT_ROOT
+  ? path.resolve(repoRoot, process.env.SEO_OUTPUT_ROOT)
+  : path.join(repoRoot, "web");
 const contentRoot = path.join(repoRoot, "content");
-const learnRoot = path.join(webRoot, "learn");
+const learnRoot = path.join(outputRoot, "learn");
 const siteUrl = "https://miaoda.vip";
-const publishDate = process.env.PUBLISH_DATE || new Date().toISOString().slice(0, 10);
+const publishDate = process.env.PUBLISH_DATE || dateInTimezone();
 
 const staticPages = [
   { loc: `${siteUrl}/`, priority: "1.0" },
@@ -388,10 +391,10 @@ async function main() {
     await fs.writeFile(path.join(articleDir, "index.html"), renderArticlePage(post, relatedPosts), "utf8");
   }
 
-  await fs.writeFile(path.join(webRoot, "feed.xml"), renderFeed(publishedPosts), "utf8");
-  await fs.writeFile(path.join(webRoot, "sitemap.xml"), renderSitemap(publishedPosts), "utf8");
+  await fs.writeFile(path.join(outputRoot, "feed.xml"), renderFeed(publishedPosts), "utf8");
+  await fs.writeFile(path.join(outputRoot, "sitemap.xml"), renderSitemap(publishedPosts), "utf8");
 
-  console.log(`Generated ${publishedPosts.length} published SEO pages for ${publishDate}.`);
+  console.log(`Generated ${publishedPosts.length} published SEO pages for ${publishDate} in ${outputRoot} (${seoTimezone}).`);
 }
 
 main().catch((error) => {

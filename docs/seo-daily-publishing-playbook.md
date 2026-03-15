@@ -38,6 +38,7 @@ The generator publishes entries when:
 This means future content can be committed ahead of time and revealed automatically by date.
 
 The generator reads every matching queue file under `content/seo-posts*.json`, so batches can be appended without rewriting the original queue file.
+The default publishing day is resolved in `Asia/Shanghai`, not UTC, so the midnight cron window publishes the correct local day.
 
 ## Daily Output Target
 
@@ -55,6 +56,12 @@ Generate the current publish set:
 
 ```bash
 node scripts/generate-seo-content.mjs
+```
+
+Preview a future publish date without touching the checked-in `web/` directory:
+
+```bash
+PUBLISH_DATE=2026-03-17 SEO_OUTPUT_ROOT=tmp/seo-preview node scripts/generate-seo-content.mjs
 ```
 
 Inspect queue health and runway:

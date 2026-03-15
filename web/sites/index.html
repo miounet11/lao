@@ -39,8 +39,8 @@
         <h1>Browse every callable site interface from <code>miounet11/lao-s</code>.</h1>
         <p class="lede">
           This page exposes the full adapter catalog used by <code>iatlas-browser site</code>. You can search by platform,
-          inspect arguments, copy the exact CLI command, copy an MCP request payload, and query the catalog itself through
-          the hosted API.
+          inspect arguments, see whether a command is hosted or local-only, copy the exact CLI command, copy an MCP request
+          payload, and call the hosted subset directly through the API.
         </p>
         <div class="hero-actions">
           <a class="button primary" href="https://github.com/miounet11/lao-s">View lao-s</a>
@@ -53,10 +53,12 @@
         <ul class="compact-list">
           <li><strong>CLI:</strong> <code>iatlas-browser site &lt;name&gt; ...</code></li>
           <li><strong>MCP:</strong> use <code>site_list</code>, <code>site_search</code>, and <code>site_run</code></li>
+          <li><strong>Hosted API:</strong> use <code>/v1/sites/hosted</code> and <code>/v1/sites/run</code></li>
           <li><strong>Catalog API:</strong> query <code>/v1/catalog/sites</code> and <code>/v1/catalog/site</code></li>
         </ul>
         <p class="subtle">
-          Execution of adapters happens through your local browser runtime. The hosted API exposes the adapter catalog and examples.
+          Hosted adapters run directly on <code>miaoda.vip</code>. Local-only adapters still require your own
+          <code>iatlas-browser</code> runtime and browser session.
         </p>
       </aside>
     </section>
@@ -71,6 +73,10 @@
             <select id="catalog-platform">
               <option value="">All platforms</option>
             </select>
+            <label class="toggle">
+              <input id="catalog-hosted-only" type="checkbox">
+              <span>Hosted only</span>
+            </label>
           </form>
           <p id="catalog-summary" class="subtle">Loading adapter catalog...</p>
         </div>
@@ -80,7 +86,66 @@
 
 curl -s "https://miaoda.vip/v1/catalog/sites?q=github"
 
-curl -s "https://miaoda.vip/v1/catalog/site?name=github/repo"</code></pre>
+curl -s "https://miaoda.vip/v1/catalog/site?name=github/repo"
+
+curl -s https://miaoda.vip/v1/sites/hosted</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid two">
+        <article class="card accent">
+          <h3>Hosted execution</h3>
+          <p>
+            These adapters run directly on the remote server. They are public, read-only, and do not depend on a personal
+            logged-in browser session.
+          </p>
+          <pre><code>curl -s https://miaoda.vip/v1/sites/run \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"github/repo","args":{"repo":"miounet11/lao"}}'</code></pre>
+        </article>
+        <article class="card">
+          <h3>Local runtime / MCP</h3>
+          <p>
+            Adapters that depend on your own login, browser state, tabs, or site-side stores remain local by design.
+            Use the same adapter name through CLI or the MCP <code>site_run</code> tool.
+          </p>
+          <pre><code>{
+  "tool": "site_run",
+  "arguments": {
+    "name": "twitter/search",
+    "args": {
+      "query": "claude code"
+    }
+  }
+}</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta signup-card">
+        <div>
+          <p class="kicker">Hosted runner playground</p>
+          <h2>Test a hosted adapter directly from this page</h2>
+          <p>
+            Paste your API key, choose one of the hosted adapters, adjust the JSON arguments, and run it against the
+            live server. This only works for the adapters marked <strong>Hosted API</strong>.
+          </p>
+          <form id="hosted-runner-form" class="catalog-filters">
+            <input id="runner-api-key" type="text" placeholder="Paste API key" autocomplete="off">
+            <select id="runner-site-name">
+              <option value="">Choose hosted adapter</option>
+            </select>
+            <button type="submit" class="button primary">Run hosted adapter</button>
+          </form>
+          <textarea id="runner-site-args" class="json-input" spellcheck="false">{}</textarea>
+        </div>
+        <div>
+          <p class="panel-label">Live response</p>
+          <pre id="runner-site-result"><code>Choose a hosted adapter to preload its JSON arguments.</code></pre>
         </div>
       </div>
     </section>

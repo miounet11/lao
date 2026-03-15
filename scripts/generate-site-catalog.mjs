@@ -7,6 +7,16 @@ import { execFileSync } from "node:child_process";
 const repoArg = process.argv[2];
 const outDirArg = process.argv[3];
 const repoUrl = "https://github.com/miounet11/lao-s.git";
+const hostedConfigPath = resolve("config", "hosted-sites.json");
+
+function loadHostedConfig() {
+  try {
+    const raw = JSON.parse(readFileSync(hostedConfigPath, "utf-8"));
+    return new Map((raw.hostedSites || []).map((item) => [item.name, item]));
+  } catch {
+    return new Map();
+  }
+}
 
 function ensureRepo(pathHint) {
   if (pathHint && existsSync(pathHint)) {
@@ -18,7 +28,7 @@ function ensureRepo(pathHint) {
   return tempDir;
 }
 
-function parseMeta(filePath, sourceRoot) {
+function parseMeta(filePath, sourceRoot, hostedMap) {
   const content = readFileSync(filePath, "utf-8");
   const rel = relative(sourceRoot, filePath).replace(/\\/g, "/");
   const defaultName = rel.replace(/\.js$/, "");
@@ -57,6 +67,12 @@ function parseMeta(filePath, sourceRoot) {
     mcpArgs[arg.name] = arg.required ? `<${arg.name}>` : "";
   }
 
+  const hostedInfo = hostedMap.get(name);
+  const sampleArgs = {};
+  for (const arg of argEntries) {
+    sampleArgs[arg.name] = arg.required ? `<${arg.name}>` : "";
+  }
+
   return {
     name,
     platform: name.split("/")[0],
@@ -74,21 +90,40 @@ function parseMeta(filePath, sourceRoot) {
         args: mcpArgs,
       },
     },
+    execution: hostedInfo
+      ? {
+          mode: "hosted",
+          hosted: true,
+          notes: hostedInfo.notes || "",
+          apiExample: {
+            method: "POST",
+            path: "/v1/sites/run",
+            body: {
+              name,
+              args: sampleArgs,
+            },
+          },
+        }
+      : {
+          mode: "local",
+          hosted: false,
+          notes: "Requires local iatlas-browser runtime and may depend on a real logged-in browser session.",
+        },
     args: argEntries,
     file: rel,
   };
 }
 
-function walk(dir, root, output) {
+function walk(dir, root, output, hostedMap) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name.startsWith(".")) continue;
     const fullPath = join(dir, entry.name);
     if (entry.isDirectory()) {
-      walk(fullPath, root, output);
+      walk(fullPath, root, output, hostedMap);
       continue;
     }
     if (entry.isFile() && entry.name.endsWith(".js")) {
-      output.push(parseMeta(fullPath, root));
+      output.push(parseMeta(fullPath, root, hostedMap));
     }
   }
 }
@@ -98,7 +133,8 @@ const outDir = resolve(outDirArg || "web/catalog");
 mkdirSync(outDir, { recursive: true });
 
 const entries = [];
-walk(repoDir, repoDir, entries);
+const hostedMap = loadHostedConfig();
+walk(repoDir, repoDir, entries, hostedMap);
 entries.sort((a, b) => a.name.localeCompare(b.name));
 
 const platformMap = new Map();

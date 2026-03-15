@@ -20,6 +20,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -47,6 +52,22 @@
         "args": {
           "query": "<query>",
           "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "arXiv search via Atom API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "arxiv/search",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
         }
       }
     },
@@ -86,6 +107,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -119,6 +145,22 @@
         "args": {
           "query": "",
           "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "BBC headlines via RSS feed with optional server-side filtering",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "bbc/news",
+          "args": {
+            "query": "",
+            "count": ""
+          }
         }
       }
     },
@@ -161,6 +203,11 @@
           "sort": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -212,6 +259,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "type",
@@ -249,6 +301,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -278,6 +335,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "bilibili/me.js"
   },
@@ -302,6 +364,11 @@
           "page": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -340,6 +407,11 @@
           "category": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -380,6 +452,11 @@
           "order": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -430,6 +507,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -461,6 +543,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "bvid",
@@ -490,6 +577,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -526,6 +618,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "securityId",
@@ -558,6 +655,11 @@
           "degree": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -613,6 +715,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -649,6 +756,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -684,6 +796,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -713,6 +830,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -752,6 +874,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -796,6 +923,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "id",
@@ -828,6 +960,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -873,6 +1010,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "genre",
@@ -910,6 +1052,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "keyword",
@@ -941,6 +1088,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "start",
@@ -969,6 +1121,11 @@
           "query": "<query>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -999,6 +1156,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -1028,6 +1190,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -1056,6 +1223,11 @@
           "query": "<query>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1087,6 +1259,11 @@
           "repo": "<repo>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1120,6 +1297,11 @@
           "body": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1165,6 +1347,22 @@
         }
       }
     },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Public GitHub issue listing via GitHub API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "github/issues",
+          "args": {
+            "repo": "<repo>",
+            "state": ""
+          }
+        }
+      }
+    },
     "args": [
       {
         "name": "repo",
@@ -1200,6 +1398,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "github/me.js"
   },
@@ -1227,6 +1430,11 @@
           "body": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1283,6 +1491,21 @@
         }
       }
     },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Public GitHub repository metadata via GitHub API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "github/repo",
+          "args": {
+            "repo": "<repo>"
+          }
+        }
+      }
+    },
     "args": [
       {
         "name": "repo",
@@ -1312,6 +1535,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1348,6 +1576,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -1376,6 +1609,21 @@
         "name": "hackernews/thread",
         "args": {
           "id": "<id>"
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Hacker News post and comments via official Firebase API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "hackernews/thread",
+          "args": {
+            "id": "<id>"
+          }
         }
       }
     },
@@ -1410,6 +1658,21 @@
         }
       }
     },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Hacker News top stories via official Firebase API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "hackernews/top",
+          "args": {
+            "count": ""
+          }
+        }
+      }
+    },
     "args": [
       {
         "name": "count",
@@ -1437,6 +1700,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "hupu/hot.js"
   },
@@ -1458,6 +1726,11 @@
           "query": "<query>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1488,6 +1761,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "limit",
@@ -1517,6 +1795,11 @@
           "limit": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1553,6 +1836,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "username",
@@ -1584,6 +1872,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1621,6 +1914,22 @@
         }
       }
     },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "npm search via registry API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "npm/search",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
+        }
+      }
+    },
     "args": [
       {
         "name": "query",
@@ -1654,6 +1963,22 @@
         "args": {
           "query": "<query>",
           "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Open Library search via public JSON API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "openlibrary/search",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
         }
       }
     },
@@ -1694,6 +2019,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -1720,6 +2050,21 @@
         "name": "pypi/package",
         "args": {
           "name": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "PyPI package metadata via public JSON API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "pypi/package",
+          "args": {
+            "name": ""
+          }
         }
       }
     },
@@ -1752,6 +2097,11 @@
           "page": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1791,6 +2141,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -1828,6 +2183,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "url",
@@ -1857,6 +2217,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "reddit/me.js"
   },
@@ -1880,6 +2245,11 @@
           "username": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1912,6 +2282,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "url",
@@ -1941,6 +2316,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -1980,6 +2360,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "keyword",
@@ -2015,6 +2400,11 @@
           "page": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2052,6 +2442,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -2087,6 +2482,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -2116,6 +2516,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2154,6 +2559,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -2186,6 +2596,11 @@
           "type": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2230,6 +2645,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "tweet_id",
@@ -2261,6 +2681,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2299,6 +2724,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "screen_name",
@@ -2326,6 +2756,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "v2ex/hot.js"
   },
@@ -2345,6 +2780,11 @@
         "name": "v2ex/latest",
         "args": {}
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
     "file": "v2ex/latest.js"
@@ -2367,6 +2807,11 @@
           "id": "<id>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2400,6 +2845,11 @@
           "max_id": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2444,6 +2894,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -2475,6 +2930,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -2504,6 +2964,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "weibo/me.js"
   },
@@ -2527,6 +2992,11 @@
           "id": "<id>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2558,6 +3028,11 @@
           "id": "<id>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2591,6 +3066,11 @@
           "feature": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2634,6 +3114,22 @@
         }
       }
     },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Wikipedia search via MediaWiki API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "wikipedia/search",
+          "args": {
+            "query": "",
+            "count": ""
+          }
+        }
+      }
+    },
     "args": [
       {
         "name": "query",
@@ -2669,6 +3165,21 @@
         }
       }
     },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Wikipedia page summary via REST API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "wikipedia/summary",
+          "args": {
+            "title": ""
+          }
+        }
+      }
+    },
     "args": [
       {
         "name": "title",
@@ -2700,6 +3211,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "note_id",
@@ -2729,6 +3245,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "xiaohongshu/feed.js"
   },
@@ -2750,6 +3271,11 @@
         "name": "xiaohongshu/me",
         "args": {}
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
     "file": "xiaohongshu/me.js"
@@ -2774,6 +3300,11 @@
           "note_id": "<note_id>"
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2806,6 +3337,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "keyword",
@@ -2837,6 +3373,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "user_id",
@@ -2863,6 +3404,21 @@
         "name": "yahoo-finance/quote",
         "args": {
           "symbol": "<symbol>"
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Yahoo Finance quote lookup via public quote endpoints",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "yahoo-finance/quote",
+          "args": {
+            "symbol": "<symbol>"
+          }
         }
       }
     },
@@ -2897,6 +3453,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -2928,6 +3489,11 @@
           "max": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -2967,6 +3533,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "id",
@@ -3004,6 +3575,11 @@
           "max": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -3043,6 +3619,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "query",
@@ -3080,6 +3661,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "lang",
@@ -3110,6 +3696,11 @@
           "id": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -3142,6 +3733,11 @@
         }
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [
       {
         "name": "count",
@@ -3171,6 +3767,11 @@
         "args": {}
       }
     },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
+    },
     "args": [],
     "file": "zhihu/me.js"
   },
@@ -3195,6 +3796,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {
@@ -3233,6 +3839,11 @@
           "count": ""
         }
       }
+    },
+    "execution": {
+      "mode": "local",
+      "hosted": false,
+      "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [
       {

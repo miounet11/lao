@@ -1,0 +1,64 @@
+{
+  "hostedSites": [
+    {
+      "name": "github/repo",
+      "status": "hosted",
+      "notes": "Public GitHub repository metadata via GitHub API"
+    },
+    {
+      "name": "github/issues",
+      "status": "hosted",
+      "notes": "Public GitHub issue listing via GitHub API"
+    },
+    {
+      "name": "hackernews/top",
+      "status": "hosted",
+      "notes": "Hacker News top stories via official Firebase API"
+    },
+    {
+      "name": "hackernews/thread",
+      "status": "hosted",
+      "notes": "Hacker News post and comments via official Firebase API"
+    },
+    {
+      "name": "wikipedia/search",
+      "status": "hosted",
+      "notes": "Wikipedia search via MediaWiki API"
+    },
+    {
+      "name": "wikipedia/summary",
+      "status": "hosted",
+      "notes": "Wikipedia page summary via REST API"
+    },
+    {
+      "name": "arxiv/search",
+      "status": "hosted",
+      "notes": "arXiv search via Atom API"
+    },
+    {
+      "name": "npm/search",
+      "status": "hosted",
+      "notes": "npm search via registry API"
+    },
+    {
+      "name": "openlibrary/search",
+      "status": "hosted",
+      "notes": "Open Library search via public JSON API"
+    },
+    {
+      "name": "pypi/package",
+      "status": "hosted",
+      "notes": "PyPI package metadata via public JSON API"
+    },
+    {
+      "name": "bbc/news",
+      "status": "hosted",
+      "notes": "BBC headlines via RSS feed with optional server-side filtering"
+    },
+    {
+      "name": "yahoo-finance/quote",
+      "status": "hosted",
+      "notes": "Yahoo Finance quote lookup via public quote endpoints"
+    }
+  ]
+}

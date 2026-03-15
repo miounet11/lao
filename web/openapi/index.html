@@ -101,6 +101,35 @@
           <p>Browse the full `lao-s` adapter catalog through API form.</p>
           <pre><code>curl -s "https://miaoda.vip/v1/catalog/sites?q=github"</code></pre>
         </article>
+        <article class="card">
+          <h3>POST /v1/sites/run</h3>
+          <p>Run the hosted subset of `lao-s` adapters directly on the remote server.</p>
+          <pre><code>curl -s https://miaoda.vip/v1/sites/run \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"github/repo","args":{"repo":"miounet11/lao"}}'</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid two">
+        <article class="card accent">
+          <h3>Hosted adapters on miaoda.vip</h3>
+          <p>
+            The remote server now executes a curated, reliable subset of public read-only adapters directly.
+            Use <code>GET /v1/sites/hosted</code> to discover what is currently available.
+          </p>
+          <pre><code>curl -s https://miaoda.vip/v1/sites/hosted</code></pre>
+        </article>
+        <article class="card">
+          <h3>What still stays local</h3>
+          <p>
+            Adapters that rely on a personal browser session, login, Pinia stores, tabs, or user-specific cookies
+            remain local by design and should be used through CLI or MCP.
+          </p>
+          <p><a href="/sites/">Browse the full sites page</a></p>
+        </article>
       </div>
     </section>
 

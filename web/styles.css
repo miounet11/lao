@@ -361,6 +361,37 @@ thead th {
   font-size: 15px;
 }
 
+.json-input {
+  width: 100%;
+  min-height: 180px;
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.toggle input {
+  margin: 0;
+}
+
 .signup-result {
   min-height: 80px;
   margin-top: 14px;
@@ -406,6 +437,29 @@ thead th {
 
 .catalog-card {
   min-width: 0;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.status-badge.hosted {
+  background: rgba(31, 122, 72, 0.12);
+  color: var(--success);
+}
+
+.status-badge.local {
+  background: rgba(23, 95, 78, 0.08);
+  color: var(--accent-strong);
 }
 
 .footer {

@@ -5,6 +5,7 @@ import { createServer, type IncomingMessage, type ServerResponse } from "node:ht
 import { isIP } from "node:net";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isHostedSiteRunner, listHostedSiteRunners, runHostedSite } from "./hosted-sites.js";
 
 const DAILY_LIMIT = Number.parseInt(process.env.OPENAPI_DAILY_LIMIT ?? "1000", 10);
 const PORT = Number.parseInt(process.env.OPENAPI_PORT ?? "18765", 10);
@@ -51,6 +52,19 @@ interface CatalogEntry {
     arguments: {
       name: string;
       args: Record<string, string>;
+    };
+  };
+  execution: {
+    mode: "hosted" | "local";
+    hosted: boolean;
+    notes: string;
+    apiExample?: {
+      method: string;
+      path: string;
+      body: {
+        name: string;
+        args: Record<string, string>;
+      };
     };
   };
   args: CatalogArg[];
@@ -464,6 +478,8 @@ async function handleRegister(request: IncomingMessage, response: ServerResponse
     endpoints: {
       usage: `${PUBLIC_ORIGIN}/v1/usage`,
       open: `${PUBLIC_ORIGIN}/v1/open`,
+      hostedSites: `${PUBLIC_ORIGIN}/v1/sites/hosted`,
+      siteRun: `${PUBLIC_ORIGIN}/v1/sites/run`,
     },
   });
 }
@@ -544,6 +560,12 @@ async function handleOpen(request: IncomingMessage, response: ServerResponse): P
   }
 
   const updatedUser = store.consumeQuota(auth.email, currentUsage.date);
+  const usageAfterConsume = {
+    date: currentUsage.date,
+    limit: DAILY_LIMIT,
+    used: updatedUser.quotaByDate[currentUsage.date] ?? 0,
+    remaining: Math.max(DAILY_LIMIT - (updatedUser.quotaByDate[currentUsage.date] ?? 0), 0),
+  };
 
   try {
     const result = await fetchOpenResult(parsedUrl.toString(), mode as OpenMode, timeoutMs);
@@ -551,11 +573,75 @@ async function handleOpen(request: IncomingMessage, response: ServerResponse): P
       ok: true,
       mode,
       data: result,
-      usage: getUsage(updatedUser),
+      usage: usageAfterConsume,
     });
   } catch (error) {
     sendError(response, 502, "open_failed", error instanceof Error ? error.message : "Failed to open target URL", {
-      usage: getUsage(updatedUser),
+      usage: usageAfterConsume,
+    });
+  }
+}
+
+async function handleHostedSiteRun(request: IncomingMessage, response: ServerResponse): Promise<void> {
+  const auth = authenticate(request, response);
+  if (!auth) {
+    return;
+  }
+
+  let body: { name?: unknown; args?: unknown };
+  try {
+    body = await readJsonBody(request);
+  } catch {
+    sendError(response, 400, "invalid_json", "Request body must be valid JSON");
+    return;
+  }
+
+  if (typeof body.name !== "string" || !body.name.trim()) {
+    sendError(response, 400, "invalid_name", "A site adapter name is required");
+    return;
+  }
+
+  const name = body.name.trim();
+  if (!isHostedSiteRunner(name)) {
+    sendError(response, 400, "site_not_hosted", `Hosted execution is not available for ${name}`);
+    return;
+  }
+
+  const argsInput = body.args;
+  const args: Record<string, string> = {};
+  if (argsInput && typeof argsInput === "object" && !Array.isArray(argsInput)) {
+    for (const [key, value] of Object.entries(argsInput as Record<string, unknown>)) {
+      if (value === undefined || value === null) continue;
+      args[key] = String(value);
+    }
+  }
+
+  const currentUsage = getUsage(auth.user);
+  if (currentUsage.used >= DAILY_LIMIT) {
+    sendError(response, 429, "quota_exceeded", "Daily request limit reached", { usage: currentUsage });
+    return;
+  }
+
+  const updatedUser = store.consumeQuota(auth.email, currentUsage.date);
+  const usageAfterConsume = {
+    date: currentUsage.date,
+    limit: DAILY_LIMIT,
+    used: updatedUser.quotaByDate[currentUsage.date] ?? 0,
+    remaining: Math.max(DAILY_LIMIT - (updatedUser.quotaByDate[currentUsage.date] ?? 0), 0),
+  };
+
+  try {
+    const result = await runHostedSite(name, args);
+    sendJson(response, 200, {
+      ok: true,
+      name,
+      args,
+      data: result,
+      usage: usageAfterConsume,
+    });
+  } catch (error) {
+    sendError(response, 502, "site_run_failed", error instanceof Error ? error.message : "Hosted site execution failed", {
+      usage: usageAfterConsume,
     });
   }
 }
@@ -601,6 +687,22 @@ function handleDocs(response: ServerResponse): void {
         method: "GET",
         path: "/v1/catalog/site?name=github/repo",
         description: "Get one site adapter definition by name",
+      },
+      {
+        method: "GET",
+        path: "/v1/sites/hosted",
+        description: "List the adapters that can be executed directly on miaoda.vip",
+      },
+      {
+        method: "POST",
+        path: "/v1/sites/run",
+        body: {
+          name: "github/repo",
+          args: {
+            repo: "miounet11/lao",
+          },
+        },
+        description: "Run a hosted site adapter on the remote server",
       },
     ],
   });
@@ -685,6 +787,28 @@ const server = createServer(async (request, response) => {
       return;
     }
 
+    if (request.method === "GET" && requestUrl.pathname === "/v1/sites/hosted") {
+      const hosted = listHostedSiteRunners();
+      const hostedSet = new Set(hosted.map((item) => item.name));
+      const catalog = loadCatalog()
+        .filter((item) => hostedSet.has(item.name))
+        .map((item) => ({
+          ...item,
+          execution: {
+            ...item.execution,
+            hosted: true,
+            mode: "hosted",
+          },
+        }));
+
+      sendJson(response, 200, {
+        ok: true,
+        count: catalog.length,
+        items: catalog,
+      });
+      return;
+    }
+
     if (request.method === "POST" && requestUrl.pathname === "/v1/register") {
       await handleRegister(request, response);
       return;
@@ -697,6 +821,11 @@ const server = createServer(async (request, response) => {
 
     if (request.method === "POST" && requestUrl.pathname === "/v1/open") {
       await handleOpen(request, response);
+      return;
+    }
+
+    if (request.method === "POST" && requestUrl.pathname === "/v1/sites/run") {
+      await handleHostedSiteRun(request, response);
       return;
     }
 

@@ -33,6 +33,14 @@ async function loadJson(url) {
   return response.json();
 }
 
+function formatTemplate(template, values = {}) {
+  let output = template;
+  for (const [key, value] of Object.entries(values)) {
+    output = output.replaceAll(`{${key}}`, String(value));
+  }
+  return output;
+}
+
 function syncApiKeyInput(input) {
   input.value = loadApiKey();
 
@@ -262,7 +270,7 @@ function initHomepageDemo() {
     });
   }
 
-      renderDemo("local-cli");
+  renderDemo("local-cli");
 }
 
 initHomepageDemo();
@@ -337,24 +345,46 @@ async function initHostedLab() {
 
   let activeTab = "open";
   let hostedItems = [];
+  const labText = {
+    summaryGeneral: root.dataset.summaryGeneral || "Create an API key above or paste one here. The lab shares the same stored key across both hosted tools.",
+    summaryOpen: root.dataset.summaryOpen || "Use /v1/open for public URL fetches, metadata extraction, and lightweight remote-safe retrieval.",
+    summarySite: root.dataset.summarySite || "Use /v1/sites/run for the hosted read-only adapter subset exposed by the live API.",
+    recentEmpty: root.dataset.recentEmpty || "Run a hosted request to pin reusable examples here.",
+    loadingAdapters: root.dataset.loadingAdapters || "Loading the current hosted adapter list from /v1/sites/hosted.",
+    noAdapters: root.dataset.noAdapters || "No hosted adapters are currently available from the live API.",
+    failedAdapters: root.dataset.failedAdapters || "Failed to load hosted adapters",
+    loadedAdapters: root.dataset.loadedAdapters || "{count} hosted adapters loaded from the live API. The JSON editor is seeded from each adapter's current API example.",
+    requireApiKey: root.dataset.requireApiKey || "Create or paste an API key first.",
+    invalidUrl: root.dataset.invalidUrl || "Enter a valid absolute URL.",
+    publicOnly: root.dataset.publicOnly || "Only public http and https URLs are supported here.",
+    runningOpen: root.dataset.runningOpen || "Running hosted open request...",
+    runningSite: root.dataset.runningSite || "Running hosted adapter...",
+    chooseAdapter: root.dataset.chooseAdapter || "Choose a hosted adapter first.",
+    invalidJson: root.dataset.invalidJson || "Arguments must be valid JSON.",
+    openFailed: root.dataset.openFailed || "Hosted open request failed",
+    siteFailed: root.dataset.siteFailed || "Hosted adapter request failed",
+    presetOpenMetadata: root.dataset.presetOpenMetadata || "Metadata: example.com",
+    presetOpenText: root.dataset.presetOpenText || "Text: RFC index",
+    presetOpenHtml: root.dataset.presetOpenHtml || "HTML: OpenAI",
+  };
 
   const openPresets = [
     {
-      label: "Metadata: example.com",
+      label: labText.presetOpenMetadata,
       apply() {
         openUrlInput.value = "https://example.com";
         openModeInput.value = "metadata";
       },
     },
     {
-      label: "Text: RFC index",
+      label: labText.presetOpenText,
       apply() {
         openUrlInput.value = "https://www.rfc-editor.org/rfc/";
         openModeInput.value = "text";
       },
     },
     {
-      label: "HTML: OpenAI",
+      label: labText.presetOpenHtml,
       apply() {
         openUrlInput.value = "https://openai.com";
         openModeInput.value = "html";
@@ -388,7 +418,7 @@ async function initHostedLab() {
   function renderRecents() {
     const items = loadHostedLabRecents();
     if (!items.length) {
-      recents.innerHTML = '<p class="subtle">Run a hosted request to pin reusable examples here.</p>';
+      recents.innerHTML = `<p class="subtle">${escapeHtml(labText.recentEmpty)}</p>`;
       return;
     }
 
@@ -460,8 +490,8 @@ async function initHostedLab() {
     }
 
     summary.textContent = nextTab === "open"
-      ? "Use /v1/open for public URL fetches, metadata extraction, and lightweight remote-safe retrieval."
-      : "Use /v1/sites/run for the hosted read-only adapter subset exposed by the live API.";
+      ? labText.summaryOpen
+      : labText.summarySite;
 
     renderPresets();
   }
@@ -535,9 +565,9 @@ async function initHostedLab() {
     if (!hostedItems.length) {
       const option = document.createElement("option");
       option.value = "";
-      option.textContent = "No hosted adapters available";
+      option.textContent = labText.noAdapters;
       siteNameInput.appendChild(option);
-      siteSummary.textContent = "No hosted adapters are currently available from the live API.";
+      siteSummary.textContent = labText.noAdapters;
     } else {
       for (const entry of hostedItems) {
         const option = document.createElement("option");
@@ -545,11 +575,11 @@ async function initHostedLab() {
         option.textContent = `${entry.name} (${entry.platform})`;
         siteNameInput.appendChild(option);
       }
-      siteSummary.textContent = `${hostedItems.length} hosted adapters loaded from the live API. The JSON editor is seeded from each adapter's current API example.`;
+      siteSummary.textContent = formatTemplate(labText.loadedAdapters, { count: hostedItems.length });
       syncSiteArgs();
     }
   } catch (error) {
-    siteSummary.textContent = error instanceof Error ? error.message : "Failed to load hosted adapters";
+    siteSummary.textContent = error instanceof Error ? error.message : labText.failedAdapters;
   }
 
   siteNameInput.addEventListener("change", syncSiteArgs);
@@ -562,7 +592,7 @@ async function initHostedLab() {
     const mode = openModeInput.value;
 
     if (!apiKey) {
-      setPreResult(result, "Create or paste an API key first.");
+      setPreResult(result, labText.requireApiKey);
       return;
     }
 
@@ -570,19 +600,19 @@ async function initHostedLab() {
     try {
       parsedUrl = new URL(url);
     } catch {
-      setPreResult(result, "Enter a valid absolute URL.");
+      setPreResult(result, labText.invalidUrl);
       return;
     }
 
     if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      setPreResult(result, "Only public http and https URLs are supported here.");
+      setPreResult(result, labText.publicOnly);
       return;
     }
 
     const originalButtonText = openSubmitButton.textContent;
     openSubmitButton.disabled = true;
     openSubmitButton.textContent = "Running...";
-    setPreResult(result, "Running hosted open request...");
+    setPreResult(result, labText.runningOpen);
 
     try {
       const response = await fetch("/v1/open", {
@@ -608,7 +638,7 @@ async function initHostedLab() {
         },
       });
     } catch (error) {
-      setPreResult(result, error instanceof Error ? error.message : "Hosted open request failed");
+      setPreResult(result, error instanceof Error ? error.message : labText.openFailed);
     } finally {
       openSubmitButton.disabled = false;
       openSubmitButton.textContent = originalButtonText;
@@ -620,12 +650,12 @@ async function initHostedLab() {
 
     const apiKey = apiKeyInput.value.trim();
     if (!apiKey) {
-      setPreResult(result, "Create or paste an API key first.");
+      setPreResult(result, labText.requireApiKey);
       return;
     }
 
     if (!siteNameInput.value) {
-      setPreResult(result, "Choose a hosted adapter first.");
+      setPreResult(result, labText.chooseAdapter);
       return;
     }
 
@@ -633,14 +663,14 @@ async function initHostedLab() {
     try {
       args = JSON.parse(siteArgsInput.value || "{}");
     } catch {
-      setPreResult(result, "Arguments must be valid JSON.");
+      setPreResult(result, labText.invalidJson);
       return;
     }
 
     const originalButtonText = siteSubmitButton.textContent;
     siteSubmitButton.disabled = true;
     siteSubmitButton.textContent = "Running...";
-    setPreResult(result, "Running hosted adapter...");
+    setPreResult(result, labText.runningSite);
 
     try {
       const response = await fetch("/v1/sites/run", {
@@ -666,7 +696,7 @@ async function initHostedLab() {
         },
       });
     } catch (error) {
-      setPreResult(result, error instanceof Error ? error.message : "Hosted adapter request failed");
+      setPreResult(result, error instanceof Error ? error.message : labText.siteFailed);
     } finally {
       siteSubmitButton.disabled = false;
       siteSubmitButton.textContent = originalButtonText;
@@ -674,6 +704,8 @@ async function initHostedLab() {
   });
 
   renderRecents();
+  summary.textContent = labText.summaryGeneral;
+  siteSummary.textContent = labText.loadingAdapters;
   setActiveTab("open");
 }
 

@@ -95,6 +95,102 @@
 
     <section class="section">
       <div class="section-head">
+        <p class="kicker">Hosted API Lab</p>
+        <h2>Prueba las dos superficies del API alojado desde esta misma portada</h2>
+        <p class="subtle">
+          Este laboratorio reúne el subconjunto alojado en un solo lugar. Sirve para obtener URLs públicas y ejecutar
+          adaptadores de solo lectura seguros para remoto. Las tareas que dependen de tus pestañas reales,
+          tu login o el contexto del navegador siguen perteneciendo al runtime local.
+        </p>
+      </div>
+      <div
+        class="cta lab-panel"
+        data-lab-root
+        data-summary-general="Crea una API key arriba o pégala aquí. Este laboratorio comparte la misma key entre las dos herramientas alojadas."
+        data-summary-open="Usa /v1/open para obtener URLs públicas, extraer metadatos y hacer lecturas remotas ligeras."
+        data-summary-site="Usa /v1/sites/run para el subconjunto de adaptadores alojados de solo lectura expuesto por la API en vivo."
+        data-recent-empty="Ejecuta una petición alojada y aquí se guardarán ejemplos recientes reutilizables."
+        data-loading-adapters="Cargando los adaptadores alojados actuales desde /v1/sites/hosted."
+        data-no-adapters="Ahora mismo no hay adaptadores alojados disponibles en la API en vivo."
+        data-failed-adapters="No se pudieron cargar los adaptadores alojados"
+        data-loaded-adapters="Se cargaron {count} adaptadores alojados desde la API en vivo. El editor JSON de abajo se rellena con el ejemplo actual de argumentos para cada adaptador."
+        data-require-api-key="Primero crea o pega una API key."
+        data-invalid-url="Introduce una URL absoluta válida."
+        data-public-only="Aquí solo se admiten URLs públicas http y https."
+        data-running-open="Ejecutando petición alojada de open..."
+        data-running-site="Ejecutando adaptador alojado..."
+        data-choose-adapter="Primero elige un adaptador alojado."
+        data-invalid-json="Los argumentos deben ser JSON válido."
+        data-open-failed="La petición alojada de open falló"
+        data-site-failed="La petición del adaptador alojado falló"
+        data-preset-open-metadata="metadata: example.com"
+        data-preset-open-text="text: índice RFC"
+        data-preset-open-html="html: OpenAI"
+      >
+        <div>
+          <div class="demo-tabs" role="tablist" aria-label="Hosted API lab tabs">
+            <button class="demo-tab is-active" type="button" data-lab-tab="open" aria-selected="true">/v1/open</button>
+            <button class="demo-tab" type="button" data-lab-tab="site" aria-selected="false">/v1/sites/run</button>
+          </div>
+          <form id="lab-api-key-form" class="catalog-filters">
+            <input id="lab-api-key" type="text" placeholder="Pega tu API key o créala arriba" autocomplete="off">
+          </form>
+          <p class="subtle playground-note" id="lab-summary">
+            Crea una API key arriba o pégala aquí. Este laboratorio comparte la misma key entre las dos herramientas alojadas.
+          </p>
+          <div class="lab-preset-bar">
+            <p class="panel-label">Presets</p>
+            <div id="lab-presets" class="pill-row" aria-live="polite"></div>
+          </div>
+
+          <div class="lab-view is-active" data-lab-view="open">
+            <form id="open-playground-form" class="catalog-filters">
+              <input id="open-playground-url" type="url" placeholder="https://example.com" value="https://example.com" autocomplete="off">
+              <select id="open-playground-mode">
+                <option value="metadata">metadata</option>
+                <option value="text">text</option>
+                <option value="html">html</option>
+              </select>
+              <button type="submit" class="button primary">Ejecutar /v1/open</button>
+            </form>
+            <ul class="quota-list">
+              <li><strong>Entrada:</strong> solo URLs públicas <code>http</code> o <code>https</code></li>
+              <li><strong>Modos:</strong> <code>metadata</code>, <code>text</code>, <code>html</code></li>
+              <li><strong>Auth:</strong> API key compartida por este laboratorio</li>
+            </ul>
+          </div>
+
+          <div class="lab-view" data-lab-view="site" hidden>
+            <form id="site-runner-form" class="catalog-filters">
+              <select id="site-runner-name">
+                <option value="">Cargando adaptadores alojados...</option>
+              </select>
+              <button type="submit" class="button primary">Ejecutar adaptador alojado</button>
+            </form>
+            <textarea id="site-runner-args" class="json-input" spellcheck="false">{}</textarea>
+            <p class="subtle playground-note" id="site-runner-summary">
+              Cargando los adaptadores actuales desde <code>/v1/sites/hosted</code>.
+            </p>
+            <ul class="quota-list">
+              <li><strong>Ejecución:</strong> solo adaptadores públicos, de solo lectura y seguros para remoto</li>
+              <li><strong>Petición:</strong> nombre del adaptador + argumentos JSON</li>
+              <li><strong>Catálogo:</strong> consulta el <a href="/sites/">catálogo de adaptadores</a></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <p class="panel-label">Ejemplos recientes</p>
+          <div id="lab-recents" class="recent-list">
+            <p class="subtle">Ejecuta una petición alojada y aquí se guardarán ejemplos recientes reutilizables.</p>
+          </div>
+          <p class="panel-label">Respuesta en vivo</p>
+          <pre id="lab-result"><code>Elige una herramienta alojada, carga un preset y lanza una petición real.</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
         <p class="kicker">Qué resuelve</p>
         <h2>Automatización con sesión autenticada y contexto real</h2>
       </div>

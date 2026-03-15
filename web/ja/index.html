@@ -101,6 +101,101 @@
 
     <section class="section">
       <div class="section-head">
+        <p class="kicker">Hosted API Lab</p>
+        <h2>トップページ上で 2 つのホスト API を試す</h2>
+        <p class="subtle">
+          このラボはホストされたサブセットを一か所にまとめます。公開 URL の取得と、リモートで安全に動く
+          読み取り専用アダプター向けです。実タブ、ログイン状態、ブラウザ文脈が必要な作業は、引き続きローカル実行系を使います。
+        </p>
+      </div>
+      <div
+        class="cta lab-panel"
+        data-lab-root
+        data-summary-general="上で API キーを作成するか貼り付けてください。このラボは 2 つのホストツールで同じキーを共有します。"
+        data-summary-open="/v1/open は公開 URL の取得、メタデータ抽出、軽量なリモート読み取り向けです。"
+        data-summary-site="/v1/sites/run は live API が公開している読み取り専用ホストアダプターのサブセット向けです。"
+        data-recent-empty="ホストリクエストを実行すると、再利用しやすい最近の例がここに保存されます。"
+        data-loading-adapters="/v1/sites/hosted から現在のホストアダプターを読み込み中です。"
+        data-no-adapters="現在 live API で利用できるホストアダプターはありません。"
+        data-failed-adapters="ホストアダプターの読み込みに失敗しました"
+        data-loaded-adapters="live API から {count} 件のホストアダプターを読み込みました。下の JSON エディタには現在の API 例の引数が自動で入ります。"
+        data-require-api-key="先に API キーを作成するか貼り付けてください。"
+        data-invalid-url="有効な絶対 URL を入力してください。"
+        data-public-only="ここでは公開 http / https URL のみ利用できます。"
+        data-running-open="ホスト open リクエストを実行中..."
+        data-running-site="ホストアダプターを実行中..."
+        data-choose-adapter="先にホストアダプターを選んでください。"
+        data-invalid-json="引数は有効な JSON である必要があります。"
+        data-open-failed="ホスト open リクエストに失敗しました"
+        data-site-failed="ホストアダプターのリクエストに失敗しました"
+        data-preset-open-metadata="metadata: example.com"
+        data-preset-open-text="text: RFC index"
+        data-preset-open-html="html: OpenAI"
+      >
+        <div>
+          <div class="demo-tabs" role="tablist" aria-label="Hosted API lab tabs">
+            <button class="demo-tab is-active" type="button" data-lab-tab="open" aria-selected="true">/v1/open</button>
+            <button class="demo-tab" type="button" data-lab-tab="site" aria-selected="false">/v1/sites/run</button>
+          </div>
+          <form id="lab-api-key-form" class="catalog-filters">
+            <input id="lab-api-key" type="text" placeholder="API キーを貼り付けるか、上で発行してください" autocomplete="off">
+          </form>
+          <p class="subtle playground-note" id="lab-summary">
+            上で API キーを作成するか貼り付けてください。このラボは 2 つのホストツールで同じキーを共有します。
+          </p>
+          <div class="lab-preset-bar">
+            <p class="panel-label">プリセット</p>
+            <div id="lab-presets" class="pill-row" aria-live="polite"></div>
+          </div>
+
+          <div class="lab-view is-active" data-lab-view="open">
+            <form id="open-playground-form" class="catalog-filters">
+              <input id="open-playground-url" type="url" placeholder="https://example.com" value="https://example.com" autocomplete="off">
+              <select id="open-playground-mode">
+                <option value="metadata">metadata</option>
+                <option value="text">text</option>
+                <option value="html">html</option>
+              </select>
+              <button type="submit" class="button primary">/v1/open を実行</button>
+            </form>
+            <ul class="quota-list">
+              <li><strong>入力:</strong> 公開 <code>http</code> / <code>https</code> URL のみ</li>
+              <li><strong>モード:</strong> <code>metadata</code>、<code>text</code>、<code>html</code></li>
+              <li><strong>認証:</strong> このラボで共有される API キー</li>
+            </ul>
+          </div>
+
+          <div class="lab-view" data-lab-view="site" hidden>
+            <form id="site-runner-form" class="catalog-filters">
+              <select id="site-runner-name">
+                <option value="">ホストアダプターを読み込み中...</option>
+              </select>
+              <button type="submit" class="button primary">ホストアダプターを実行</button>
+            </form>
+            <textarea id="site-runner-args" class="json-input" spellcheck="false">{}</textarea>
+            <p class="subtle playground-note" id="site-runner-summary">
+              <code>/v1/sites/hosted</code> から現在のホストアダプターを読み込み中です。
+            </p>
+            <ul class="quota-list">
+              <li><strong>実行範囲:</strong> 公開・読み取り専用・リモート安全なホストアダプターのみ</li>
+              <li><strong>リクエスト:</strong> アダプター名 + JSON 引数</li>
+              <li><strong>カタログ:</strong> <a href="/sites/">アダプター一覧</a></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <p class="panel-label">最近の例</p>
+          <div id="lab-recents" class="recent-list">
+            <p class="subtle">ホストリクエストを実行すると、再利用しやすい最近の例がここに保存されます。</p>
+          </div>
+          <p class="panel-label">レスポンス</p>
+          <pre id="lab-result"><code>ホストツールを選び、プリセットを読み込み、実際のリクエストを実行してください。</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
         <p class="kicker">何が便利か</p>
         <h2>ログイン済みサイトの自動化に強い</h2>
       </div>

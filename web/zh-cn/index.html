@@ -114,6 +114,101 @@
 
     <section class="section">
       <div class="section-head">
+        <p class="kicker">Hosted API Lab</p>
+        <h2>在首页直接测试两个托管接口</h2>
+        <p class="subtle">
+          这个实验区把托管子集集中在一起。适合公开 URL 抓取和远程安全的只读适配器调用。
+          任何依赖你真实标签页、登录态或浏览器上下文的任务，仍然应该走本地运行时。
+        </p>
+      </div>
+      <div
+        class="cta lab-panel"
+        data-lab-root
+        data-summary-general="在上方创建或粘贴 API Key。这个实验区会在两个托管工具之间共享同一个 Key。"
+        data-summary-open="用 /v1/open 处理公开 URL 抓取、元数据提取和轻量级远程读取。"
+        data-summary-site="用 /v1/sites/run 调用 live API 暴露出来的远程只读适配器子集。"
+        data-recent-empty="运行一次托管请求后，这里会保存可复用的最近示例。"
+        data-loading-adapters="正在从 /v1/sites/hosted 加载当前托管适配器。"
+        data-no-adapters="当前 live API 暂时没有可用的托管适配器。"
+        data-failed-adapters="加载托管适配器失败"
+        data-loaded-adapters="已从 live API 加载 {count} 个托管适配器。下方 JSON 编辑器会自动填入该适配器当前的 API 示例参数。"
+        data-require-api-key="请先创建或粘贴 API Key。"
+        data-invalid-url="请输入有效的绝对 URL。"
+        data-public-only="这里只支持公开的 http 与 https 地址。"
+        data-running-open="正在执行托管 open 请求..."
+        data-running-site="正在执行托管适配器..."
+        data-choose-adapter="请先选择一个托管适配器。"
+        data-invalid-json="参数必须是合法 JSON。"
+        data-open-failed="托管 open 请求失败"
+        data-site-failed="托管适配器请求失败"
+        data-preset-open-metadata="metadata：example.com"
+        data-preset-open-text="text：RFC 索引"
+        data-preset-open-html="html：OpenAI"
+      >
+        <div>
+          <div class="demo-tabs" role="tablist" aria-label="Hosted API lab tabs">
+            <button class="demo-tab is-active" type="button" data-lab-tab="open" aria-selected="true">/v1/open</button>
+            <button class="demo-tab" type="button" data-lab-tab="site" aria-selected="false">/v1/sites/run</button>
+          </div>
+          <form id="lab-api-key-form" class="catalog-filters">
+            <input id="lab-api-key" type="text" placeholder="粘贴 API Key，或在上方先创建一个" autocomplete="off">
+          </form>
+          <p class="subtle playground-note" id="lab-summary">
+            在上方创建或粘贴 API Key。这个实验区会在两个托管工具之间共享同一个 Key。
+          </p>
+          <div class="lab-preset-bar">
+            <p class="panel-label">预设</p>
+            <div id="lab-presets" class="pill-row" aria-live="polite"></div>
+          </div>
+
+          <div class="lab-view is-active" data-lab-view="open">
+            <form id="open-playground-form" class="catalog-filters">
+              <input id="open-playground-url" type="url" placeholder="https://example.com" value="https://example.com" autocomplete="off">
+              <select id="open-playground-mode">
+                <option value="metadata">metadata</option>
+                <option value="text">text</option>
+                <option value="html">html</option>
+              </select>
+              <button type="submit" class="button primary">运行 /v1/open</button>
+            </form>
+            <ul class="quota-list">
+              <li><strong>输入：</strong>仅支持公开 <code>http</code> / <code>https</code> URL</li>
+              <li><strong>模式：</strong><code>metadata</code>、<code>text</code>、<code>html</code></li>
+              <li><strong>认证：</strong>使用这个实验区共享的 API Key</li>
+            </ul>
+          </div>
+
+          <div class="lab-view" data-lab-view="site" hidden>
+            <form id="site-runner-form" class="catalog-filters">
+              <select id="site-runner-name">
+                <option value="">正在加载托管适配器...</option>
+              </select>
+              <button type="submit" class="button primary">运行托管适配器</button>
+            </form>
+            <textarea id="site-runner-args" class="json-input" spellcheck="false">{}</textarea>
+            <p class="subtle playground-note" id="site-runner-summary">
+              正在从 <code>/v1/sites/hosted</code> 加载当前托管适配器。
+            </p>
+            <ul class="quota-list">
+              <li><strong>执行范围：</strong>仅限公开、只读、远程安全的托管适配器</li>
+              <li><strong>请求形式：</strong>适配器名称 + JSON 参数</li>
+              <li><strong>完整目录：</strong>查看 <a href="/sites/">适配器目录</a></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <p class="panel-label">最近示例</p>
+          <div id="lab-recents" class="recent-list">
+            <p class="subtle">运行一次托管请求后，这里会保存可复用的最近示例。</p>
+          </div>
+          <p class="panel-label">实时响应</p>
+          <pre id="lab-result"><code>选择一个托管工具，加载预设，然后发起真实请求。</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
         <p class="kicker">为什么这个工具有价值</p>
         <h2>核心逻辑：不是模拟浏览器，而是接管你真实在用的浏览器</h2>
       </div>

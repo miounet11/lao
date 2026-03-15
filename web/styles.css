@@ -550,6 +550,12 @@ thead th {
   gap: 18px;
 }
 
+.lab-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  gap: 18px;
+}
+
 .demo-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -600,12 +606,43 @@ thead th {
   margin-top: 12px;
 }
 
-#open-playground-result {
-  min-height: 280px;
+.lab-preset-bar {
+  margin: 16px 0 18px;
 }
 
-#site-runner-result {
-  min-height: 320px;
+.lab-view {
+  display: block;
+}
+
+.recent-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.recent-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(20, 35, 29, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.recent-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+#lab-result {
+  min-height: 360px;
 }
 
 .mode-grid,
@@ -852,6 +889,7 @@ thead th {
   .hero,
   .signup-card,
   .demo-panel,
+  .lab-panel,
   .grid.two,
   .grid.three,
   .faq-list {
@@ -886,12 +924,14 @@ thead th {
   .cta,
   .faq-item,
   .signup-card,
-  .demo-panel {
+  .demo-panel,
+  .lab-panel {
     border-radius: 22px;
   }
 
   .hero,
   .demo-panel,
+  .lab-panel,
   .signup-card,
   .card,
   .panel {

@@ -267,39 +267,302 @@ function initHomepageDemo() {
 
 initHomepageDemo();
 
-function initOpenPlayground() {
-  const form = document.getElementById("open-playground-form");
-  const apiKeyInput = document.getElementById("open-playground-key");
-  const urlInput = document.getElementById("open-playground-url");
-  const modeInput = document.getElementById("open-playground-mode");
-  const result = document.getElementById("open-playground-result");
+const hostedLabRecentKey = "iatlas-browser-hosted-lab-recents";
+
+function loadHostedLabRecents() {
+  try {
+    const raw = localStorage.getItem(hostedLabRecentKey);
+    const parsed = JSON.parse(raw || "[]");
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHostedLabRecents(items) {
+  try {
+    localStorage.setItem(hostedLabRecentKey, JSON.stringify(items.slice(0, 6)));
+  } catch {}
+}
+
+async function initHostedLab() {
+  const root = document.querySelector("[data-lab-root]");
+  const apiKeyInput = document.getElementById("lab-api-key");
+  const summary = document.getElementById("lab-summary");
+  const presets = document.getElementById("lab-presets");
+  const recents = document.getElementById("lab-recents");
+  const result = document.getElementById("lab-result");
+  const tabs = Array.from(document.querySelectorAll("[data-lab-tab]"));
+  const views = Array.from(document.querySelectorAll("[data-lab-view]"));
+
+  const openForm = document.getElementById("open-playground-form");
+  const openUrlInput = document.getElementById("open-playground-url");
+  const openModeInput = document.getElementById("open-playground-mode");
+
+  const siteForm = document.getElementById("site-runner-form");
+  const siteNameInput = document.getElementById("site-runner-name");
+  const siteArgsInput = document.getElementById("site-runner-args");
+  const siteSummary = document.getElementById("site-runner-summary");
 
   if (
-    !(form instanceof HTMLFormElement) ||
+    !(root instanceof HTMLElement) ||
     !(apiKeyInput instanceof HTMLInputElement) ||
-    !(urlInput instanceof HTMLInputElement) ||
-    !(modeInput instanceof HTMLSelectElement) ||
-    !(result instanceof HTMLElement)
+    !(summary instanceof HTMLElement) ||
+    !(presets instanceof HTMLElement) ||
+    !(recents instanceof HTMLElement) ||
+    !(result instanceof HTMLElement) ||
+    !(openForm instanceof HTMLFormElement) ||
+    !(openUrlInput instanceof HTMLInputElement) ||
+    !(openModeInput instanceof HTMLSelectElement) ||
+    !(siteForm instanceof HTMLFormElement) ||
+    !(siteNameInput instanceof HTMLSelectElement) ||
+    !(siteArgsInput instanceof HTMLTextAreaElement) ||
+    !(siteSummary instanceof HTMLElement)
   ) {
     return;
   }
 
-  const submitButton = form.querySelector('button[type="submit"]');
-  if (!(submitButton instanceof HTMLButtonElement)) {
+  const openSubmitButton = openForm.querySelector('button[type="submit"]');
+  const siteSubmitButton = siteForm.querySelector('button[type="submit"]');
+  if (!(openSubmitButton instanceof HTMLButtonElement) || !(siteSubmitButton instanceof HTMLButtonElement)) {
     return;
   }
 
   syncApiKeyInput(apiKeyInput);
+  apiKeyInput.addEventListener("change", () => {
+    if (apiKeyInput.value.trim()) {
+      saveApiKey(apiKeyInput.value.trim());
+    }
+  });
 
-  form.addEventListener("submit", async (event) => {
+  let activeTab = "open";
+  let hostedItems = [];
+
+  const openPresets = [
+    {
+      label: "Metadata: example.com",
+      apply() {
+        openUrlInput.value = "https://example.com";
+        openModeInput.value = "metadata";
+      },
+    },
+    {
+      label: "Text: RFC index",
+      apply() {
+        openUrlInput.value = "https://www.rfc-editor.org/rfc/";
+        openModeInput.value = "text";
+      },
+    },
+    {
+      label: "HTML: OpenAI",
+      apply() {
+        openUrlInput.value = "https://openai.com";
+        openModeInput.value = "html";
+      },
+    },
+  ];
+
+  function getSitePresetEntries() {
+    const preferred = ["github/repo", "arxiv/search", "hackernews/top", "wikipedia/summary"];
+    const selected = [];
+
+    for (const name of preferred) {
+      const entry = hostedItems.find((item) => item.name === name);
+      if (entry) {
+        selected.push(entry);
+      }
+    }
+
+    for (const entry of hostedItems) {
+      if (selected.length >= 4) {
+        break;
+      }
+      if (!selected.includes(entry)) {
+        selected.push(entry);
+      }
+    }
+
+    return selected;
+  }
+
+  function renderRecents() {
+    const items = loadHostedLabRecents();
+    if (!items.length) {
+      recents.innerHTML = '<p class="subtle">Run a hosted request to pin reusable examples here.</p>';
+      return;
+    }
+
+    recents.innerHTML = items.map((item, index) => `
+      <button class="recent-chip" type="button" data-recent-index="${index}">
+        ${escapeHtml(item.label)}
+      </button>
+    `).join("");
+  }
+
+  function pushRecent(item) {
+    const next = [item, ...loadHostedLabRecents().filter((entry) => entry.label !== item.label)];
+    saveHostedLabRecents(next);
+    renderRecents();
+  }
+
+  function syncSiteArgs() {
+    const entry = hostedItems.find((item) => item.name === siteNameInput.value) || hostedItems[0];
+    if (!entry) {
+      siteArgsInput.value = "{}";
+      return;
+    }
+
+    siteNameInput.value = entry.name;
+    siteArgsInput.value = JSON.stringify(entry.execution?.apiExample?.body?.args ?? {}, null, 2);
+  }
+
+  function renderPresets() {
+    const entries = activeTab === "open"
+      ? openPresets.map((preset, index) => ({
+          label: preset.label,
+          action: "open",
+          index,
+        }))
+      : getSitePresetEntries().map((entry) => ({
+          label: `${entry.name}`,
+          action: "site",
+          name: entry.name,
+        }));
+
+    presets.innerHTML = entries.map((entry) => `
+      <button class="recent-chip" type="button"
+        data-preset-action="${entry.action}"
+        ${entry.action === "open" ? `data-preset-index="${entry.index}"` : `data-preset-name="${escapeHtml(entry.name)}"`}>
+        ${escapeHtml(entry.label)}
+      </button>
+    `).join("");
+  }
+
+  function setActiveTab(nextTab) {
+    activeTab = nextTab;
+
+    for (const tab of tabs) {
+      if (!(tab instanceof HTMLButtonElement)) {
+        continue;
+      }
+      const isActive = tab.dataset.labTab === nextTab;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", isActive ? "true" : "false");
+    }
+
+    for (const view of views) {
+      if (!(view instanceof HTMLElement)) {
+        continue;
+      }
+      const isActive = view.dataset.labView === nextTab;
+      view.classList.toggle("is-active", isActive);
+      view.hidden = !isActive;
+    }
+
+    summary.textContent = nextTab === "open"
+      ? "Use /v1/open for public URL fetches, metadata extraction, and lightweight remote-safe retrieval."
+      : "Use /v1/sites/run for the hosted read-only adapter subset exposed by the live API.";
+
+    renderPresets();
+  }
+
+  presets.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const button = target.closest("[data-preset-action]");
+    if (!(button instanceof HTMLElement)) {
+      return;
+    }
+
+    if (button.dataset.presetAction === "open") {
+      const preset = openPresets[Number(button.dataset.presetIndex || "-1")];
+      preset?.apply();
+      return;
+    }
+
+    const entry = hostedItems.find((item) => item.name === button.dataset.presetName);
+    if (!entry) {
+      return;
+    }
+    setActiveTab("site");
+    siteNameInput.value = entry.name;
+    syncSiteArgs();
+  });
+
+  recents.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    const button = target.closest("[data-recent-index]");
+    if (!(button instanceof HTMLElement)) {
+      return;
+    }
+
+    const item = loadHostedLabRecents()[Number(button.dataset.recentIndex || "-1")];
+    if (!item) {
+      return;
+    }
+
+    setActiveTab(item.type);
+    if (item.type === "open") {
+      openUrlInput.value = item.payload.url || "";
+      openModeInput.value = item.payload.mode || "metadata";
+    } else if (item.type === "site") {
+      siteNameInput.value = item.payload.name || "";
+      siteArgsInput.value = JSON.stringify(item.payload.args || {}, null, 2);
+    }
+  });
+
+  for (const tab of tabs) {
+    if (!(tab instanceof HTMLButtonElement)) {
+      continue;
+    }
+    tab.addEventListener("click", () => {
+      setActiveTab(tab.dataset.labTab || "open");
+    });
+  }
+
+  try {
+    const payload = await loadJson("/v1/sites/hosted");
+    hostedItems = Array.isArray(payload.items) ? payload.items : [];
+    siteNameInput.innerHTML = "";
+
+    if (!hostedItems.length) {
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = "No hosted adapters available";
+      siteNameInput.appendChild(option);
+      siteSummary.textContent = "No hosted adapters are currently available from the live API.";
+    } else {
+      for (const entry of hostedItems) {
+        const option = document.createElement("option");
+        option.value = entry.name;
+        option.textContent = `${entry.name} (${entry.platform})`;
+        siteNameInput.appendChild(option);
+      }
+      siteSummary.textContent = `${hostedItems.length} hosted adapters loaded from the live API. The JSON editor is seeded from each adapter's current API example.`;
+      syncSiteArgs();
+    }
+  } catch (error) {
+    siteSummary.textContent = error instanceof Error ? error.message : "Failed to load hosted adapters";
+  }
+
+  siteNameInput.addEventListener("change", syncSiteArgs);
+
+  openForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const apiKey = apiKeyInput.value.trim();
-    const url = urlInput.value.trim();
-    const mode = modeInput.value;
+    const url = openUrlInput.value.trim();
+    const mode = openModeInput.value;
 
     if (!apiKey) {
-      result.textContent = "Create or paste an API key first.";
+      setPreResult(result, "Create or paste an API key first.");
       return;
     }
 
@@ -307,18 +570,18 @@ function initOpenPlayground() {
     try {
       parsedUrl = new URL(url);
     } catch {
-      result.textContent = "Enter a valid absolute URL.";
+      setPreResult(result, "Enter a valid absolute URL.");
       return;
     }
 
     if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-      result.textContent = "Only public http and https URLs are supported here.";
+      setPreResult(result, "Only public http and https URLs are supported here.");
       return;
     }
 
-    const originalButtonText = submitButton.textContent;
-    submitButton.disabled = true;
-    submitButton.textContent = "Running...";
+    const originalButtonText = openSubmitButton.textContent;
+    openSubmitButton.disabled = true;
+    openSubmitButton.textContent = "Running...";
     setPreResult(result, "Running hosted open request...");
 
     try {
@@ -336,88 +599,23 @@ function initOpenPlayground() {
 
       const payload = await response.json();
       setPreResult(result, JSON.stringify(payload, null, 2));
+      pushRecent({
+        type: "open",
+        label: `/v1/open · ${mode} · ${parsedUrl.host}`,
+        payload: {
+          url: parsedUrl.toString(),
+          mode,
+        },
+      });
     } catch (error) {
       setPreResult(result, error instanceof Error ? error.message : "Hosted open request failed");
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = originalButtonText;
+      openSubmitButton.disabled = false;
+      openSubmitButton.textContent = originalButtonText;
     }
   });
-}
 
-initOpenPlayground();
-
-async function initHostedSiteRunner() {
-  const form = document.getElementById("site-runner-form");
-  const apiKeyInput = document.getElementById("site-runner-key");
-  const nameInput = document.getElementById("site-runner-name");
-  const argsInput = document.getElementById("site-runner-args");
-  const summary = document.getElementById("site-runner-summary");
-  const result = document.getElementById("site-runner-result");
-
-  if (
-    !(form instanceof HTMLFormElement) ||
-    !(apiKeyInput instanceof HTMLInputElement) ||
-    !(nameInput instanceof HTMLSelectElement) ||
-    !(argsInput instanceof HTMLTextAreaElement) ||
-    !(summary instanceof HTMLElement) ||
-    !(result instanceof HTMLElement)
-  ) {
-    return;
-  }
-
-  const submitButton = form.querySelector('button[type="submit"]');
-  if (!(submitButton instanceof HTMLButtonElement)) {
-    return;
-  }
-
-  syncApiKeyInput(apiKeyInput);
-
-  let hostedItems = [];
-
-  try {
-    const payload = await loadJson("/v1/sites/hosted");
-    hostedItems = Array.isArray(payload.items) ? payload.items : [];
-
-    nameInput.innerHTML = "";
-
-    if (!hostedItems.length) {
-      const option = document.createElement("option");
-      option.value = "";
-      option.textContent = "No hosted adapters available";
-      nameInput.appendChild(option);
-      summary.textContent = "No hosted adapters are currently available from the live API.";
-      return;
-    }
-
-    for (const entry of hostedItems) {
-      const option = document.createElement("option");
-      option.value = entry.name;
-      option.textContent = `${entry.name} (${entry.platform})`;
-      nameInput.appendChild(option);
-    }
-
-    summary.textContent = `${hostedItems.length} hosted adapters loaded from the live API. The JSON editor below is seeded from each adapter's current API example.`;
-  } catch (error) {
-    summary.textContent = error instanceof Error ? error.message : "Failed to load hosted adapters";
-    return;
-  }
-
-  function syncArgs() {
-    const entry = hostedItems.find((item) => item.name === nameInput.value) || hostedItems[0];
-    if (!entry) {
-      argsInput.value = "{}";
-      return;
-    }
-
-    nameInput.value = entry.name;
-    argsInput.value = JSON.stringify(entry.execution?.apiExample?.body?.args ?? {}, null, 2);
-  }
-
-  nameInput.addEventListener("change", syncArgs);
-  syncArgs();
-
-  form.addEventListener("submit", async (event) => {
+  siteForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const apiKey = apiKeyInput.value.trim();
@@ -426,22 +624,22 @@ async function initHostedSiteRunner() {
       return;
     }
 
-    if (!nameInput.value) {
+    if (!siteNameInput.value) {
       setPreResult(result, "Choose a hosted adapter first.");
       return;
     }
 
     let args;
     try {
-      args = JSON.parse(argsInput.value || "{}");
+      args = JSON.parse(siteArgsInput.value || "{}");
     } catch {
       setPreResult(result, "Arguments must be valid JSON.");
       return;
     }
 
-    const originalButtonText = submitButton.textContent;
-    submitButton.disabled = true;
-    submitButton.textContent = "Running...";
+    const originalButtonText = siteSubmitButton.textContent;
+    siteSubmitButton.disabled = true;
+    siteSubmitButton.textContent = "Running...";
     setPreResult(result, "Running hosted adapter...");
 
     try {
@@ -452,20 +650,31 @@ async function initHostedSiteRunner() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: nameInput.value,
+          name: siteNameInput.value,
           args,
         }),
       });
 
       const payload = await response.json();
       setPreResult(result, JSON.stringify(payload, null, 2));
+      pushRecent({
+        type: "site",
+        label: `/v1/sites/run · ${siteNameInput.value}`,
+        payload: {
+          name: siteNameInput.value,
+          args,
+        },
+      });
     } catch (error) {
       setPreResult(result, error instanceof Error ? error.message : "Hosted adapter request failed");
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = originalButtonText;
+      siteSubmitButton.disabled = false;
+      siteSubmitButton.textContent = originalButtonText;
     }
   });
+
+  renderRecents();
+  setActiveTab("open");
 }
 
-initHostedSiteRunner();
+initHostedLab();

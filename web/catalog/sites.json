@@ -33,7 +33,8 @@
         "position": 0
       }
     ],
-    "file": "36kr/newsflash.js"
+    "file": "36kr/newsflash.js",
+    "source": "lao-s"
   },
   {
     "name": "arxiv/search",
@@ -85,7 +86,8 @@
         "position": 1
       }
     ],
-    "file": "arxiv/search.js"
+    "file": "arxiv/search.js",
+    "source": "lao-s"
   },
   {
     "name": "baidu/search",
@@ -126,7 +128,8 @@
         "position": 1
       }
     ],
-    "file": "baidu/search.js"
+    "file": "baidu/search.js",
+    "source": "lao-s"
   },
   {
     "name": "bbc/news",
@@ -178,7 +181,8 @@
         "position": 1
       }
     ],
-    "file": "bbc/news.js"
+    "file": "bbc/news.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/comments",
@@ -235,7 +239,8 @@
         "position": 3
       }
     ],
-    "file": "bilibili/comments.js"
+    "file": "bilibili/comments.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/feed",
@@ -278,7 +283,8 @@
         "position": 1
       }
     ],
-    "file": "bilibili/feed.js"
+    "file": "bilibili/feed.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/history",
@@ -314,7 +320,8 @@
         "position": 0
       }
     ],
-    "file": "bilibili/history.js"
+    "file": "bilibili/history.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/me",
@@ -341,7 +348,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "bilibili/me.js"
+    "file": "bilibili/me.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/popular",
@@ -384,7 +392,8 @@
         "position": 1
       }
     ],
-    "file": "bilibili/popular.js"
+    "file": "bilibili/popular.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/ranking",
@@ -427,7 +436,8 @@
         "position": 1
       }
     ],
-    "file": "bilibili/ranking.js"
+    "file": "bilibili/ranking.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/search",
@@ -484,7 +494,8 @@
         "position": 3
       }
     ],
-    "file": "bilibili/search.js"
+    "file": "bilibili/search.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/trending",
@@ -520,7 +531,8 @@
         "position": 0
       }
     ],
-    "file": "bilibili/trending.js"
+    "file": "bilibili/trending.js",
+    "source": "lao-s"
   },
   {
     "name": "bilibili/video",
@@ -556,7 +568,8 @@
         "position": 0
       }
     ],
-    "file": "bilibili/video.js"
+    "file": "bilibili/video.js",
+    "source": "lao-s"
   },
   {
     "name": "bing/search",
@@ -597,7 +610,8 @@
         "position": 1
       }
     ],
-    "file": "bing/search.js"
+    "file": "bing/search.js",
+    "source": "lao-s"
   },
   {
     "name": "boss/detail",
@@ -631,7 +645,8 @@
         "position": 0
       }
     ],
-    "file": "boss/detail.js"
+    "file": "boss/detail.js",
+    "source": "lao-s"
   },
   {
     "name": "boss/search",
@@ -693,7 +708,8 @@
         "position": 4
       }
     ],
-    "file": "boss/search.js"
+    "file": "boss/search.js",
+    "source": "lao-s"
   },
   {
     "name": "cnblogs/search",
@@ -734,7 +750,63 @@
         "position": 1
       }
     ],
-    "file": "cnblogs/search.js"
+    "file": "cnblogs/search.js",
+    "source": "lao-s"
+  },
+  {
+    "name": "crates/search",
+    "platform": "crates",
+    "command": "search",
+    "description": "Search Rust crates via the public crates.io API",
+    "domain": "crates.io",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site crates/search tokio",
+    "cliExample": "iatlas-browser site crates/search tokio",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "crates/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Rust crate search via crates.io API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "crates/search",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10, max 50)",
+        "position": 1
+      }
+    ],
+    "file": "_hosted/crates/search.js",
+    "source": "hosted-extension"
   },
   {
     "name": "csdn/search",
@@ -775,7 +847,8 @@
         "position": 1
       }
     ],
-    "file": "csdn/search.js"
+    "file": "csdn/search.js",
+    "source": "lao-s"
   },
   {
     "name": "ctrip/search",
@@ -809,7 +882,8 @@
         "position": 0
       }
     ],
-    "file": "ctrip/search.js"
+    "file": "ctrip/search.js",
+    "source": "lao-s"
   },
   {
     "name": "devto/search",
@@ -850,7 +924,63 @@
         "position": 1
       }
     ],
-    "file": "devto/search.js"
+    "file": "devto/search.js",
+    "source": "lao-s"
+  },
+  {
+    "name": "dockerhub/search",
+    "platform": "dockerhub",
+    "command": "search",
+    "description": "Search public Docker Hub repositories",
+    "domain": "hub.docker.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site dockerhub/search nginx",
+    "cliExample": "iatlas-browser site dockerhub/search nginx",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "dockerhub/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Docker Hub repository search via public API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "dockerhub/search",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10, max 50)",
+        "position": 1
+      }
+    ],
+    "file": "_hosted/dockerhub/search.js",
+    "source": "hosted-extension"
   },
   {
     "name": "douban/comments",
@@ -900,7 +1030,8 @@
         "position": 2
       }
     ],
-    "file": "douban/comments.js"
+    "file": "douban/comments.js",
+    "source": "lao-s"
   },
   {
     "name": "douban/movie",
@@ -936,7 +1067,8 @@
         "position": 0
       }
     ],
-    "file": "douban/movie.js"
+    "file": "douban/movie.js",
+    "source": "lao-s"
   },
   {
     "name": "douban/movie-hot",
@@ -986,7 +1118,8 @@
         "position": 2
       }
     ],
-    "file": "douban/movie-hot.js"
+    "file": "douban/movie-hot.js",
+    "source": "lao-s"
   },
   {
     "name": "douban/movie-top",
@@ -1029,7 +1162,8 @@
         "position": 1
       }
     ],
-    "file": "douban/movie-top.js"
+    "file": "douban/movie-top.js",
+    "source": "lao-s"
   },
   {
     "name": "douban/search",
@@ -1065,7 +1199,8 @@
         "position": 0
       }
     ],
-    "file": "douban/search.js"
+    "file": "douban/search.js",
+    "source": "lao-s"
   },
   {
     "name": "douban/top250",
@@ -1101,7 +1236,8 @@
         "position": 0
       }
     ],
-    "file": "douban/top250.js"
+    "file": "douban/top250.js",
+    "source": "lao-s"
   },
   {
     "name": "duckduckgo/search",
@@ -1135,7 +1271,8 @@
         "position": 0
       }
     ],
-    "file": "duckduckgo/search.js"
+    "file": "duckduckgo/search.js",
+    "source": "lao-s"
   },
   {
     "name": "eastmoney/news",
@@ -1169,7 +1306,8 @@
         "position": 0
       }
     ],
-    "file": "eastmoney/news.js"
+    "file": "eastmoney/news.js",
+    "source": "lao-s"
   },
   {
     "name": "eastmoney/stock",
@@ -1203,7 +1341,8 @@
         "position": 0
       }
     ],
-    "file": "eastmoney/stock.js"
+    "file": "eastmoney/stock.js",
+    "source": "lao-s"
   },
   {
     "name": "genius/search",
@@ -1237,7 +1376,8 @@
         "position": 0
       }
     ],
-    "file": "genius/search.js"
+    "file": "genius/search.js",
+    "source": "lao-s"
   },
   {
     "name": "github/fork",
@@ -1273,7 +1413,8 @@
         "position": 0
       }
     ],
-    "file": "github/fork.js"
+    "file": "github/fork.js",
+    "source": "lao-s"
   },
   {
     "name": "github/issue-create",
@@ -1323,7 +1464,8 @@
         "position": 2
       }
     ],
-    "file": "github/issue-create.js"
+    "file": "github/issue-create.js",
+    "source": "lao-s"
   },
   {
     "name": "github/issues",
@@ -1377,7 +1519,8 @@
         "position": 1
       }
     ],
-    "file": "github/issues.js"
+    "file": "github/issues.js",
+    "source": "lao-s"
   },
   {
     "name": "github/me",
@@ -1404,7 +1547,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "github/me.js"
+    "file": "github/me.js",
+    "source": "lao-s"
   },
   {
     "name": "github/pr-create",
@@ -1468,7 +1612,8 @@
         "position": 4
       }
     ],
-    "file": "github/pr-create.js"
+    "file": "github/pr-create.js",
+    "source": "lao-s"
   },
   {
     "name": "github/repo",
@@ -1514,7 +1659,8 @@
         "position": 0
       }
     ],
-    "file": "github/repo.js"
+    "file": "github/repo.js",
+    "source": "lao-s"
   },
   {
     "name": "google/search",
@@ -1555,7 +1701,8 @@
         "position": 1
       }
     ],
-    "file": "google/search.js"
+    "file": "google/search.js",
+    "source": "lao-s"
   },
   {
     "name": "gsmarena/search",
@@ -1589,7 +1736,8 @@
         "position": 0
       }
     ],
-    "file": "gsmarena/search.js"
+    "file": "gsmarena/search.js",
+    "source": "lao-s"
   },
   {
     "name": "hackernews/thread",
@@ -1635,7 +1783,8 @@
         "position": 0
       }
     ],
-    "file": "hackernews/thread.js"
+    "file": "hackernews/thread.js",
+    "source": "lao-s"
   },
   {
     "name": "hackernews/top",
@@ -1681,7 +1830,63 @@
         "position": 0
       }
     ],
-    "file": "hackernews/top.js"
+    "file": "hackernews/top.js",
+    "source": "lao-s"
+  },
+  {
+    "name": "huggingface/models",
+    "platform": "huggingface",
+    "command": "models",
+    "description": "Search public Hugging Face models",
+    "domain": "huggingface.co",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site huggingface/models sentence-transformers",
+    "cliExample": "iatlas-browser site huggingface/models sentence-transformers",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "huggingface/models",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Hugging Face model search via public API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "huggingface/models",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10, max 50)",
+        "position": 1
+      }
+    ],
+    "file": "_hosted/huggingface/models.js",
+    "source": "hosted-extension"
   },
   {
     "name": "hupu/hot",
@@ -1706,7 +1911,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "hupu/hot.js"
+    "file": "hupu/hot.js",
+    "source": "lao-s"
   },
   {
     "name": "imdb/search",
@@ -1740,7 +1946,8 @@
         "position": 0
       }
     ],
-    "file": "imdb/search.js"
+    "file": "imdb/search.js",
+    "source": "lao-s"
   },
   {
     "name": "jike/feed",
@@ -1774,7 +1981,8 @@
         "position": 0
       }
     ],
-    "file": "jike/feed.js"
+    "file": "jike/feed.js",
+    "source": "lao-s"
   },
   {
     "name": "jike/search",
@@ -1815,7 +2023,8 @@
         "position": 1
       }
     ],
-    "file": "jike/search.js"
+    "file": "jike/search.js",
+    "source": "lao-s"
   },
   {
     "name": "linkedin/profile",
@@ -1849,7 +2058,8 @@
         "position": 0
       }
     ],
-    "file": "linkedin/profile.js"
+    "file": "linkedin/profile.js",
+    "source": "lao-s"
   },
   {
     "name": "linkedin/search",
@@ -1892,7 +2102,63 @@
         "position": 1
       }
     ],
-    "file": "linkedin/search.js"
+    "file": "linkedin/search.js",
+    "source": "lao-s"
+  },
+  {
+    "name": "maven/search",
+    "platform": "maven",
+    "command": "search",
+    "description": "Search Maven Central artifacts",
+    "domain": "search.maven.org",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site maven/search junit",
+    "cliExample": "iatlas-browser site maven/search junit",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "maven/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Maven Central artifact search via Solr API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "maven/search",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10, max 50)",
+        "position": 1
+      }
+    ],
+    "file": "_hosted/maven/search.js",
+    "source": "hosted-extension"
   },
   {
     "name": "npm/search",
@@ -1944,7 +2210,8 @@
         "position": 1
       }
     ],
-    "file": "npm/search.js"
+    "file": "npm/search.js",
+    "source": "lao-s"
   },
   {
     "name": "openlibrary/search",
@@ -1996,7 +2263,8 @@
         "position": 1
       }
     ],
-    "file": "openlibrary/search.js"
+    "file": "openlibrary/search.js",
+    "source": "lao-s"
   },
   {
     "name": "producthunt/today",
@@ -2032,7 +2300,63 @@
         "position": 0
       }
     ],
-    "file": "producthunt/today.js"
+    "file": "producthunt/today.js",
+    "source": "lao-s"
+  },
+  {
+    "name": "pubmed/search",
+    "platform": "pubmed",
+    "command": "search",
+    "description": "Search PubMed articles via NCBI E-utilities",
+    "domain": "pubmed.ncbi.nlm.nih.gov",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site pubmed/search CRISPR",
+    "cliExample": "iatlas-browser site pubmed/search CRISPR",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "pubmed/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "PubMed search via NCBI E-utilities",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "pubmed/search",
+          "args": {
+            "query": "<query>",
+            "count": ""
+          }
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10, max 20)",
+        "position": 1
+      }
+    ],
+    "file": "_hosted/pubmed/search.js",
+    "source": "hosted-extension"
   },
   {
     "name": "pypi/package",
@@ -2076,7 +2400,8 @@
         "position": 0
       }
     ],
-    "file": "pypi/package.js"
+    "file": "pypi/package.js",
+    "source": "lao-s"
   },
   {
     "name": "pypi/search",
@@ -2117,7 +2442,8 @@
         "position": 1
       }
     ],
-    "file": "pypi/search.js"
+    "file": "pypi/search.js",
+    "source": "lao-s"
   },
   {
     "name": "qidian/search",
@@ -2160,7 +2486,8 @@
         "position": 1
       }
     ],
-    "file": "qidian/search.js"
+    "file": "qidian/search.js",
+    "source": "lao-s"
   },
   {
     "name": "reddit/context",
@@ -2196,7 +2523,8 @@
         "position": 0
       }
     ],
-    "file": "reddit/context.js"
+    "file": "reddit/context.js",
+    "source": "lao-s"
   },
   {
     "name": "reddit/me",
@@ -2223,7 +2551,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "reddit/me.js"
+    "file": "reddit/me.js",
+    "source": "lao-s"
   },
   {
     "name": "reddit/posts",
@@ -2259,7 +2588,8 @@
         "position": 0
       }
     ],
-    "file": "reddit/posts.js"
+    "file": "reddit/posts.js",
+    "source": "lao-s"
   },
   {
     "name": "reddit/thread",
@@ -2295,7 +2625,8 @@
         "position": 0
       }
     ],
-    "file": "reddit/thread.js"
+    "file": "reddit/thread.js",
+    "source": "lao-s"
   },
   {
     "name": "reuters/search",
@@ -2336,7 +2667,8 @@
         "position": 1
       }
     ],
-    "file": "reuters/search.js"
+    "file": "reuters/search.js",
+    "source": "lao-s"
   },
   {
     "name": "smzdm/search",
@@ -2379,7 +2711,8 @@
         "position": 1
       }
     ],
-    "file": "smzdm/search.js"
+    "file": "smzdm/search.js",
+    "source": "lao-s"
   },
   {
     "name": "sogou/weixin",
@@ -2420,7 +2753,71 @@
         "position": 1
       }
     ],
-    "file": "sogou/weixin.js"
+    "file": "sogou/weixin.js",
+    "source": "lao-s"
+  },
+  {
+    "name": "stackexchange/search",
+    "platform": "stackexchange",
+    "command": "search",
+    "description": "Search Stack Exchange questions through the public API",
+    "domain": "api.stackexchange.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site stackexchange/search \"playwright proxy\"",
+    "cliExample": "iatlas-browser site stackexchange/search \"playwright proxy\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "stackexchange/search",
+        "args": {
+          "query": "<query>",
+          "site": "",
+          "count": ""
+        }
+      }
+    },
+    "execution": {
+      "mode": "hosted",
+      "hosted": true,
+      "notes": "Stack Exchange question search via public API",
+      "apiExample": {
+        "method": "POST",
+        "path": "/v1/sites/run",
+        "body": {
+          "name": "stackexchange/search",
+          "args": {
+            "query": "<query>",
+            "site": "",
+            "count": ""
+          }
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "site",
+        "required": false,
+        "description": "Stack Exchange site slug, default: stackoverflow",
+        "position": 1
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10, max 50)",
+        "position": 2
+      }
+    ],
+    "file": "_hosted/stackexchange/search.js",
+    "source": "hosted-extension"
   },
   {
     "name": "stackoverflow/search",
@@ -2461,7 +2858,8 @@
         "position": 1
       }
     ],
-    "file": "stackoverflow/search.js"
+    "file": "stackoverflow/search.js",
+    "source": "lao-s"
   },
   {
     "name": "toutiao/hot",
@@ -2495,7 +2893,8 @@
         "position": 0
       }
     ],
-    "file": "toutiao/hot.js"
+    "file": "toutiao/hot.js",
+    "source": "lao-s"
   },
   {
     "name": "toutiao/search",
@@ -2536,7 +2935,8 @@
         "position": 1
       }
     ],
-    "file": "toutiao/search.js"
+    "file": "toutiao/search.js",
+    "source": "lao-s"
   },
   {
     "name": "twitter/notifications",
@@ -2572,7 +2972,8 @@
         "position": 0
       }
     ],
-    "file": "twitter/notifications.js"
+    "file": "twitter/notifications.js",
+    "source": "lao-s"
   },
   {
     "name": "twitter/search",
@@ -2622,7 +3023,8 @@
         "position": 2
       }
     ],
-    "file": "twitter/search.js"
+    "file": "twitter/search.js",
+    "source": "lao-s"
   },
   {
     "name": "twitter/thread",
@@ -2658,7 +3060,8 @@
         "position": 0
       }
     ],
-    "file": "twitter/thread.js"
+    "file": "twitter/thread.js",
+    "source": "lao-s"
   },
   {
     "name": "twitter/tweets",
@@ -2701,7 +3104,8 @@
         "position": 1
       }
     ],
-    "file": "twitter/tweets.js"
+    "file": "twitter/tweets.js",
+    "source": "lao-s"
   },
   {
     "name": "twitter/user",
@@ -2737,7 +3141,8 @@
         "position": 0
       }
     ],
-    "file": "twitter/user.js"
+    "file": "twitter/user.js",
+    "source": "lao-s"
   },
   {
     "name": "v2ex/hot",
@@ -2762,7 +3167,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "v2ex/hot.js"
+    "file": "v2ex/hot.js",
+    "source": "lao-s"
   },
   {
     "name": "v2ex/latest",
@@ -2787,7 +3193,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "v2ex/latest.js"
+    "file": "v2ex/latest.js",
+    "source": "lao-s"
   },
   {
     "name": "v2ex/topic",
@@ -2821,7 +3228,8 @@
         "position": 0
       }
     ],
-    "file": "v2ex/topic.js"
+    "file": "v2ex/topic.js",
+    "source": "lao-s"
   },
   {
     "name": "weibo/comments",
@@ -2871,7 +3279,8 @@
         "position": 2
       }
     ],
-    "file": "weibo/comments.js"
+    "file": "weibo/comments.js",
+    "source": "lao-s"
   },
   {
     "name": "weibo/feed",
@@ -2907,7 +3316,8 @@
         "position": 0
       }
     ],
-    "file": "weibo/feed.js"
+    "file": "weibo/feed.js",
+    "source": "lao-s"
   },
   {
     "name": "weibo/hot",
@@ -2943,7 +3353,8 @@
         "position": 0
       }
     ],
-    "file": "weibo/hot.js"
+    "file": "weibo/hot.js",
+    "source": "lao-s"
   },
   {
     "name": "weibo/me",
@@ -2970,7 +3381,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "weibo/me.js"
+    "file": "weibo/me.js",
+    "source": "lao-s"
   },
   {
     "name": "weibo/post",
@@ -3006,7 +3418,8 @@
         "position": 0
       }
     ],
-    "file": "weibo/post.js"
+    "file": "weibo/post.js",
+    "source": "lao-s"
   },
   {
     "name": "weibo/user",
@@ -3042,7 +3455,8 @@
         "position": 0
       }
     ],
-    "file": "weibo/user.js"
+    "file": "weibo/user.js",
+    "source": "lao-s"
   },
   {
     "name": "weibo/user_posts",
@@ -3092,7 +3506,8 @@
         "position": 2
       }
     ],
-    "file": "weibo/user_posts.js"
+    "file": "weibo/user_posts.js",
+    "source": "lao-s"
   },
   {
     "name": "wikipedia/search",
@@ -3144,7 +3559,8 @@
         "position": 1
       }
     ],
-    "file": "wikipedia/search.js"
+    "file": "wikipedia/search.js",
+    "source": "lao-s"
   },
   {
     "name": "wikipedia/summary",
@@ -3188,7 +3604,8 @@
         "position": 0
       }
     ],
-    "file": "wikipedia/summary.js"
+    "file": "wikipedia/summary.js",
+    "source": "lao-s"
   },
   {
     "name": "xiaohongshu/comments",
@@ -3224,7 +3641,8 @@
         "position": 0
       }
     ],
-    "file": "xiaohongshu/comments.js"
+    "file": "xiaohongshu/comments.js",
+    "source": "lao-s"
   },
   {
     "name": "xiaohongshu/feed",
@@ -3251,7 +3669,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "xiaohongshu/feed.js"
+    "file": "xiaohongshu/feed.js",
+    "source": "lao-s"
   },
   {
     "name": "xiaohongshu/me",
@@ -3278,7 +3697,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "xiaohongshu/me.js"
+    "file": "xiaohongshu/me.js",
+    "source": "lao-s"
   },
   {
     "name": "xiaohongshu/note",
@@ -3314,7 +3734,8 @@
         "position": 0
       }
     ],
-    "file": "xiaohongshu/note.js"
+    "file": "xiaohongshu/note.js",
+    "source": "lao-s"
   },
   {
     "name": "xiaohongshu/search",
@@ -3350,7 +3771,8 @@
         "position": 0
       }
     ],
-    "file": "xiaohongshu/search.js"
+    "file": "xiaohongshu/search.js",
+    "source": "lao-s"
   },
   {
     "name": "xiaohongshu/user_posts",
@@ -3386,7 +3808,8 @@
         "position": 0
       }
     ],
-    "file": "xiaohongshu/user_posts.js"
+    "file": "xiaohongshu/user_posts.js",
+    "source": "lao-s"
   },
   {
     "name": "yahoo-finance/quote",
@@ -3430,7 +3853,8 @@
         "position": 0
       }
     ],
-    "file": "yahoo-finance/quote.js"
+    "file": "yahoo-finance/quote.js",
+    "source": "lao-s"
   },
   {
     "name": "youdao/translate",
@@ -3466,7 +3890,8 @@
         "position": 0
       }
     ],
-    "file": "youdao/translate.js"
+    "file": "youdao/translate.js",
+    "source": "lao-s"
   },
   {
     "name": "youtube/channel",
@@ -3509,7 +3934,8 @@
         "position": 1
       }
     ],
-    "file": "youtube/channel.js"
+    "file": "youtube/channel.js",
+    "source": "lao-s"
   },
   {
     "name": "youtube/comments",
@@ -3552,7 +3978,8 @@
         "position": 1
       }
     ],
-    "file": "youtube/comments.js"
+    "file": "youtube/comments.js",
+    "source": "lao-s"
   },
   {
     "name": "youtube/feed",
@@ -3595,7 +4022,8 @@
         "position": 1
       }
     ],
-    "file": "youtube/feed.js"
+    "file": "youtube/feed.js",
+    "source": "lao-s"
   },
   {
     "name": "youtube/search",
@@ -3638,7 +4066,8 @@
         "position": 1
       }
     ],
-    "file": "youtube/search.js"
+    "file": "youtube/search.js",
+    "source": "lao-s"
   },
   {
     "name": "youtube/transcript",
@@ -3674,7 +4103,8 @@
         "position": 0
       }
     ],
-    "file": "youtube/transcript.js"
+    "file": "youtube/transcript.js",
+    "source": "lao-s"
   },
   {
     "name": "youtube/video",
@@ -3710,7 +4140,8 @@
         "position": 0
       }
     ],
-    "file": "youtube/video.js"
+    "file": "youtube/video.js",
+    "source": "lao-s"
   },
   {
     "name": "zhihu/hot",
@@ -3746,7 +4177,8 @@
         "position": 0
       }
     ],
-    "file": "zhihu/hot.js"
+    "file": "zhihu/hot.js",
+    "source": "lao-s"
   },
   {
     "name": "zhihu/me",
@@ -3773,7 +4205,8 @@
       "notes": "Requires local iatlas-browser runtime and may depend on a real logged-in browser session."
     },
     "args": [],
-    "file": "zhihu/me.js"
+    "file": "zhihu/me.js",
+    "source": "lao-s"
   },
   {
     "name": "zhihu/question",
@@ -3816,7 +4249,8 @@
         "position": 1
       }
     ],
-    "file": "zhihu/question.js"
+    "file": "zhihu/question.js",
+    "source": "lao-s"
   },
   {
     "name": "zhihu/search",
@@ -3859,6 +4293,7 @@
         "position": 1
       }
     ],
-    "file": "zhihu/search.js"
+    "file": "zhihu/search.js",
+    "source": "lao-s"
   }
 ]

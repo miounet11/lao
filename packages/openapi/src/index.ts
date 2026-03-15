@@ -69,6 +69,7 @@ interface CatalogEntry {
   };
   args: CatalogArg[];
   file: string;
+  source?: string;
 }
 
 interface AuthResult {
@@ -681,7 +682,7 @@ function handleDocs(response: ServerResponse): void {
       {
         method: "GET",
         path: "/v1/catalog/sites",
-        description: "List all site adapters from miounet11/lao-s as API catalog metadata",
+        description: "List the full adapter catalog, including lao-s entries and hosted API extensions",
       },
       {
         method: "GET",

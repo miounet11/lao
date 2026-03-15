@@ -36,6 +36,7 @@ function createCard(entry) {
   const apiLookup = `curl -s "https://miaoda.vip/v1/catalog/site?name=${encodeURIComponent(entry.name)}"`;
   const capabilityText = entry.capabilities.length ? entry.capabilities.join(", ") : "none";
   const hosted = Boolean(entry.execution?.hosted);
+  const source = entry.source === "hosted-extension" ? "Hosted extension" : "lao-s";
   const hostedApi = hosted
     ? `curl -s https://miaoda.vip/v1/sites/run \\
   -H "Authorization: Bearer $API_KEY" \\
@@ -50,6 +51,7 @@ function createCard(entry) {
     <article class="card catalog-card">
       <p class="kicker">${escapeHtml(entry.platform)}</p>
       ${badge}
+      <p class="subtle">Source: <code>${escapeHtml(source)}</code></p>
       <h3>${escapeHtml(entry.name)}</h3>
       <p>${escapeHtml(entry.description || "No description")}</p>
       <p class="subtle">Domain: <code>${escapeHtml(entry.domain || "n/a")}</code> · Read-only: <code>${entry.readOnly ? "true" : "false"}</code> · Capabilities: <code>${escapeHtml(capabilityText)}</code></p>
@@ -179,7 +181,8 @@ async function initCatalogPage() {
     });
 
     const hostedCount = sites.filter((entry) => entry.execution?.hosted).length;
-    summary.textContent = `${filtered.length} adapters shown · ${sites.length} total adapters · ${hostedCount} hosted on miaoda.vip · ${platforms.length} platforms`;
+    const extensionCount = sites.filter((entry) => entry.source === "hosted-extension").length;
+    summary.textContent = `${filtered.length} adapters shown · ${sites.length} total adapters · ${hostedCount} hosted on miaoda.vip · ${extensionCount} hosted extensions · ${platforms.length} platforms`;
     grid.innerHTML = filtered.map(createCard).join("");
   }
 

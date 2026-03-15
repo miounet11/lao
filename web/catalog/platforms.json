@@ -56,6 +56,13 @@
     ]
   },
   {
+    "name": "crates",
+    "count": 1,
+    "domains": [
+      "crates.io"
+    ]
+  },
+  {
     "name": "csdn",
     "count": 1,
     "domains": [
@@ -74,6 +81,13 @@
     "count": 1,
     "domains": [
       "dev.to"
+    ]
+  },
+  {
+    "name": "dockerhub",
+    "count": 1,
+    "domains": [
+      "hub.docker.com"
     ]
   },
   {
@@ -135,6 +149,13 @@
     ]
   },
   {
+    "name": "huggingface",
+    "count": 1,
+    "domains": [
+      "huggingface.co"
+    ]
+  },
+  {
     "name": "hupu",
     "count": 1,
     "domains": [
@@ -163,6 +184,13 @@
     ]
   },
   {
+    "name": "maven",
+    "count": 1,
+    "domains": [
+      "search.maven.org"
+    ]
+  },
+  {
     "name": "npm",
     "count": 1,
     "domains": [
@@ -181,6 +209,13 @@
     "count": 1,
     "domains": [
       "www.producthunt.com"
+    ]
+  },
+  {
+    "name": "pubmed",
+    "count": 1,
+    "domains": [
+      "pubmed.ncbi.nlm.nih.gov"
     ]
   },
   {
@@ -223,6 +258,13 @@
     "count": 1,
     "domains": [
       "weixin.sogou.com"
+    ]
+  },
+  {
+    "name": "stackexchange",
+    "count": 1,
+    "domains": [
+      "api.stackexchange.com"
     ]
   },
   {

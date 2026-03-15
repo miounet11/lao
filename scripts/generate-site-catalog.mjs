@@ -8,6 +8,7 @@ const repoArg = process.argv[2];
 const outDirArg = process.argv[3];
 const repoUrl = "https://github.com/miounet11/lao-s.git";
 const hostedConfigPath = resolve("config", "hosted-sites.json");
+const customSitesConfigPath = resolve("config", "custom-sites.json");
 
 function loadHostedConfig() {
   try {
@@ -16,6 +17,73 @@ function loadHostedConfig() {
   } catch {
     return new Map();
   }
+}
+
+function loadCustomSites() {
+  try {
+    const raw = JSON.parse(readFileSync(customSitesConfigPath, "utf-8"));
+    return Array.isArray(raw.customSites) ? raw.customSites : [];
+  } catch {
+    return [];
+  }
+}
+
+function buildCatalogEntry(entry, hostedMap) {
+  const argEntries = (entry.args || []).map((arg, index) => ({
+    name: arg.name,
+    required: Boolean(arg.required),
+    description: arg.description || "",
+    position: typeof arg.position === "number" ? arg.position : index,
+  }));
+  const cliExample = String(entry.example || `iatlas-browser site ${entry.name}`).replace(/\bbb-browser\b/g, "iatlas-browser");
+  const mcpArgs = {};
+  const sampleArgs = {};
+  for (const arg of argEntries) {
+    mcpArgs[arg.name] = arg.required ? `<${arg.name}>` : "";
+    sampleArgs[arg.name] = arg.required ? `<${arg.name}>` : "";
+  }
+
+  const hostedInfo = hostedMap.get(entry.name);
+  return {
+    name: entry.name,
+    platform: entry.platform || entry.name.split("/")[0],
+    command: entry.command || entry.name.split("/").slice(1).join("/"),
+    description: entry.description || "",
+    domain: entry.domain || "",
+    readOnly: entry.readOnly !== false,
+    capabilities: entry.capabilities || [],
+    example: cliExample,
+    cliExample,
+    mcpExample: {
+      tool: "site_run",
+      arguments: {
+        name: entry.name,
+        args: mcpArgs,
+      },
+    },
+    execution: hostedInfo
+      ? {
+          mode: "hosted",
+          hosted: true,
+          notes: hostedInfo.notes || "",
+          apiExample: {
+            method: "POST",
+            path: "/v1/sites/run",
+            body: {
+              name: entry.name,
+              args: sampleArgs,
+            },
+          },
+        }
+      : {
+          mode: "local",
+          hosted: false,
+          notes: "Requires local iatlas-browser runtime and may depend on a real logged-in browser session.",
+        },
+    args: argEntries,
+    file: entry.file || "",
+    source: entry.source || "lao-s",
+  };
 }
 
 function ensureRepo(pathHint) {
@@ -62,18 +130,7 @@ function parseMeta(filePath, sourceRoot, hostedMap) {
     .replaceAll("epiral/iatlas-browser", "miounet11/lao")
     .replace(/\bbb-browser\b/g, "iatlas-browser");
 
-  const mcpArgs = {};
-  for (const arg of argEntries) {
-    mcpArgs[arg.name] = arg.required ? `<${arg.name}>` : "";
-  }
-
-  const hostedInfo = hostedMap.get(name);
-  const sampleArgs = {};
-  for (const arg of argEntries) {
-    sampleArgs[arg.name] = arg.required ? `<${arg.name}>` : "";
-  }
-
-  return {
+  return buildCatalogEntry({
     name,
     platform: name.split("/")[0],
     command: name.split("/").slice(1).join("/"),
@@ -83,35 +140,10 @@ function parseMeta(filePath, sourceRoot, hostedMap) {
     capabilities: meta.capabilities || [],
     example: cliExample,
     cliExample,
-    mcpExample: {
-      tool: "site_run",
-      arguments: {
-        name,
-        args: mcpArgs,
-      },
-    },
-    execution: hostedInfo
-      ? {
-          mode: "hosted",
-          hosted: true,
-          notes: hostedInfo.notes || "",
-          apiExample: {
-            method: "POST",
-            path: "/v1/sites/run",
-            body: {
-              name,
-              args: sampleArgs,
-            },
-          },
-        }
-      : {
-          mode: "local",
-          hosted: false,
-          notes: "Requires local iatlas-browser runtime and may depend on a real logged-in browser session.",
-        },
     args: argEntries,
     file: rel,
-  };
+    source: "lao-s",
+  }, hostedMap);
 }
 
 function walk(dir, root, output, hostedMap) {
@@ -135,6 +167,9 @@ mkdirSync(outDir, { recursive: true });
 const entries = [];
 const hostedMap = loadHostedConfig();
 walk(repoDir, repoDir, entries, hostedMap);
+for (const entry of loadCustomSites()) {
+  entries.push(buildCatalogEntry(entry, hostedMap));
+}
 entries.sort((a, b) => a.name.localeCompare(b.name));
 
 const platformMap = new Map();

@@ -364,6 +364,177 @@ async function yahooFinanceQuote(args: Record<string, string>) {
   };
 }
 
+async function cratesSearch(args: Record<string, string>) {
+  const query = requireArg(args, "query");
+  const count = parseCount(args.count, 10, 50);
+  const data = await fetchJson(`https://crates.io/api/v1/crates?page=1&per_page=${count}&q=${encodeURIComponent(query)}`) as Record<string, any>;
+  const crates = (data.crates ?? []).map((item: Record<string, any>) => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    max_version: item.max_version,
+    downloads: item.downloads,
+    recent_downloads: item.recent_downloads ?? null,
+    updated_at: item.updated_at,
+    repository: item.repository ?? null,
+    homepage: item.homepage ?? null,
+    documentation: item.documentation ?? null,
+    keywords: item.keywords ?? [],
+    url: `https://crates.io/crates/${item.id}`,
+  }));
+
+  return {
+    query,
+    total: data.meta?.total ?? crates.length,
+    count: crates.length,
+    crates,
+  };
+}
+
+async function dockerHubSearch(args: Record<string, string>) {
+  const query = requireArg(args, "query");
+  const count = parseCount(args.count, 10, 50);
+  const data = await fetchJson(`https://hub.docker.com/v2/search/repositories/?page_size=${count}&query=${encodeURIComponent(query)}`) as Record<string, any>;
+  const repositories = (data.results ?? []).map((item: Record<string, any>) => ({
+    name: item.repo_name ?? item.name,
+    namespace: item.repo_namespace ?? null,
+    description: item.short_description ?? item.description ?? "",
+    stars: item.star_count ?? 0,
+    pulls: item.pull_count ?? 0,
+    isOfficial: Boolean(item.is_official),
+    isAutomated: Boolean(item.is_automated),
+    lastUpdated: item.last_updated ?? null,
+    url: item.repo_name ? `https://hub.docker.com/r/${item.repo_name}` : null,
+  }));
+
+  return {
+    query,
+    total: data.count ?? repositories.length,
+    count: repositories.length,
+    repositories,
+  };
+}
+
+async function huggingFaceModels(args: Record<string, string>) {
+  const query = requireArg(args, "query");
+  const count = parseCount(args.count, 10, 50);
+  const models = await fetchJson(
+    `https://huggingface.co/api/models?search=${encodeURIComponent(query)}&limit=${count}&sort=downloads&direction=-1`,
+  ) as Record<string, any>[];
+
+  return {
+    query,
+    count: models.length,
+    models: models.map((item) => ({
+      id: item.id,
+      author: item.author ?? null,
+      pipeline_tag: item.pipeline_tag ?? null,
+      downloads: item.downloads ?? null,
+      likes: item.likes ?? null,
+      private: Boolean(item.private),
+      gated: item.gated ?? false,
+      updated_at: item.lastModified ?? null,
+      tags: (item.tags ?? []).slice(0, 10),
+      url: item.id ? `https://huggingface.co/${item.id}` : null,
+    })),
+  };
+}
+
+async function mavenSearch(args: Record<string, string>) {
+  const query = requireArg(args, "query");
+  const count = parseCount(args.count, 10, 50);
+  const data = await fetchJson(
+    `https://search.maven.org/solrsearch/select?q=${encodeURIComponent(query)}&rows=${count}&wt=json`,
+  ) as Record<string, any>;
+  const docs = data.response?.docs ?? [];
+
+  return {
+    query,
+    total: data.response?.numFound ?? docs.length,
+    count: docs.length,
+    artifacts: docs.map((doc: Record<string, any>) => ({
+      group: doc.g,
+      artifact: doc.a,
+      latestVersion: doc.latestVersion ?? null,
+      packaging: doc.p ?? null,
+      timestamp: doc.timestamp ?? null,
+      versionCount: doc.versionCount ?? null,
+      repositoryId: doc.repositoryId ?? null,
+      url: doc.g && doc.a ? `https://search.maven.org/artifact/${doc.g}/${doc.a}` : null,
+    })),
+  };
+}
+
+async function pubmedSearch(args: Record<string, string>) {
+  const query = requireArg(args, "query");
+  const count = parseCount(args.count, 10, 20);
+  const searchData = await fetchJson(
+    `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&retmode=json&sort=relevance&retmax=${count}&term=${encodeURIComponent(query)}`,
+  ) as Record<string, any>;
+  const ids = searchData.esearchresult?.idlist ?? [];
+  if (!ids.length) {
+    return {
+      query,
+      total: Number.parseInt(searchData.esearchresult?.count ?? "0", 10) || 0,
+      count: 0,
+      articles: [],
+    };
+  }
+
+  const summaryData = await fetchJson(
+    `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=${encodeURIComponent(ids.join(","))}`,
+  ) as Record<string, any>;
+
+  return {
+    query,
+    total: Number.parseInt(searchData.esearchresult?.count ?? "0", 10) || ids.length,
+    count: ids.length,
+    articles: ids.map((id: string) => {
+      const item = summaryData.result?.[id] ?? {};
+      return {
+        uid: id,
+        title: item.title ?? null,
+        fullJournalName: item.fulljournalname ?? null,
+        pubdate: item.pubdate ?? null,
+        authors: (item.authors ?? []).map((author: Record<string, any>) => author.name).filter(Boolean),
+        doi: item.elocationid ?? null,
+        articleIds: item.articleids ?? [],
+        url: `https://pubmed.ncbi.nlm.nih.gov/${id}/`,
+      };
+    }),
+  };
+}
+
+async function stackExchangeSearch(args: Record<string, string>) {
+  const query = requireArg(args, "query");
+  const site = args.site?.trim() || "stackoverflow";
+  const count = parseCount(args.count, 10, 50);
+  const data = await fetchJson(
+    `https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&site=${encodeURIComponent(site)}&pagesize=${count}&q=${encodeURIComponent(query)}`,
+  ) as Record<string, any>;
+  const items = data.items ?? [];
+
+  return {
+    query,
+    site,
+    count: items.length,
+    hasMore: Boolean(data.has_more),
+    questions: items.map((item: Record<string, any>) => ({
+      question_id: item.question_id,
+      title: stripHtml(item.title ?? ""),
+      score: item.score ?? 0,
+      answer_count: item.answer_count ?? 0,
+      view_count: item.view_count ?? 0,
+      is_answered: Boolean(item.is_answered),
+      tags: item.tags ?? [],
+      owner: item.owner?.display_name ?? null,
+      creation_date: item.creation_date ?? null,
+      last_activity_date: item.last_activity_date ?? null,
+      url: item.link ?? null,
+    })),
+  };
+}
+
 const handlers: Record<string, HostedSiteHandler> = {
   "github/repo": githubRepo,
   "github/issues": githubIssues,
@@ -377,6 +548,12 @@ const handlers: Record<string, HostedSiteHandler> = {
   "pypi/package": pypiPackage,
   "bbc/news": bbcNews,
   "yahoo-finance/quote": yahooFinanceQuote,
+  "crates/search": cratesSearch,
+  "dockerhub/search": dockerHubSearch,
+  "huggingface/models": huggingFaceModels,
+  "maven/search": mavenSearch,
+  "pubmed/search": pubmedSearch,
+  "stackexchange/search": stackExchangeSearch,
 };
 
 const hostedSiteInfo: HostedSiteInfo[] = [
@@ -392,6 +569,12 @@ const hostedSiteInfo: HostedSiteInfo[] = [
   { name: "pypi/package", notes: "PyPI package metadata via public JSON API" },
   { name: "bbc/news", notes: "BBC News RSS with optional server-side query filtering" },
   { name: "yahoo-finance/quote", notes: "Yahoo Finance quote lookup" },
+  { name: "crates/search", notes: "Rust crate search via crates.io API" },
+  { name: "dockerhub/search", notes: "Docker Hub repository search via public API" },
+  { name: "huggingface/models", notes: "Hugging Face model search via public API" },
+  { name: "maven/search", notes: "Maven Central artifact search via Solr API" },
+  { name: "pubmed/search", notes: "PubMed search via NCBI E-utilities" },
+  { name: "stackexchange/search", notes: "Stack Exchange question search via public API" },
 ];
 
 export function listHostedSiteRunners(): HostedSiteInfo[] {

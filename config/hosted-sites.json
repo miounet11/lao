@@ -59,6 +59,36 @@
       "name": "yahoo-finance/quote",
       "status": "hosted",
       "notes": "Yahoo Finance quote lookup via public quote endpoints"
+    },
+    {
+      "name": "crates/search",
+      "status": "hosted",
+      "notes": "Rust crate search via crates.io API"
+    },
+    {
+      "name": "dockerhub/search",
+      "status": "hosted",
+      "notes": "Docker Hub repository search via public API"
+    },
+    {
+      "name": "huggingface/models",
+      "status": "hosted",
+      "notes": "Hugging Face model search via public API"
+    },
+    {
+      "name": "maven/search",
+      "status": "hosted",
+      "notes": "Maven Central artifact search via Solr API"
+    },
+    {
+      "name": "pubmed/search",
+      "status": "hosted",
+      "notes": "PubMed search via NCBI E-utilities"
+    },
+    {
+      "name": "stackexchange/search",
+      "status": "hosted",
+      "notes": "Stack Exchange question search via public API"
     }
   ]
 }

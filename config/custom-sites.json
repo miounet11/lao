@@ -1,0 +1,165 @@
+{
+  "customSites": [
+    {
+      "name": "crates/search",
+      "platform": "crates",
+      "command": "search",
+      "description": "Search Rust crates via the public crates.io API",
+      "domain": "crates.io",
+      "readOnly": true,
+      "capabilities": [
+        "network"
+      ],
+      "example": "iatlas-browser site crates/search tokio",
+      "args": [
+        {
+          "name": "query",
+          "required": true,
+          "description": "Search query"
+        },
+        {
+          "name": "count",
+          "required": false,
+          "description": "Number of results (default 10, max 50)"
+        }
+      ],
+      "file": "_hosted/crates/search.js",
+      "source": "hosted-extension"
+    },
+    {
+      "name": "dockerhub/search",
+      "platform": "dockerhub",
+      "command": "search",
+      "description": "Search public Docker Hub repositories",
+      "domain": "hub.docker.com",
+      "readOnly": true,
+      "capabilities": [
+        "network"
+      ],
+      "example": "iatlas-browser site dockerhub/search nginx",
+      "args": [
+        {
+          "name": "query",
+          "required": true,
+          "description": "Search query"
+        },
+        {
+          "name": "count",
+          "required": false,
+          "description": "Number of results (default 10, max 50)"
+        }
+      ],
+      "file": "_hosted/dockerhub/search.js",
+      "source": "hosted-extension"
+    },
+    {
+      "name": "huggingface/models",
+      "platform": "huggingface",
+      "command": "models",
+      "description": "Search public Hugging Face models",
+      "domain": "huggingface.co",
+      "readOnly": true,
+      "capabilities": [
+        "network"
+      ],
+      "example": "iatlas-browser site huggingface/models sentence-transformers",
+      "args": [
+        {
+          "name": "query",
+          "required": true,
+          "description": "Search query"
+        },
+        {
+          "name": "count",
+          "required": false,
+          "description": "Number of results (default 10, max 50)"
+        }
+      ],
+      "file": "_hosted/huggingface/models.js",
+      "source": "hosted-extension"
+    },
+    {
+      "name": "maven/search",
+      "platform": "maven",
+      "command": "search",
+      "description": "Search Maven Central artifacts",
+      "domain": "search.maven.org",
+      "readOnly": true,
+      "capabilities": [
+        "network"
+      ],
+      "example": "iatlas-browser site maven/search junit",
+      "args": [
+        {
+          "name": "query",
+          "required": true,
+          "description": "Search query"
+        },
+        {
+          "name": "count",
+          "required": false,
+          "description": "Number of results (default 10, max 50)"
+        }
+      ],
+      "file": "_hosted/maven/search.js",
+      "source": "hosted-extension"
+    },
+    {
+      "name": "pubmed/search",
+      "platform": "pubmed",
+      "command": "search",
+      "description": "Search PubMed articles via NCBI E-utilities",
+      "domain": "pubmed.ncbi.nlm.nih.gov",
+      "readOnly": true,
+      "capabilities": [
+        "network"
+      ],
+      "example": "iatlas-browser site pubmed/search CRISPR",
+      "args": [
+        {
+          "name": "query",
+          "required": true,
+          "description": "Search query"
+        },
+        {
+          "name": "count",
+          "required": false,
+          "description": "Number of results (default 10, max 20)"
+        }
+      ],
+      "file": "_hosted/pubmed/search.js",
+      "source": "hosted-extension"
+    },
+    {
+      "name": "stackexchange/search",
+      "platform": "stackexchange",
+      "command": "search",
+      "description": "Search Stack Exchange questions through the public API",
+      "domain": "api.stackexchange.com",
+      "readOnly": true,
+      "capabilities": [
+        "network"
+      ],
+      "example": "iatlas-browser site stackexchange/search \"playwright proxy\"",
+      "args": [
+        {
+          "name": "query",
+          "required": true,
+          "description": "Search query"
+        },
+        {
+          "name": "site",
+          "required": false,
+          "description": "Stack Exchange site slug, default: stackoverflow"
+        },
+        {
+          "name": "count",
+          "required": false,
+          "description": "Number of results (default 10, max 50)"
+        }
+      ],
+      "file": "_hosted/stackexchange/search.js",
+      "source": "hosted-extension"
+    }
+  ]
+}

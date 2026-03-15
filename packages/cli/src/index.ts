@@ -43,6 +43,9 @@ import { traceCommand } from "./commands/trace.js";
 import { fetchCommand } from "./commands/fetch.js";
 import { siteCommand } from "./commands/site.js";
 import { doctorCommand } from "./commands/doctor.js";
+import { setupCommand } from "./commands/setup.js";
+import { mcpConfigCommand } from "./commands/mcp-config.js";
+import { apiGuideCommand } from "./commands/api-guide.js";
 import { APP_NAME, APP_VERSION } from "@iatlas-browser/shared";
 
 const HELP_TEXT = `
@@ -57,8 +60,14 @@ iatlas-browser - AI Agent 浏览器自动化工具
   site <name> [args]   运行 adapter（如 site reddit/thread <url>）
   site update          更新社区 adapter 库
   guide                如何创建新 adapter（开发指南）
+  setup                一键初始化扩展/MCP/API 示例
+  mcp-config [client]  输出 MCP 配置片段
+  api-guide            输出本地 HTTP API 示例
 
   示例：
+    iatlas-browser setup
+    iatlas-browser mcp-config cursor
+    iatlas-browser api-guide
     iatlas-browser site twitter/search "claude code"
     iatlas-browser site reddit/thread <url>
     iatlas-browser site github/pr-create owner/repo --title "feat: ..."
@@ -423,6 +432,21 @@ async function main(): Promise<void> {
 
       case "doctor": {
         await doctorCommand({ json: parsed.flags.json });
+        break;
+      }
+
+      case "setup": {
+        await setupCommand({ json: parsed.flags.json });
+        break;
+      }
+
+      case "mcp-config": {
+        await mcpConfigCommand(parsed.args[0], { json: parsed.flags.json });
+        break;
+      }
+
+      case "api-guide": {
+        await apiGuideCommand({ json: parsed.flags.json });
         break;
       }
 

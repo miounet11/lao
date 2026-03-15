@@ -102,13 +102,28 @@ This is especially useful for:
 
 ## Quick Start
 
-### Install
+### One-line install
+
+```bash
+curl -fsSL https://miaoda.vip/install.sh | bash
+```
+
+This script will:
+
+- clone or update the repository into `~/.iatlas-browser/src`
+- install dependencies
+- build the project
+- create local `iatlas-browser` and `iatlas-browser-mcp` launchers in `~/.local/bin`
+- run `iatlas-browser setup`
+
+### Install from npm
 
 ```bash
 npm install -g iatlas-browser
+iatlas-browser setup
 ```
 
-### Build or download the extension
+### Build or download the extension bundle
 
 Option A: use a release build
 
@@ -129,7 +144,9 @@ The unpacked extension output will be in `extension/`.
 1. Open `chrome://extensions/`
 2. Enable `Developer mode`
 3. Click `Load unpacked`
-4. Select the `extension/` directory
+4. Select either:
+   - `~/.iatlas-browser/extension` after `iatlas-browser setup`
+   - or the local repo `extension/` directory if building from source
 
 ### Start the daemon
 
@@ -153,6 +170,20 @@ iatlas-browser get title
 
 ## MCP Setup
 
+Fastest path:
+
+```bash
+iatlas-browser mcp-config cursor
+```
+
+That prints a ready-to-paste MCP block.
+
+Default generated snippet files after `iatlas-browser setup`:
+
+- `~/.iatlas-browser/mcp/generic.json`
+- `~/.iatlas-browser/mcp/cursor.json`
+- `~/.iatlas-browser/mcp/claude-desktop.json`
+
 Example configuration:
 
 ```json
@@ -166,6 +197,25 @@ Example configuration:
 }
 ```
 
+## Local API Setup
+
+The daemon is also a local HTTP API.
+
+Fastest path:
+
+```bash
+iatlas-browser api-guide
+```
+
+That prints ready-made `curl` examples for:
+
+- `GET /status`
+- `POST /command`
+
+Generated example file after `iatlas-browser setup`:
+
+- `~/.iatlas-browser/api/examples.sh`
+
 ## Command Groups
 
 Main command families:
@@ -175,7 +225,7 @@ Main command families:
 - inspection: `snapshot`, `get`, `screenshot`, `eval`
 - browser state: `tab`, `frame`, `dialog`, `wait`
 - debugging: `network`, `console`, `errors`, `trace`
-- platform: `daemon`, `status`, `stop`, `reload`, `doctor`
+- platform: `daemon`, `status`, `stop`, `reload`, `doctor`, `setup`, `mcp-config`, `api-guide`
 - adapters: `site`, `guide`
 
 Run help at any time:
@@ -183,6 +233,8 @@ Run help at any time:
 ```bash
 iatlas-browser --help
 iatlas-browser site --help
+iatlas-browser mcp-config cursor
+iatlas-browser api-guide
 ```
 
 ## Site Adapter System

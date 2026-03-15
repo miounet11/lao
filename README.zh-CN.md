@@ -46,16 +46,34 @@ iatlas-browser 翻转了这个逻辑：**不是让网站适配机器，而是让
 
 ## 快速开始
 
-### 安装
+### 一键安装
+
+```bash
+curl -fsSL https://miaoda.vip/install.sh | bash
+```
+
+这个脚本会：
+
+- 拉取或更新仓库到 `~/.iatlas-browser/src`
+- 安装依赖
+- 构建项目
+- 在 `~/.local/bin` 创建 `iatlas-browser` 和 `iatlas-browser-mcp`
+- 自动执行 `iatlas-browser setup`
+
+### npm 安装
 
 ```bash
 npm install -g iatlas-browser
+iatlas-browser setup
 ```
 
 ### Chrome 扩展
 
 1. 从 [Releases](https://github.com/miounet11/lao/releases/latest) 下载 zip
 2. 解压 → `chrome://extensions/` → 开发者模式 → 加载已解压的扩展程序
+3. 也可以直接加载：
+   - `~/.iatlas-browser/extension`
+   - 或源码仓库里的 `extension/`
 
 ### 使用
 
@@ -77,6 +95,41 @@ iatlas-browser site zhihu/hot # 开搞
   }
 }
 ```
+
+## MCP 快速使用
+
+最快方式：
+
+```bash
+iatlas-browser mcp-config cursor
+```
+
+它会直接输出可粘贴的 MCP 配置。
+
+执行 `iatlas-browser setup` 后，还会生成：
+
+- `~/.iatlas-browser/mcp/generic.json`
+- `~/.iatlas-browser/mcp/cursor.json`
+- `~/.iatlas-browser/mcp/claude-desktop.json`
+
+## 本地 API 快速使用
+
+Daemon 同时也是本地 HTTP API。
+
+最快方式：
+
+```bash
+iatlas-browser api-guide
+```
+
+它会输出现成的 `curl` 示例，包括：
+
+- `GET /status`
+- `POST /command`
+
+执行 `iatlas-browser setup` 后，还会生成：
+
+- `~/.iatlas-browser/api/examples.sh`
 
 ## 35 个平台，97 个命令
 

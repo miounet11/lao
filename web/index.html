@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iatlas-browser</title>
+  <meta name="description" content="Install and use iatlas-browser from the web, terminal, MCP, or local API.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">miaoda.vip × iatlas-browser</p>
+      <h1>Your browser session, exposed as a local tool layer.</h1>
+      <p class="lede">
+        Install from one command, load the Chrome extension, then use
+        <code>iatlas-browser</code> from the terminal, MCP clients, or the local HTTP API.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="/install.sh">Download install.sh</a>
+        <a class="button" href="/downloads/iatlas-browser-extension.zip">Download extension zip</a>
+        <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card accent">
+        <h2>1. One-line install</h2>
+        <p>This installs the repo into <code>~/.iatlas-browser/src</code>, builds it, and bootstraps local files.</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copy</button>
+      </article>
+
+      <article class="card">
+        <h2>2. Load the extension</h2>
+        <p>After install, load the unpacked extension in Chrome:</p>
+        <pre><code>chrome://extensions/</code></pre>
+        <p class="subtle">Use the generated path: <code>~/.iatlas-browser/extension</code></p>
+      </article>
+
+      <article class="card">
+        <h2>3. Start local runtime</h2>
+        <pre><code>iatlas-browser daemon
+iatlas-browser doctor</code></pre>
+        <button class="copy" data-copy="iatlas-browser daemon
+iatlas-browser doctor">Copy</button>
+      </article>
+
+      <article class="card">
+        <h2>4. Use immediately</h2>
+        <pre><code>iatlas-browser open https://example.com
+iatlas-browser snapshot -i
+iatlas-browser mcp-config cursor
+iatlas-browser api-guide</code></pre>
+        <button class="copy" data-copy="iatlas-browser open https://example.com
+iatlas-browser snapshot -i
+iatlas-browser mcp-config cursor
+iatlas-browser api-guide">Copy</button>
+      </article>
+    </section>
+
+    <section class="split">
+      <article class="panel">
+        <div class="panel-head">
+          <h2>MCP quick start</h2>
+          <a href="/mcp/cursor.json">cursor.json</a>
+        </div>
+        <p>Paste this into Cursor, Claude Desktop, or another MCP-compatible tool.</p>
+        <pre><code>{
+  "mcpServers": {
+    "iatlas-browser": {
+      "command": "npx",
+      "args": ["-y", "iatlas-browser", "--mcp"]
+    }
+  }
+}</code></pre>
+        <button class="copy" data-copy='{
+  "mcpServers": {
+    "iatlas-browser": {
+      "command": "npx",
+      "args": ["-y", "iatlas-browser", "--mcp"]
+    }
+  }
+}'>Copy</button>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Local API quick start</h2>
+          <a href="/api/examples.sh">examples.sh</a>
+        </div>
+        <p>The daemon exposes a local HTTP API on <code>127.0.0.1:19824</code>.</p>
+        <pre><code>curl -s http://127.0.0.1:19824/status
+
+curl -s http://127.0.0.1:19824/command \
+  -H "Content-Type: application/json" \
+  -d '{"id":"demo-open","action":"open","url":"https://example.com"}'</code></pre>
+        <button class="copy" data-copy='curl -s http://127.0.0.1:19824/status
+
+curl -s http://127.0.0.1:19824/command \
+  -H "Content-Type: application/json" \
+  -d '"'"'{"id":"demo-open","action":"open","url":"https://example.com"}'"'"''>Copy</button>
+      </article>
+    </section>
+
+    <section class="strip">
+      <div>
+        <h2>What this page provides</h2>
+        <ul>
+          <li>One-line installer at <code>/install.sh</code></li>
+          <li>Extension zip download</li>
+          <li>MCP config snippets</li>
+          <li>API usage examples</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Repository</h2>
+        <p><a href="https://github.com/miounet11/lao">github.com/miounet11/lao</a></p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    for (const button of document.querySelectorAll('.copy')) {
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(button.dataset.copy || '');
+          const original = button.textContent;
+          button.textContent = 'Copied';
+          setTimeout(() => { button.textContent = original; }, 1200);
+        } catch {
+          button.textContent = 'Copy failed';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

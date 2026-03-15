@@ -30,7 +30,7 @@ import { execSync } from "node:child_process";
 const APP_DIR = join(homedir(), APP_DIRNAME);
 const LOCAL_SITES_DIR = join(APP_DIR, "sites");
 const COMMUNITY_SITES_DIR = join(APP_DIR, "bb-sites");
-const COMMUNITY_REPO = "https://github.com/epiral/bb-sites.git";
+const COMMUNITY_REPO = "https://github.com/miounet11/lao-s.git";
 
 export interface SiteOptions {
   json?: boolean;
@@ -419,15 +419,15 @@ async function siteRun(
       ? `Please log in to https://${site.domain} in your browser first, then retry.`
       : undefined;
     const hint = loginHint || errObj.hint;
-    const reportHint = `If this is an adapter bug, report via: gh issue create --repo epiral/bb-sites --title "[${name}] <description>" OR: iatlas-browser site github/issue-create epiral/bb-sites --title "[${name}] <description>"`;
+    const reportHint = `If this is an adapter bug, report via: gh issue create --repo miounet11/lao-s --title "[${name}] <description>" OR: iatlas-browser site github/issue-create miounet11/lao-s --title "[${name}] <description>"`;
 
     if (options.json) {
       console.log(JSON.stringify({ id: evalReq.id, success: false, error: errObj.error, hint, reportHint }));
     } else {
       console.error(`[error] site ${name}: ${errObj.error}`);
       if (hint) console.error(`  Hint: ${hint}`);
-      console.error(`  Report: gh issue create --repo epiral/bb-sites --title "[${name}] ..."`);
-      console.error(`     or: iatlas-browser site github/issue-create epiral/bb-sites --title "[${name}] ..."`);
+      console.error(`  Report: gh issue create --repo miounet11/lao-s --title "[${name}] ..."`);
+      console.error(`     or: iatlas-browser site github/issue-create miounet11/lao-s --title "[${name}] ..."`);
     }
     process.exit(1);
   }
@@ -469,8 +469,8 @@ export async function siteCommand(
   iatlas-browser site search reddit
 
 创建新 adapter: iatlas-browser guide
-报告问题: gh issue create --repo epiral/bb-sites --title "[adapter-name] 描述"
-贡献社区: https://github.com/epiral/bb-sites`);
+报告问题: gh issue create --repo miounet11/lao-s --title "[adapter-name] 描述"
+贡献社区: https://github.com/miounet11/lao-s`);
     return;
   }
 

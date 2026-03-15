@@ -342,6 +342,25 @@ thead th {
   font-size: 15px;
 }
 
+.catalog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.catalog-filters input,
+.catalog-filters select {
+  flex: 1 1 220px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font-size: 15px;
+}
+
 .signup-result {
   min-height: 80px;
   margin-top: 14px;
@@ -383,6 +402,10 @@ thead th {
   border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.74);
   box-shadow: var(--shadow);
+}
+
+.catalog-card {
+  min-width: 0;
 }
 
 .footer {

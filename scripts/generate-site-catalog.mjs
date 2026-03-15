@@ -1,0 +1,125 @@
+#!/usr/bin/env node
+import { mkdtempSync, readFileSync, readdirSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join, relative, resolve } from "node:path";
+import { execFileSync } from "node:child_process";
+
+const repoArg = process.argv[2];
+const outDirArg = process.argv[3];
+const repoUrl = "https://github.com/miounet11/lao-s.git";
+
+function ensureRepo(pathHint) {
+  if (pathHint && existsSync(pathHint)) {
+    return resolve(pathHint);
+  }
+
+  const tempDir = mkdtempSync(join(tmpdir(), "lao-s-catalog-"));
+  execFileSync("git", ["clone", "--depth", "1", repoUrl, tempDir], { stdio: "inherit" });
+  return tempDir;
+}
+
+function parseMeta(filePath, sourceRoot) {
+  const content = readFileSync(filePath, "utf-8");
+  const rel = relative(sourceRoot, filePath).replace(/\\/g, "/");
+  const defaultName = rel.replace(/\.js$/, "");
+  const match = content.match(/\/\*\s*@meta\s*\n([\s\S]*?)\*\//);
+  let meta = {};
+  if (match) {
+    try {
+      meta = JSON.parse(match[1]);
+    } catch {
+      meta = {};
+    }
+  }
+
+  const name = meta.name || defaultName;
+  const args = meta.args || {};
+  const argEntries = Object.entries(args).map(([argName, def], index) => ({
+    name: argName,
+    required: Boolean(def?.required),
+    description: def?.description || "",
+    position: index,
+  }));
+
+  const positionalUsage = argEntries
+    .map((arg) => (arg.required ? `<${arg.name}>` : `[${arg.name}]`))
+    .join(" ");
+  const cliExample = meta.example
+    ? String(meta.example).replace(/\bbb-browser\b/g, "iatlas-browser")
+    : `iatlas-browser site ${name}${positionalUsage ? ` ${positionalUsage}` : ""}`;
+
+  const mcpArgs = {};
+  for (const arg of argEntries) {
+    mcpArgs[arg.name] = arg.required ? `<${arg.name}>` : "";
+  }
+
+  return {
+    name,
+    platform: name.split("/")[0],
+    command: name.split("/").slice(1).join("/"),
+    description: meta.description || "",
+    domain: meta.domain || "",
+    readOnly: meta.readOnly !== false,
+    capabilities: meta.capabilities || [],
+    example: cliExample,
+    cliExample,
+    mcpExample: {
+      tool: "site_run",
+      arguments: {
+        name,
+        args: mcpArgs,
+      },
+    },
+    args: argEntries,
+    file: rel,
+  };
+}
+
+function walk(dir, root, output) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name.startsWith(".")) continue;
+    const fullPath = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walk(fullPath, root, output);
+      continue;
+    }
+    if (entry.isFile() && entry.name.endsWith(".js")) {
+      output.push(parseMeta(fullPath, root));
+    }
+  }
+}
+
+const repoDir = ensureRepo(repoArg);
+const outDir = resolve(outDirArg || "web/catalog");
+mkdirSync(outDir, { recursive: true });
+
+const entries = [];
+walk(repoDir, repoDir, entries);
+entries.sort((a, b) => a.name.localeCompare(b.name));
+
+const platformMap = new Map();
+for (const entry of entries) {
+  if (!platformMap.has(entry.platform)) {
+    platformMap.set(entry.platform, {
+      name: entry.platform,
+      count: 0,
+      domains: new Set(),
+    });
+  }
+  const bucket = platformMap.get(entry.platform);
+  bucket.count += 1;
+  if (entry.domain) bucket.domains.add(entry.domain);
+}
+
+const platforms = Array.from(platformMap.values())
+  .map((item) => ({
+    name: item.name,
+    count: item.count,
+    domains: Array.from(item.domains).sort(),
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+writeFileSync(join(outDir, "sites.json"), `${JSON.stringify(entries, null, 2)}\n`, "utf-8");
+writeFileSync(join(outDir, "platforms.json"), `${JSON.stringify(platforms, null, 2)}\n`, "utf-8");
+
+console.log(`Generated ${entries.length} site catalog entries into ${outDir}`);

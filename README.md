@@ -249,7 +249,7 @@ An adapter is a small JavaScript unit that runs against a real website context a
 Default directories:
 
 - private adapters: `~/.iatlas-browser/sites`
-- shared adapters: `~/.iatlas-browser/bb-sites`
+- shared adapters: `~/.iatlas-browser/bb-sites` from `miounet11/lao-s`
 
 Useful commands:
 

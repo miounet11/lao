@@ -1,0 +1,306 @@
+[
+  {
+    "name": "36kr",
+    "count": 1,
+    "domains": [
+      "36kr.com"
+    ]
+  },
+  {
+    "name": "arxiv",
+    "count": 1,
+    "domains": [
+      "arxiv.org"
+    ]
+  },
+  {
+    "name": "baidu",
+    "count": 1,
+    "domains": [
+      "www.baidu.com"
+    ]
+  },
+  {
+    "name": "bbc",
+    "count": 1,
+    "domains": [
+      "www.bbc.com"
+    ]
+  },
+  {
+    "name": "bilibili",
+    "count": 9,
+    "domains": [
+      "www.bilibili.com"
+    ]
+  },
+  {
+    "name": "bing",
+    "count": 1,
+    "domains": [
+      "www.bing.com"
+    ]
+  },
+  {
+    "name": "boss",
+    "count": 2,
+    "domains": [
+      "www.zhipin.com"
+    ]
+  },
+  {
+    "name": "cnblogs",
+    "count": 1,
+    "domains": [
+      "zzk.cnblogs.com"
+    ]
+  },
+  {
+    "name": "csdn",
+    "count": 1,
+    "domains": [
+      "so.csdn.net"
+    ]
+  },
+  {
+    "name": "ctrip",
+    "count": 1,
+    "domains": [
+      "www.ctrip.com"
+    ]
+  },
+  {
+    "name": "devto",
+    "count": 1,
+    "domains": [
+      "dev.to"
+    ]
+  },
+  {
+    "name": "douban",
+    "count": 6,
+    "domains": [
+      "movie.douban.com",
+      "www.douban.com"
+    ]
+  },
+  {
+    "name": "duckduckgo",
+    "count": 1,
+    "domains": [
+      "duckduckgo.com"
+    ]
+  },
+  {
+    "name": "eastmoney",
+    "count": 2,
+    "domains": [
+      "quote.eastmoney.com",
+      "www.eastmoney.com"
+    ]
+  },
+  {
+    "name": "genius",
+    "count": 1,
+    "domains": [
+      "genius.com"
+    ]
+  },
+  {
+    "name": "github",
+    "count": 6,
+    "domains": [
+      "github.com"
+    ]
+  },
+  {
+    "name": "google",
+    "count": 1,
+    "domains": [
+      "www.google.com"
+    ]
+  },
+  {
+    "name": "gsmarena",
+    "count": 1,
+    "domains": [
+      "www.gsmarena.com"
+    ]
+  },
+  {
+    "name": "hackernews",
+    "count": 2,
+    "domains": [
+      "news.ycombinator.com"
+    ]
+  },
+  {
+    "name": "hupu",
+    "count": 1,
+    "domains": [
+      "bbs.hupu.com"
+    ]
+  },
+  {
+    "name": "imdb",
+    "count": 1,
+    "domains": [
+      "www.imdb.com"
+    ]
+  },
+  {
+    "name": "jike",
+    "count": 2,
+    "domains": [
+      "web.okjike.com"
+    ]
+  },
+  {
+    "name": "linkedin",
+    "count": 2,
+    "domains": [
+      "www.linkedin.com"
+    ]
+  },
+  {
+    "name": "npm",
+    "count": 1,
+    "domains": [
+      "www.npmjs.com"
+    ]
+  },
+  {
+    "name": "openlibrary",
+    "count": 1,
+    "domains": [
+      "openlibrary.org"
+    ]
+  },
+  {
+    "name": "producthunt",
+    "count": 1,
+    "domains": [
+      "www.producthunt.com"
+    ]
+  },
+  {
+    "name": "pypi",
+    "count": 2,
+    "domains": [
+      "pypi.org"
+    ]
+  },
+  {
+    "name": "qidian",
+    "count": 1,
+    "domains": [
+      "www.qidian.com"
+    ]
+  },
+  {
+    "name": "reddit",
+    "count": 4,
+    "domains": [
+      "www.reddit.com"
+    ]
+  },
+  {
+    "name": "reuters",
+    "count": 1,
+    "domains": [
+      "www.reuters.com"
+    ]
+  },
+  {
+    "name": "smzdm",
+    "count": 1,
+    "domains": [
+      "www.smzdm.com"
+    ]
+  },
+  {
+    "name": "sogou",
+    "count": 1,
+    "domains": [
+      "weixin.sogou.com"
+    ]
+  },
+  {
+    "name": "stackoverflow",
+    "count": 1,
+    "domains": [
+      "stackoverflow.com"
+    ]
+  },
+  {
+    "name": "toutiao",
+    "count": 2,
+    "domains": [
+      "so.toutiao.com",
+      "www.toutiao.com"
+    ]
+  },
+  {
+    "name": "twitter",
+    "count": 5,
+    "domains": [
+      "x.com"
+    ]
+  },
+  {
+    "name": "v2ex",
+    "count": 3,
+    "domains": [
+      "www.v2ex.com"
+    ]
+  },
+  {
+    "name": "weibo",
+    "count": 7,
+    "domains": [
+      "weibo.com"
+    ]
+  },
+  {
+    "name": "wikipedia",
+    "count": 2,
+    "domains": [
+      "en.wikipedia.org"
+    ]
+  },
+  {
+    "name": "xiaohongshu",
+    "count": 6,
+    "domains": [
+      "www.xiaohongshu.com"
+    ]
+  },
+  {
+    "name": "yahoo-finance",
+    "count": 1,
+    "domains": [
+      "finance.yahoo.com"
+    ]
+  },
+  {
+    "name": "youdao",
+    "count": 1,
+    "domains": [
+      "dict.youdao.com"
+    ]
+  },
+  {
+    "name": "youtube",
+    "count": 6,
+    "domains": [
+      "www.youtube.com"
+    ]
+  },
+  {
+    "name": "zhihu",
+    "count": 4,
+    "domains": [
+      "www.zhihu.com"
+    ]
+  }
+]

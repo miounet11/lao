@@ -12,6 +12,7 @@ const HOST = process.env.OPENAPI_HOST ?? "127.0.0.1";
 const PUBLIC_ORIGIN = process.env.OPENAPI_PUBLIC_ORIGIN ?? "https://miaoda.vip";
 const DATA_DIR = process.env.OPENAPI_DATA_DIR ?? resolve(process.cwd(), "data");
 const STORE_PATH = join(DATA_DIR, "store.json");
+const CATALOG_PATH = process.env.OPENAPI_CATALOG_PATH ?? resolve(process.cwd(), "catalog", "sites.json");
 const MAX_BODY_BYTES = 512_000;
 const DEFAULT_TIMEOUT_MS = 15_000;
 const MAX_TIMEOUT_MS = 30_000;
@@ -26,6 +27,34 @@ interface UserRecord {
 
 interface StoreShape {
   users: Record<string, UserRecord>;
+}
+
+interface CatalogArg {
+  name: string;
+  required: boolean;
+  description: string;
+  position: number;
+}
+
+interface CatalogEntry {
+  name: string;
+  platform: string;
+  command: string;
+  description: string;
+  domain: string;
+  readOnly: boolean;
+  capabilities: string[];
+  example: string;
+  cliExample: string;
+  mcpExample: {
+    tool: string;
+    arguments: {
+      name: string;
+      args: Record<string, string>;
+    };
+  };
+  args: CatalogArg[];
+  file: string;
 }
 
 interface AuthResult {
@@ -166,6 +195,14 @@ function sendError(response: ServerResponse, statusCode: number, code: string, m
       ...(extra ?? {}),
     },
   });
+}
+
+function loadCatalog(): CatalogEntry[] {
+  try {
+    return JSON.parse(readFileSync(CATALOG_PATH, "utf-8")) as CatalogEntry[];
+  } catch {
+    return [];
+  }
 }
 
 async function readJsonBody<T>(request: IncomingMessage): Promise<T> {
@@ -555,6 +592,16 @@ function handleDocs(response: ServerResponse): void {
         },
         description: "Fetch a public http/https URL and return metadata, text, or HTML",
       },
+      {
+        method: "GET",
+        path: "/v1/catalog/sites",
+        description: "List all site adapters from miounet11/lao-s as API catalog metadata",
+      },
+      {
+        method: "GET",
+        path: "/v1/catalog/site?name=github/repo",
+        description: "Get one site adapter definition by name",
+      },
     ],
   });
 }
@@ -589,6 +636,52 @@ const server = createServer(async (request, response) => {
 
     if (request.method === "GET" && requestUrl.pathname === "/v1/docs") {
       handleDocs(response);
+      return;
+    }
+
+    if (request.method === "GET" && requestUrl.pathname === "/v1/catalog/sites") {
+      const query = requestUrl.searchParams.get("q")?.trim().toLowerCase() ?? "";
+      const platform = requestUrl.searchParams.get("platform")?.trim().toLowerCase() ?? "";
+      const limit = Math.max(1, Math.min(Number.parseInt(requestUrl.searchParams.get("limit") ?? "200", 10), 500));
+      let catalog = loadCatalog();
+
+      if (query) {
+        catalog = catalog.filter((entry) =>
+          entry.name.toLowerCase().includes(query)
+          || entry.description.toLowerCase().includes(query)
+          || entry.domain.toLowerCase().includes(query)
+        );
+      }
+
+      if (platform) {
+        catalog = catalog.filter((entry) => entry.platform.toLowerCase() === platform);
+      }
+
+      sendJson(response, 200, {
+        ok: true,
+        count: catalog.length,
+        items: catalog.slice(0, limit),
+      });
+      return;
+    }
+
+    if (request.method === "GET" && requestUrl.pathname === "/v1/catalog/site") {
+      const name = requestUrl.searchParams.get("name")?.trim();
+      if (!name) {
+        sendError(response, 400, "missing_name", "Provide ?name=<platform/command>");
+        return;
+      }
+
+      const entry = loadCatalog().find((item) => item.name === name);
+      if (!entry) {
+        sendError(response, 404, "site_not_found", `No adapter found for ${name}`);
+        return;
+      }
+
+      sendJson(response, 200, {
+        ok: true,
+        item: entry,
+      });
       return;
     }
 

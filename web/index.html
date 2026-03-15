@@ -90,6 +90,7 @@
     <header class="topbar">
       <a class="brand" href="/">iatlas-browser</a>
       <nav class="lang-switch" aria-label="Language switcher">
+        <a href="/sites/">Sites</a>
         <a class="is-active" href="/">English</a>
         <a href="/zh-cn/">中文</a>
         <a href="/ja/">日本語</a>
@@ -106,9 +107,10 @@
           already use. Instead of rebuilding authentication in headless Chrome, it works with your live tabs,
           cookies, and page state through a local daemon and extension.
         </p>
-      <div class="hero-actions">
+        <div class="hero-actions">
           <a class="button primary" href="/install.sh">Download install.sh</a>
           <a class="button" href="/downloads/iatlas-browser-extension.zip">Download extension zip</a>
+          <a class="button" href="/sites/">Browse site adapters</a>
           <a class="button" href="/openapi/">Open API docs</a>
           <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
         </div>
@@ -363,6 +365,11 @@ curl -s http://127.0.0.1:19824/command \
           <h3>Open API docs</h3>
           <p>Hosted API guide and request examples.</p>
           <p><a href="/openapi/">/openapi/</a></p>
+        </article>
+        <article class="card">
+          <h3>Sites catalog</h3>
+          <p>Browse every adapter from `lao-s` with CLI and MCP request examples.</p>
+          <p><a href="/sites/">/sites/</a></p>
         </article>
       </div>
     </section>

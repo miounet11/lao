@@ -29,7 +29,7 @@ iatlas-browser site youtube/transcript VIDEO_ID      # YouTube 字幕全文
 iatlas-browser site stackoverflow/search "async"     # 搜 StackOverflow
 ```
 
-**35 个平台，97 个命令，全部用你真实浏览器的登录态。** [完整列表 →](https://github.com/epiral/bb-sites)
+**35 个平台，97 个命令，全部用你真实浏览器的登录态。** [完整列表 →](https://github.com/miounet11/lao-s)
 
 ## 核心理念
 
@@ -133,7 +133,7 @@ iatlas-browser api-guide
 
 ## 35 个平台，97 个命令
 
-社区驱动，通过 [bb-sites](https://github.com/epiral/bb-sites) 维护。每个命令一个 JS 文件。
+社区驱动，通过 [lao-s](https://github.com/miounet11/lao-s) 维护。每个命令一个 JS 文件。
 
 | 类别 | 平台 | 命令 |
 |------|------|------|

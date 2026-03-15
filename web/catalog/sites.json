@@ -1,0 +1,3253 @@
+[
+  {
+    "name": "36kr/newsflash",
+    "platform": "36kr",
+    "command": "newsflash",
+    "description": "36氪快讯",
+    "domain": "36kr.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site 36kr/newsflash",
+    "cliExample": "iatlas-browser site 36kr/newsflash",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "36kr/newsflash",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of items to return (default: 20, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "36kr/newsflash.js"
+  },
+  {
+    "name": "arxiv/search",
+    "platform": "arxiv",
+    "command": "search",
+    "description": "Search arXiv papers by query",
+    "domain": "arxiv.org",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site arxiv/search \"large language model\"",
+    "cliExample": "iatlas-browser site arxiv/search \"large language model\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "arxiv/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (max 50)",
+        "position": 1
+      }
+    ],
+    "file": "arxiv/search.js"
+  },
+  {
+    "name": "baidu/search",
+    "platform": "baidu",
+    "command": "search",
+    "description": "百度搜索",
+    "domain": "www.baidu.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site baidu/search \"Claude Code\"",
+    "cliExample": "iatlas-browser site baidu/search \"Claude Code\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "baidu/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10)",
+        "position": 1
+      }
+    ],
+    "file": "baidu/search.js"
+  },
+  {
+    "name": "bbc/news",
+    "platform": "bbc",
+    "command": "news",
+    "description": "BBC News headlines (RSS) or search",
+    "domain": "www.bbc.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site bbc/news \"climate change\"",
+    "cliExample": "iatlas-browser site bbc/news \"climate change\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bbc/news",
+        "args": {
+          "query": "",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": false,
+        "description": "Search query. If omitted, returns top headlines from RSS feed",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Max results to return (default 20)",
+        "position": 1
+      }
+    ],
+    "file": "bbc/news.js"
+  },
+  {
+    "name": "bilibili/comments",
+    "platform": "bilibili",
+    "command": "comments",
+    "description": "Get comments for a Bilibili video",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/comments BV1LGwHzrE4A",
+    "cliExample": "iatlas-browser site bilibili/comments BV1LGwHzrE4A",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/comments",
+        "args": {
+          "bvid": "<bvid>",
+          "page": "",
+          "count": "",
+          "sort": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "bvid",
+        "required": true,
+        "description": "Video BV ID",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default: 1)",
+        "position": 1
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Comments per page (default: 20, max: 30)",
+        "position": 2
+      },
+      {
+        "name": "sort",
+        "required": false,
+        "description": "Sort: 0=by_time, 2=by_likes (default: 2)",
+        "position": 3
+      }
+    ],
+    "file": "bilibili/comments.js"
+  },
+  {
+    "name": "bilibili/feed",
+    "platform": "bilibili",
+    "command": "feed",
+    "description": "Get Bilibili dynamic feed (timeline from followed users)",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/feed",
+    "cliExample": "iatlas-browser site bilibili/feed",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/feed",
+        "args": {
+          "type": "",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "type",
+        "required": false,
+        "description": "Filter type: all (default), video, article, draw",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Max items to return (default: 20)",
+        "position": 1
+      }
+    ],
+    "file": "bilibili/feed.js"
+  },
+  {
+    "name": "bilibili/history",
+    "platform": "bilibili",
+    "command": "history",
+    "description": "Get Bilibili watch history",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/history 10",
+    "cliExample": "iatlas-browser site bilibili/history 10",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/history",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of items (default: 20, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "bilibili/history.js"
+  },
+  {
+    "name": "bilibili/me",
+    "platform": "bilibili",
+    "command": "me",
+    "description": "Get current Bilibili logged-in user info",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/me",
+    "cliExample": "iatlas-browser site bilibili/me",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/me",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "bilibili/me.js"
+  },
+  {
+    "name": "bilibili/popular",
+    "platform": "bilibili",
+    "command": "popular",
+    "description": "Get Bilibili popular/trending videos",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/popular 10",
+    "cliExample": "iatlas-browser site bilibili/popular 10",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/popular",
+        "args": {
+          "count": "",
+          "page": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of videos (default: 20, max: 50)",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default: 1)",
+        "position": 1
+      }
+    ],
+    "file": "bilibili/popular.js"
+  },
+  {
+    "name": "bilibili/ranking",
+    "platform": "bilibili",
+    "command": "ranking",
+    "description": "Get Bilibili top ranking videos (all categories or specific category)",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/ranking --category 36",
+    "cliExample": "iatlas-browser site bilibili/ranking --category 36",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/ranking",
+        "args": {
+          "count": "",
+          "category": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of videos to return (default: 20, max: 100)",
+        "position": 0
+      },
+      {
+        "name": "category",
+        "required": false,
+        "description": "Category ID (rid): 0=all, 1=anime, 3=music, 4=game, 5=dance, 36=knowledge, 188=tech, 160=life, 211=food, 217=animal, 119=kichiku, 155=fashion, 202=info, 165=ad, 234=sports, 223=car, 177=documentary, 181=movie, 11=tv (default: 0)",
+        "position": 1
+      }
+    ],
+    "file": "bilibili/ranking.js"
+  },
+  {
+    "name": "bilibili/search",
+    "platform": "bilibili",
+    "command": "search",
+    "description": "Search Bilibili videos by keyword",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/search 编程",
+    "cliExample": "iatlas-browser site bilibili/search 编程",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/search",
+        "args": {
+          "keyword": "<keyword>",
+          "page": "",
+          "count": "",
+          "order": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "keyword",
+        "required": true,
+        "description": "Search keyword",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default: 1)",
+        "position": 1
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Results per page (default: 20, max: 50)",
+        "position": 2
+      },
+      {
+        "name": "order",
+        "required": false,
+        "description": "Sort order: totalrank (default), click (views), pubdate (newest), dm (danmaku), stow (favorites)",
+        "position": 3
+      }
+    ],
+    "file": "bilibili/search.js"
+  },
+  {
+    "name": "bilibili/trending",
+    "platform": "bilibili",
+    "command": "trending",
+    "description": "Get Bilibili trending search keywords (hot searches)",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/trending",
+    "cliExample": "iatlas-browser site bilibili/trending",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/trending",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of trending items (default: 20, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "bilibili/trending.js"
+  },
+  {
+    "name": "bilibili/video",
+    "platform": "bilibili",
+    "command": "video",
+    "description": "Get Bilibili video details by bvid",
+    "domain": "www.bilibili.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site bilibili/video BV1LGwHzrE4A",
+    "cliExample": "iatlas-browser site bilibili/video BV1LGwHzrE4A",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bilibili/video",
+        "args": {
+          "bvid": "<bvid>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "bvid",
+        "required": true,
+        "description": "Video BV ID (e.g. BV1xx411c7mD)",
+        "position": 0
+      }
+    ],
+    "file": "bilibili/video.js"
+  },
+  {
+    "name": "bing/search",
+    "platform": "bing",
+    "command": "search",
+    "description": "Bing 搜索",
+    "domain": "www.bing.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site bing/search \"Claude Code\"",
+    "cliExample": "iatlas-browser site bing/search \"Claude Code\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "bing/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10)",
+        "position": 1
+      }
+    ],
+    "file": "bing/search.js"
+  },
+  {
+    "name": "boss/detail",
+    "platform": "boss",
+    "command": "detail",
+    "description": "获取 BOSS直聘职位详情（JD、公司信息）",
+    "domain": "www.zhipin.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site boss/detail <securityId>",
+    "cliExample": "iatlas-browser site boss/detail <securityId>",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "boss/detail",
+        "args": {
+          "securityId": "<securityId>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "securityId",
+        "required": true,
+        "description": "Job securityId (from boss/search results)",
+        "position": 0
+      }
+    ],
+    "file": "boss/detail.js"
+  },
+  {
+    "name": "boss/search",
+    "platform": "boss",
+    "command": "search",
+    "description": "BOSS直聘搜索职位",
+    "domain": "www.zhipin.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site boss/search \"AI agent\"",
+    "cliExample": "iatlas-browser site boss/search \"AI agent\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "boss/search",
+        "args": {
+          "query": "<query>",
+          "city": "",
+          "page": "",
+          "experience": "",
+          "degree": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search keyword (e.g. AI agent, 前端)",
+        "position": 0
+      },
+      {
+        "name": "city",
+        "required": false,
+        "description": "City code (default 101010100=北京, 101020100=上海, 101280100=广州, 101210100=杭州, 101280600=深圳)",
+        "position": 1
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default 1)",
+        "position": 2
+      },
+      {
+        "name": "experience",
+        "required": false,
+        "description": "Experience filter (e.g. 101=在校, 102=应届, 103=1年以内, 104=1-3年, 105=3-5年, 106=5-10年, 107=10年以上)",
+        "position": 3
+      },
+      {
+        "name": "degree",
+        "required": false,
+        "description": "Degree filter (e.g. 209=高中, 208=大专, 206=本科, 203=硕士, 201=博士)",
+        "position": 4
+      }
+    ],
+    "file": "boss/search.js"
+  },
+  {
+    "name": "cnblogs/search",
+    "platform": "cnblogs",
+    "command": "search",
+    "description": "博客园技术文章搜索",
+    "domain": "zzk.cnblogs.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site cnblogs/search \"Python\"",
+    "cliExample": "iatlas-browser site cnblogs/search \"Python\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "cnblogs/search",
+        "args": {
+          "query": "<query>",
+          "page": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default 1)",
+        "position": 1
+      }
+    ],
+    "file": "cnblogs/search.js"
+  },
+  {
+    "name": "csdn/search",
+    "platform": "csdn",
+    "command": "search",
+    "description": "CSDN 技术文章搜索",
+    "domain": "so.csdn.net",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site csdn/search \"Python\"",
+    "cliExample": "iatlas-browser site csdn/search \"Python\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "csdn/search",
+        "args": {
+          "query": "<query>",
+          "page": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default 1)",
+        "position": 1
+      }
+    ],
+    "file": "csdn/search.js"
+  },
+  {
+    "name": "ctrip/search",
+    "platform": "ctrip",
+    "command": "search",
+    "description": "携程旅行搜索 - 搜索目的地景点信息",
+    "domain": "www.ctrip.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site ctrip/search \"三亚\"",
+    "cliExample": "iatlas-browser site ctrip/search \"三亚\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "ctrip/search",
+        "args": {
+          "query": "<query>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "搜索关键词，如城市名或景点名",
+        "position": 0
+      }
+    ],
+    "file": "ctrip/search.js"
+  },
+  {
+    "name": "devto/search",
+    "platform": "devto",
+    "command": "search",
+    "description": "Search Dev.to articles by keyword",
+    "domain": "dev.to",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site devto/search \"rust programming\"",
+    "cliExample": "iatlas-browser site devto/search \"rust programming\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "devto/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search keyword or phrase",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (max 100)",
+        "position": 1
+      }
+    ],
+    "file": "devto/search.js"
+  },
+  {
+    "name": "douban/comments",
+    "platform": "douban",
+    "command": "comments",
+    "description": "Get short reviews/comments for a Douban movie or TV show",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site douban/comments 1292052",
+    "cliExample": "iatlas-browser site douban/comments 1292052",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "douban/comments",
+        "args": {
+          "id": "<id>",
+          "sort": "",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "Douban subject ID (e.g. 1292052)",
+        "position": 0
+      },
+      {
+        "name": "sort",
+        "required": false,
+        "description": "Sort order: new_score (default, hot), time (newest first)",
+        "position": 1
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of comments (default: 20, max: 50)",
+        "position": 2
+      }
+    ],
+    "file": "douban/comments.js"
+  },
+  {
+    "name": "douban/movie",
+    "platform": "douban",
+    "command": "movie",
+    "description": "Get detailed movie/TV info with rating, cast, and hot reviews from Douban",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site douban/movie 1292052",
+    "cliExample": "iatlas-browser site douban/movie 1292052",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "douban/movie",
+        "args": {
+          "id": "<id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "Douban subject ID (e.g. 1292052 for The Shawshank Redemption)",
+        "position": 0
+      }
+    ],
+    "file": "douban/movie.js"
+  },
+  {
+    "name": "douban/movie-hot",
+    "platform": "douban",
+    "command": "movie-hot",
+    "description": "Get hot/trending movies or TV shows on Douban by tag",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site douban/movie-hot movie 豆瓣高分",
+    "cliExample": "iatlas-browser site douban/movie-hot movie 豆瓣高分",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "douban/movie-hot",
+        "args": {
+          "type": "",
+          "tag": "",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "type",
+        "required": false,
+        "description": "Type: movie (default) or tv",
+        "position": 0
+      },
+      {
+        "name": "tag",
+        "required": false,
+        "description": "Tag filter (default: 热门). Movies: 热门/最新/豆瓣高分/冷门佳片/华语/欧美/韩国/日本. TV: 热门/国产剧/综艺/美剧/日剧/韩剧/日本动画/纪录片",
+        "position": 1
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default: 20, max: 50)",
+        "position": 2
+      }
+    ],
+    "file": "douban/movie-hot.js"
+  },
+  {
+    "name": "douban/movie-top",
+    "platform": "douban",
+    "command": "movie-top",
+    "description": "Get top rated movies by genre from Douban charts",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site douban/movie-top 科幻 10",
+    "cliExample": "iatlas-browser site douban/movie-top 科幻 10",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "douban/movie-top",
+        "args": {
+          "genre": "",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "genre",
+        "required": false,
+        "description": "Genre (default: 剧情). Options: 剧情/喜剧/动作/爱情/科幻/动画/悬疑/惊悚/恐怖/纪录片/短片/情色/音乐/歌舞/家庭/儿童/传记/历史/战争/犯罪/西部/奇幻/冒险/灾难/武侠/古装/运动/黑色电影",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default: 20, max: 50)",
+        "position": 1
+      }
+    ],
+    "file": "douban/movie-top.js"
+  },
+  {
+    "name": "douban/search",
+    "platform": "douban",
+    "command": "search",
+    "description": "Search Douban across movies, books, and music",
+    "domain": "www.douban.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site douban/search 三体",
+    "cliExample": "iatlas-browser site douban/search 三体",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "douban/search",
+        "args": {
+          "keyword": "<keyword>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "keyword",
+        "required": true,
+        "description": "Search keyword (Chinese or English)",
+        "position": 0
+      }
+    ],
+    "file": "douban/search.js"
+  },
+  {
+    "name": "douban/top250",
+    "platform": "douban",
+    "command": "top250",
+    "description": "Get Douban Top 250 movies list",
+    "domain": "movie.douban.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site douban/top250",
+    "cliExample": "iatlas-browser site douban/top250",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "douban/top250",
+        "args": {
+          "start": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "start",
+        "required": false,
+        "description": "Start position (default: 0, step by 25). Use 0 for #1-25, 25 for #26-50, etc.",
+        "position": 0
+      }
+    ],
+    "file": "douban/top250.js"
+  },
+  {
+    "name": "duckduckgo/search",
+    "platform": "duckduckgo",
+    "command": "search",
+    "description": "DuckDuckGo search (HTML lite, no JS needed)",
+    "domain": "duckduckgo.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site duckduckgo/search \"iatlas-browser CLI\"",
+    "cliExample": "iatlas-browser site duckduckgo/search \"iatlas-browser CLI\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "duckduckgo/search",
+        "args": {
+          "query": "<query>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      }
+    ],
+    "file": "duckduckgo/search.js"
+  },
+  {
+    "name": "eastmoney/news",
+    "platform": "eastmoney",
+    "command": "news",
+    "description": "获取东方财富网财经热点新闻",
+    "domain": "www.eastmoney.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site eastmoney/news",
+    "cliExample": "iatlas-browser site eastmoney/news",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "eastmoney/news",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "返回新闻条数，默认 20，最大 50",
+        "position": 0
+      }
+    ],
+    "file": "eastmoney/news.js"
+  },
+  {
+    "name": "eastmoney/stock",
+    "platform": "eastmoney",
+    "command": "stock",
+    "description": "获取东方财富网股票实时行情",
+    "domain": "quote.eastmoney.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site eastmoney/stock 贵州茅台",
+    "cliExample": "iatlas-browser site eastmoney/stock 贵州茅台",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "eastmoney/stock",
+        "args": {
+          "query": "<query>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "股票名称或代码，如 贵州茅台 或 600519",
+        "position": 0
+      }
+    ],
+    "file": "eastmoney/stock.js"
+  },
+  {
+    "name": "genius/search",
+    "platform": "genius",
+    "command": "search",
+    "description": "Genius 歌曲/歌词搜索",
+    "domain": "genius.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site genius/search \"bohemian rhapsody\"",
+    "cliExample": "iatlas-browser site genius/search \"bohemian rhapsody\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "genius/search",
+        "args": {
+          "query": "<query>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "搜索关键词",
+        "position": 0
+      }
+    ],
+    "file": "genius/search.js"
+  },
+  {
+    "name": "github/fork",
+    "platform": "github",
+    "command": "fork",
+    "description": "Fork a GitHub repository",
+    "domain": "github.com",
+    "readOnly": false,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site github/fork epiral/bb-sites",
+    "cliExample": "iatlas-browser site github/fork epiral/bb-sites",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "github/fork",
+        "args": {
+          "repo": "<repo>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "repo",
+        "required": true,
+        "description": "Repository to fork (owner/repo)",
+        "position": 0
+      }
+    ],
+    "file": "github/fork.js"
+  },
+  {
+    "name": "github/issue-create",
+    "platform": "github",
+    "command": "issue-create",
+    "description": "Create a GitHub issue",
+    "domain": "github.com",
+    "readOnly": false,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site github/issue-create epiral/bb-sites --title \"[reddit/me] returns empty\" --body \"Description here\"",
+    "cliExample": "iatlas-browser site github/issue-create epiral/bb-sites --title \"[reddit/me] returns empty\" --body \"Description here\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "github/issue-create",
+        "args": {
+          "repo": "<repo>",
+          "title": "<title>",
+          "body": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "repo",
+        "required": true,
+        "description": "owner/repo format",
+        "position": 0
+      },
+      {
+        "name": "title",
+        "required": true,
+        "description": "Issue title",
+        "position": 1
+      },
+      {
+        "name": "body",
+        "required": false,
+        "description": "Issue body (markdown)",
+        "position": 2
+      }
+    ],
+    "file": "github/issue-create.js"
+  },
+  {
+    "name": "github/issues",
+    "platform": "github",
+    "command": "issues",
+    "description": "获取 GitHub 仓库的 issue 列表",
+    "domain": "github.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site github/issues epiral/iatlas-browser",
+    "cliExample": "iatlas-browser site github/issues epiral/iatlas-browser",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "github/issues",
+        "args": {
+          "repo": "<repo>",
+          "state": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "repo",
+        "required": true,
+        "description": "owner/repo format",
+        "position": 0
+      },
+      {
+        "name": "state",
+        "required": false,
+        "description": "open, closed, or all (default: open)",
+        "position": 1
+      }
+    ],
+    "file": "github/issues.js"
+  },
+  {
+    "name": "github/me",
+    "platform": "github",
+    "command": "me",
+    "description": "获取当前 GitHub 登录用户信息",
+    "domain": "github.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site github/me",
+    "cliExample": "iatlas-browser site github/me",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "github/me",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "github/me.js"
+  },
+  {
+    "name": "github/pr-create",
+    "platform": "github",
+    "command": "pr-create",
+    "description": "Create a GitHub pull request",
+    "domain": "github.com",
+    "readOnly": false,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site github/pr-create epiral/bb-sites --title \"feat(weibo): add hot adapter\" --head myuser:feat-weibo --body \"Adds weibo/hot.js\"",
+    "cliExample": "iatlas-browser site github/pr-create epiral/bb-sites --title \"feat(weibo): add hot adapter\" --head myuser:feat-weibo --body \"Adds weibo/hot.js\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "github/pr-create",
+        "args": {
+          "repo": "<repo>",
+          "title": "<title>",
+          "head": "<head>",
+          "base": "",
+          "body": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "repo",
+        "required": true,
+        "description": "Target repo (owner/repo)",
+        "position": 0
+      },
+      {
+        "name": "title",
+        "required": true,
+        "description": "PR title",
+        "position": 1
+      },
+      {
+        "name": "head",
+        "required": true,
+        "description": "Source branch (user:branch or branch)",
+        "position": 2
+      },
+      {
+        "name": "base",
+        "required": false,
+        "description": "Target branch (default: main)",
+        "position": 3
+      },
+      {
+        "name": "body",
+        "required": false,
+        "description": "PR description (markdown)",
+        "position": 4
+      }
+    ],
+    "file": "github/pr-create.js"
+  },
+  {
+    "name": "github/repo",
+    "platform": "github",
+    "command": "repo",
+    "description": "获取 GitHub 仓库信息",
+    "domain": "github.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site github/repo epiral/iatlas-browser",
+    "cliExample": "iatlas-browser site github/repo epiral/iatlas-browser",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "github/repo",
+        "args": {
+          "repo": "<repo>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "repo",
+        "required": true,
+        "description": "owner/repo format (e.g. epiral/bb-browser)",
+        "position": 0
+      }
+    ],
+    "file": "github/repo.js"
+  },
+  {
+    "name": "google/search",
+    "platform": "google",
+    "command": "search",
+    "description": "Google 搜索",
+    "domain": "www.google.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site google/search \"iatlas-browser\"",
+    "cliExample": "iatlas-browser site google/search \"iatlas-browser\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "google/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10)",
+        "position": 1
+      }
+    ],
+    "file": "google/search.js"
+  },
+  {
+    "name": "gsmarena/search",
+    "platform": "gsmarena",
+    "command": "search",
+    "description": "GSMArena 手机搜索",
+    "domain": "www.gsmarena.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site gsmarena/search \"iPhone 16\"",
+    "cliExample": "iatlas-browser site gsmarena/search \"iPhone 16\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "gsmarena/search",
+        "args": {
+          "query": "<query>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Phone name to search (e.g. iPhone 16, Galaxy S25)",
+        "position": 0
+      }
+    ],
+    "file": "gsmarena/search.js"
+  },
+  {
+    "name": "hackernews/thread",
+    "platform": "hackernews",
+    "command": "thread",
+    "description": "获取 Hacker News 帖子的评论树",
+    "domain": "news.ycombinator.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site hackernews/thread 12345678",
+    "cliExample": "iatlas-browser site hackernews/thread 12345678",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "hackernews/thread",
+        "args": {
+          "id": "<id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "HN item ID or URL",
+        "position": 0
+      }
+    ],
+    "file": "hackernews/thread.js"
+  },
+  {
+    "name": "hackernews/top",
+    "platform": "hackernews",
+    "command": "top",
+    "description": "获取 Hacker News 当前热门帖子",
+    "domain": "news.ycombinator.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site hackernews/top 10",
+    "cliExample": "iatlas-browser site hackernews/top 10",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "hackernews/top",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of posts (default: 20, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "hackernews/top.js"
+  },
+  {
+    "name": "hupu/hot",
+    "platform": "hupu",
+    "command": "hot",
+    "description": "虎扑步行街热帖",
+    "domain": "bbs.hupu.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site hupu/hot",
+    "cliExample": "iatlas-browser site hupu/hot",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "hupu/hot",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "hupu/hot.js"
+  },
+  {
+    "name": "imdb/search",
+    "platform": "imdb",
+    "command": "search",
+    "description": "IMDb 电影搜索",
+    "domain": "www.imdb.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site imdb/search --query inception",
+    "cliExample": "iatlas-browser site imdb/search --query inception",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "imdb/search",
+        "args": {
+          "query": "<query>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "搜索关键词",
+        "position": 0
+      }
+    ],
+    "file": "imdb/search.js"
+  },
+  {
+    "name": "jike/feed",
+    "platform": "jike",
+    "command": "feed",
+    "description": "获取即刻推荐 Feed",
+    "domain": "web.okjike.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site jike/feed",
+    "cliExample": "iatlas-browser site jike/feed",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "jike/feed",
+        "args": {
+          "limit": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "limit",
+        "required": false,
+        "description": "Number of posts (default 20)",
+        "position": 0
+      }
+    ],
+    "file": "jike/feed.js"
+  },
+  {
+    "name": "jike/search",
+    "platform": "jike",
+    "command": "search",
+    "description": "即刻搜索动态",
+    "domain": "web.okjike.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site jike/search \"AI agent\"",
+    "cliExample": "iatlas-browser site jike/search \"AI agent\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "jike/search",
+        "args": {
+          "query": "<query>",
+          "limit": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search keyword",
+        "position": 0
+      },
+      {
+        "name": "limit",
+        "required": false,
+        "description": "Number of results (default 20)",
+        "position": 1
+      }
+    ],
+    "file": "jike/search.js"
+  },
+  {
+    "name": "linkedin/profile",
+    "platform": "linkedin",
+    "command": "profile",
+    "description": "获取 LinkedIn 用户 profile",
+    "domain": "www.linkedin.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site linkedin/profile williamhgates",
+    "cliExample": "iatlas-browser site linkedin/profile williamhgates",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "linkedin/profile",
+        "args": {
+          "username": "<username>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "username",
+        "required": true,
+        "description": "LinkedIn username (from URL linkedin.com/in/<username>)",
+        "position": 0
+      }
+    ],
+    "file": "linkedin/profile.js"
+  },
+  {
+    "name": "linkedin/search",
+    "platform": "linkedin",
+    "command": "search",
+    "description": "搜索 LinkedIn 帖子",
+    "domain": "www.linkedin.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site linkedin/search \"AI agent\"",
+    "cliExample": "iatlas-browser site linkedin/search \"AI agent\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "linkedin/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search keyword",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Max results to return (default 10)",
+        "position": 1
+      }
+    ],
+    "file": "linkedin/search.js"
+  },
+  {
+    "name": "npm/search",
+    "platform": "npm",
+    "command": "search",
+    "description": "Search npm packages via registry API",
+    "domain": "www.npmjs.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site npm/search \"react state management\"",
+    "cliExample": "iatlas-browser site npm/search \"react state management\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "npm/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 20, max 250)",
+        "position": 1
+      }
+    ],
+    "file": "npm/search.js"
+  },
+  {
+    "name": "openlibrary/search",
+    "platform": "openlibrary",
+    "command": "search",
+    "description": "Open Library 图书搜索",
+    "domain": "openlibrary.org",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site openlibrary/search \"machine learning\"",
+    "cliExample": "iatlas-browser site openlibrary/search \"machine learning\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "openlibrary/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "搜索关键词",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "返回数量",
+        "position": 1
+      }
+    ],
+    "file": "openlibrary/search.js"
+  },
+  {
+    "name": "producthunt/today",
+    "platform": "producthunt",
+    "command": "today",
+    "description": "Product Hunt 今日热门产品",
+    "domain": "www.producthunt.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site producthunt/today",
+    "cliExample": "iatlas-browser site producthunt/today",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "producthunt/today",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of products to return (default: 20, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "producthunt/today.js"
+  },
+  {
+    "name": "pypi/package",
+    "platform": "pypi",
+    "command": "package",
+    "description": "获取 Python 包详情",
+    "domain": "pypi.org",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site pypi/package \"requests\"",
+    "cliExample": "iatlas-browser site pypi/package \"requests\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "pypi/package",
+        "args": {
+          "name": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "name",
+        "required": false,
+        "description": "",
+        "position": 0
+      }
+    ],
+    "file": "pypi/package.js"
+  },
+  {
+    "name": "pypi/search",
+    "platform": "pypi",
+    "command": "search",
+    "description": "搜索 Python 包",
+    "domain": "pypi.org",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site pypi/search \"machine learning\"",
+    "cliExample": "iatlas-browser site pypi/search \"machine learning\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "pypi/search",
+        "args": {
+          "query": "",
+          "page": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": false,
+        "description": "",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "",
+        "position": 1
+      }
+    ],
+    "file": "pypi/search.js"
+  },
+  {
+    "name": "qidian/search",
+    "platform": "qidian",
+    "command": "search",
+    "description": "起点中文网小说搜索",
+    "domain": "www.qidian.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site qidian/search \"仙侠\"",
+    "cliExample": "iatlas-browser site qidian/search \"仙侠\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "qidian/search",
+        "args": {
+          "query": "<query>",
+          "page": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search keyword (e.g. 仙侠, 系统流)",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default 1)",
+        "position": 1
+      }
+    ],
+    "file": "qidian/search.js"
+  },
+  {
+    "name": "reddit/context",
+    "platform": "reddit",
+    "command": "context",
+    "description": "获取评论的 ancestor chain（从根帖到目标评论的完整路径）",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site reddit/context https://www.reddit.com/r/LocalLLaMA/comments/1rso48p/comment/oa8domi/",
+    "cliExample": "iatlas-browser site reddit/context https://www.reddit.com/r/LocalLLaMA/comments/1rso48p/comment/oa8domi/",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "reddit/context",
+        "args": {
+          "url": "<url>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "url",
+        "required": true,
+        "description": "Reddit comment URL (utm params are stripped automatically)",
+        "position": 0
+      }
+    ],
+    "file": "reddit/context.js"
+  },
+  {
+    "name": "reddit/me",
+    "platform": "reddit",
+    "command": "me",
+    "description": "获取当前 Reddit 登录用户信息",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site reddit/me",
+    "cliExample": "iatlas-browser site reddit/me",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "reddit/me",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "reddit/me.js"
+  },
+  {
+    "name": "reddit/posts",
+    "platform": "reddit",
+    "command": "posts",
+    "description": "获取用户发帖列表（自动翻页）",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site reddit/posts MorroHsu",
+    "cliExample": "iatlas-browser site reddit/posts MorroHsu",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "reddit/posts",
+        "args": {
+          "username": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "username",
+        "required": false,
+        "description": "Reddit username (defaults to current user)",
+        "position": 0
+      }
+    ],
+    "file": "reddit/posts.js"
+  },
+  {
+    "name": "reddit/thread",
+    "platform": "reddit",
+    "command": "thread",
+    "description": "获取 Reddit 帖子的完整讨论树",
+    "domain": "www.reddit.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site reddit/thread https://www.reddit.com/r/LocalLLaMA/comments/1rrisqn/...",
+    "cliExample": "iatlas-browser site reddit/thread https://www.reddit.com/r/LocalLLaMA/comments/1rrisqn/...",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "reddit/thread",
+        "args": {
+          "url": "<url>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "url",
+        "required": true,
+        "description": "Reddit post URL",
+        "position": 0
+      }
+    ],
+    "file": "reddit/thread.js"
+  },
+  {
+    "name": "reuters/search",
+    "platform": "reuters",
+    "command": "search",
+    "description": "Reuters 路透社新闻搜索",
+    "domain": "www.reuters.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site reuters/search \"artificial intelligence\"",
+    "cliExample": "iatlas-browser site reuters/search \"artificial intelligence\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "reuters/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Max results to return (default 10)",
+        "position": 1
+      }
+    ],
+    "file": "reuters/search.js"
+  },
+  {
+    "name": "smzdm/search",
+    "platform": "smzdm",
+    "command": "search",
+    "description": "什么值得买搜索好价",
+    "domain": "www.smzdm.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site smzdm/search \"耳机\"",
+    "cliExample": "iatlas-browser site smzdm/search \"耳机\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "smzdm/search",
+        "args": {
+          "keyword": "<keyword>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "keyword",
+        "required": true,
+        "description": "Search keyword (e.g. 耳机)",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Max results to return (default: 20)",
+        "position": 1
+      }
+    ],
+    "file": "smzdm/search.js"
+  },
+  {
+    "name": "sogou/weixin",
+    "platform": "sogou",
+    "command": "weixin",
+    "description": "搜狗微信文章搜索",
+    "domain": "weixin.sogou.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site sogou/weixin \"AI agent\"",
+    "cliExample": "iatlas-browser site sogou/weixin \"AI agent\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "sogou/weixin",
+        "args": {
+          "query": "<query>",
+          "page": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default 1)",
+        "position": 1
+      }
+    ],
+    "file": "sogou/weixin.js"
+  },
+  {
+    "name": "stackoverflow/search",
+    "platform": "stackoverflow",
+    "command": "search",
+    "description": "Search Stack Overflow questions",
+    "domain": "stackoverflow.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site stackoverflow/search \"python async await\"",
+    "cliExample": "iatlas-browser site stackoverflow/search \"python async await\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "stackoverflow/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 10, max 50)",
+        "position": 1
+      }
+    ],
+    "file": "stackoverflow/search.js"
+  },
+  {
+    "name": "toutiao/hot",
+    "platform": "toutiao",
+    "command": "hot",
+    "description": "今日头条热榜",
+    "domain": "www.toutiao.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site toutiao/hot",
+    "cliExample": "iatlas-browser site toutiao/hot",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "toutiao/hot",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "返回条数 (默认 20, 最多 50)",
+        "position": 0
+      }
+    ],
+    "file": "toutiao/hot.js"
+  },
+  {
+    "name": "toutiao/search",
+    "platform": "toutiao",
+    "command": "search",
+    "description": "今日头条搜索",
+    "domain": "so.toutiao.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site toutiao/search AI",
+    "cliExample": "iatlas-browser site toutiao/search AI",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "toutiao/search",
+        "args": {
+          "query": "<query>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "搜索关键词",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "返回结果数量 (默认 10, 最多 20)",
+        "position": 1
+      }
+    ],
+    "file": "toutiao/search.js"
+  },
+  {
+    "name": "twitter/notifications",
+    "platform": "twitter",
+    "command": "notifications",
+    "description": "获取 Twitter 通知（点赞、转发、回复、关注等）",
+    "domain": "x.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site twitter/notifications",
+    "cliExample": "iatlas-browser site twitter/notifications",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "twitter/notifications",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of notifications (default 20, max 50)",
+        "position": 0
+      }
+    ],
+    "file": "twitter/notifications.js"
+  },
+  {
+    "name": "twitter/search",
+    "platform": "twitter",
+    "command": "search",
+    "description": "搜索推文",
+    "domain": "x.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site twitter/search \"claude code\"",
+    "cliExample": "iatlas-browser site twitter/search \"claude code\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "twitter/search",
+        "args": {
+          "query": "<query>",
+          "count": "",
+          "type": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default 20, max 50)",
+        "position": 1
+      },
+      {
+        "name": "type",
+        "required": false,
+        "description": "Result type: latest (default) or top",
+        "position": 2
+      }
+    ],
+    "file": "twitter/search.js"
+  },
+  {
+    "name": "twitter/thread",
+    "platform": "twitter",
+    "command": "thread",
+    "description": "获取推文对话线程（原文 + 所有回复）",
+    "domain": "x.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site twitter/thread 2032478407146311850",
+    "cliExample": "iatlas-browser site twitter/thread 2032478407146311850",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "twitter/thread",
+        "args": {
+          "tweet_id": "<tweet_id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "tweet_id",
+        "required": true,
+        "description": "Tweet ID (numeric) or full URL",
+        "position": 0
+      }
+    ],
+    "file": "twitter/thread.js"
+  },
+  {
+    "name": "twitter/tweets",
+    "platform": "twitter",
+    "command": "tweets",
+    "description": "获取用户最近的推文（时间线）",
+    "domain": "x.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site twitter/tweets plantegg",
+    "cliExample": "iatlas-browser site twitter/tweets plantegg",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "twitter/tweets",
+        "args": {
+          "screen_name": "<screen_name>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "screen_name",
+        "required": true,
+        "description": "Twitter handle (without @)",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of tweets (default 20, max 100)",
+        "position": 1
+      }
+    ],
+    "file": "twitter/tweets.js"
+  },
+  {
+    "name": "twitter/user",
+    "platform": "twitter",
+    "command": "user",
+    "description": "获取 Twitter 用户 profile",
+    "domain": "x.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site twitter/user yan5xu",
+    "cliExample": "iatlas-browser site twitter/user yan5xu",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "twitter/user",
+        "args": {
+          "screen_name": "<screen_name>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "screen_name",
+        "required": true,
+        "description": "Twitter handle (without @)",
+        "position": 0
+      }
+    ],
+    "file": "twitter/user.js"
+  },
+  {
+    "name": "v2ex/hot",
+    "platform": "v2ex",
+    "command": "hot",
+    "description": "获取 V2EX 最热主题",
+    "domain": "www.v2ex.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site v2ex/hot",
+    "cliExample": "iatlas-browser site v2ex/hot",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "v2ex/hot",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "v2ex/hot.js"
+  },
+  {
+    "name": "v2ex/latest",
+    "platform": "v2ex",
+    "command": "latest",
+    "description": "获取 V2EX 最新主题",
+    "domain": "www.v2ex.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site v2ex/latest",
+    "cliExample": "iatlas-browser site v2ex/latest",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "v2ex/latest",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "v2ex/latest.js"
+  },
+  {
+    "name": "v2ex/topic",
+    "platform": "v2ex",
+    "command": "topic",
+    "description": "获取 V2EX 主题详情和回复",
+    "domain": "www.v2ex.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site v2ex/topic 1024",
+    "cliExample": "iatlas-browser site v2ex/topic 1024",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "v2ex/topic",
+        "args": {
+          "id": "<id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "Topic ID",
+        "position": 0
+      }
+    ],
+    "file": "v2ex/topic.js"
+  },
+  {
+    "name": "weibo/comments",
+    "platform": "weibo",
+    "command": "comments",
+    "description": "Get comments on a Weibo post",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site weibo/comments 5274888946583083",
+    "cliExample": "iatlas-browser site weibo/comments 5274888946583083",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "weibo/comments",
+        "args": {
+          "id": "<id>",
+          "count": "",
+          "max_id": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "Post ID (numeric idstr)",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of comments (default: 20, max: 50)",
+        "position": 1
+      },
+      {
+        "name": "max_id",
+        "required": false,
+        "description": "Pagination cursor (from previous response)",
+        "position": 2
+      }
+    ],
+    "file": "weibo/comments.js"
+  },
+  {
+    "name": "weibo/feed",
+    "platform": "weibo",
+    "command": "feed",
+    "description": "Get Weibo home timeline (posts from followed users)",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site weibo/feed 10",
+    "cliExample": "iatlas-browser site weibo/feed 10",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "weibo/feed",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of posts (default: 15, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "weibo/feed.js"
+  },
+  {
+    "name": "weibo/hot",
+    "platform": "weibo",
+    "command": "hot",
+    "description": "Get Weibo hot search / trending topics",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site weibo/hot 20",
+    "cliExample": "iatlas-browser site weibo/hot 20",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "weibo/hot",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of items to return (default: 30, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "weibo/hot.js"
+  },
+  {
+    "name": "weibo/me",
+    "platform": "weibo",
+    "command": "me",
+    "description": "Get current logged-in Weibo user info",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site weibo/me",
+    "cliExample": "iatlas-browser site weibo/me",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "weibo/me",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "weibo/me.js"
+  },
+  {
+    "name": "weibo/post",
+    "platform": "weibo",
+    "command": "post",
+    "description": "Get a single Weibo post by ID (numeric or mblogid)",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site weibo/post QvqcCrCyL",
+    "cliExample": "iatlas-browser site weibo/post QvqcCrCyL",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "weibo/post",
+        "args": {
+          "id": "<id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "Post ID (numeric idstr) or mblogid (short alphanumeric ID from URL)",
+        "position": 0
+      }
+    ],
+    "file": "weibo/post.js"
+  },
+  {
+    "name": "weibo/user",
+    "platform": "weibo",
+    "command": "user",
+    "description": "Get Weibo user profile by uid (numeric) or screen_name",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site weibo/user 1654184992",
+    "cliExample": "iatlas-browser site weibo/user 1654184992",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "weibo/user",
+        "args": {
+          "id": "<id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "User ID (numeric uid) or screen name",
+        "position": 0
+      }
+    ],
+    "file": "weibo/user.js"
+  },
+  {
+    "name": "weibo/user_posts",
+    "platform": "weibo",
+    "command": "user_posts",
+    "description": "Get a Weibo user's posts (timeline)",
+    "domain": "weibo.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site weibo/user_posts 1654184992",
+    "cliExample": "iatlas-browser site weibo/user_posts 1654184992",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "weibo/user_posts",
+        "args": {
+          "uid": "<uid>",
+          "page": "",
+          "feature": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "uid",
+        "required": true,
+        "description": "User ID (numeric)",
+        "position": 0
+      },
+      {
+        "name": "page",
+        "required": false,
+        "description": "Page number (default: 1)",
+        "position": 1
+      },
+      {
+        "name": "feature",
+        "required": false,
+        "description": "Filter: 0=all, 1=original, 2=picture, 3=video, 4=music (default: 0)",
+        "position": 2
+      }
+    ],
+    "file": "weibo/user_posts.js"
+  },
+  {
+    "name": "wikipedia/search",
+    "platform": "wikipedia",
+    "command": "search",
+    "description": "搜索维基百科",
+    "domain": "en.wikipedia.org",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site wikipedia/search \"artificial intelligence\"",
+    "cliExample": "iatlas-browser site wikipedia/search \"artificial intelligence\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "wikipedia/search",
+        "args": {
+          "query": "",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": false,
+        "description": "",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "",
+        "position": 1
+      }
+    ],
+    "file": "wikipedia/search.js"
+  },
+  {
+    "name": "wikipedia/summary",
+    "platform": "wikipedia",
+    "command": "summary",
+    "description": "获取维基百科页面摘要",
+    "domain": "en.wikipedia.org",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site wikipedia/summary \"Python_(programming_language)\"",
+    "cliExample": "iatlas-browser site wikipedia/summary \"Python_(programming_language)\"",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "wikipedia/summary",
+        "args": {
+          "title": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "title",
+        "required": false,
+        "description": "",
+        "position": 0
+      }
+    ],
+    "file": "wikipedia/summary.js"
+  },
+  {
+    "name": "xiaohongshu/comments",
+    "platform": "xiaohongshu",
+    "command": "comments",
+    "description": "获取小红书笔记的评论列表",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site xiaohongshu/comments 69aa7160000000001b01634d",
+    "cliExample": "iatlas-browser site xiaohongshu/comments 69aa7160000000001b01634d",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "xiaohongshu/comments",
+        "args": {
+          "note_id": "<note_id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "note_id",
+        "required": true,
+        "description": "Note ID",
+        "position": 0
+      }
+    ],
+    "file": "xiaohongshu/comments.js"
+  },
+  {
+    "name": "xiaohongshu/feed",
+    "platform": "xiaohongshu",
+    "command": "feed",
+    "description": "获取小红书首页推荐 Feed",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site xiaohongshu/feed",
+    "cliExample": "iatlas-browser site xiaohongshu/feed",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "xiaohongshu/feed",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "xiaohongshu/feed.js"
+  },
+  {
+    "name": "xiaohongshu/me",
+    "platform": "xiaohongshu",
+    "command": "me",
+    "description": "获取当前小红书登录用户信息",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site xiaohongshu/me",
+    "cliExample": "iatlas-browser site xiaohongshu/me",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "xiaohongshu/me",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "xiaohongshu/me.js"
+  },
+  {
+    "name": "xiaohongshu/note",
+    "platform": "xiaohongshu",
+    "command": "note",
+    "description": "获取小红书笔记详情（标题、正文、互动数据）",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site xiaohongshu/note 69aa7160000000001b01634d",
+    "cliExample": "iatlas-browser site xiaohongshu/note 69aa7160000000001b01634d",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "xiaohongshu/note",
+        "args": {
+          "note_id": "<note_id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "note_id",
+        "required": true,
+        "description": "Note ID or URL",
+        "position": 0
+      }
+    ],
+    "file": "xiaohongshu/note.js"
+  },
+  {
+    "name": "xiaohongshu/search",
+    "platform": "xiaohongshu",
+    "command": "search",
+    "description": "搜索小红书笔记",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site xiaohongshu/search 美食",
+    "cliExample": "iatlas-browser site xiaohongshu/search 美食",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "xiaohongshu/search",
+        "args": {
+          "keyword": "<keyword>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "keyword",
+        "required": true,
+        "description": "Search keyword",
+        "position": 0
+      }
+    ],
+    "file": "xiaohongshu/search.js"
+  },
+  {
+    "name": "xiaohongshu/user_posts",
+    "platform": "xiaohongshu",
+    "command": "user_posts",
+    "description": "获取小红书用户的笔记列表",
+    "domain": "www.xiaohongshu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site xiaohongshu/user_posts 5a927d8411be10720ae9e1e4",
+    "cliExample": "iatlas-browser site xiaohongshu/user_posts 5a927d8411be10720ae9e1e4",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "xiaohongshu/user_posts",
+        "args": {
+          "user_id": "<user_id>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "user_id",
+        "required": true,
+        "description": "User ID",
+        "position": 0
+      }
+    ],
+    "file": "xiaohongshu/user_posts.js"
+  },
+  {
+    "name": "yahoo-finance/quote",
+    "platform": "yahoo-finance",
+    "command": "quote",
+    "description": "Yahoo Finance 股票行情",
+    "domain": "finance.yahoo.com",
+    "readOnly": true,
+    "capabilities": [],
+    "example": "iatlas-browser site yahoo-finance/quote AAPL",
+    "cliExample": "iatlas-browser site yahoo-finance/quote AAPL",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "yahoo-finance/quote",
+        "args": {
+          "symbol": "<symbol>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "symbol",
+        "required": true,
+        "description": "Stock ticker symbol, e.g. AAPL, MSFT, TSLA",
+        "position": 0
+      }
+    ],
+    "file": "yahoo-finance/quote.js"
+  },
+  {
+    "name": "youdao/translate",
+    "platform": "youdao",
+    "command": "translate",
+    "description": "有道翻译/词典查询",
+    "domain": "dict.youdao.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site youdao/translate hello",
+    "cliExample": "iatlas-browser site youdao/translate hello",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "youdao/translate",
+        "args": {
+          "query": "<query>"
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Word or sentence to translate (English or Chinese)",
+        "position": 0
+      }
+    ],
+    "file": "youdao/translate.js"
+  },
+  {
+    "name": "youtube/channel",
+    "platform": "youtube",
+    "command": "channel",
+    "description": "Get YouTube channel info and recent videos",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site youtube/channel '@programmingwithmosh'",
+    "cliExample": "iatlas-browser site youtube/channel '@programmingwithmosh'",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "youtube/channel",
+        "args": {
+          "id": "",
+          "max": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": false,
+        "description": "Channel ID (UCxxxx) or handle (@name). Defaults to current page channel.",
+        "position": 0
+      },
+      {
+        "name": "max",
+        "required": false,
+        "description": "Max recent videos to return (default: 10)",
+        "position": 1
+      }
+    ],
+    "file": "youtube/channel.js"
+  },
+  {
+    "name": "youtube/comments",
+    "platform": "youtube",
+    "command": "comments",
+    "description": "Get comments for a YouTube video",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site youtube/comments d56mG7DezGs",
+    "cliExample": "iatlas-browser site youtube/comments d56mG7DezGs",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "youtube/comments",
+        "args": {
+          "id": "",
+          "max": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": false,
+        "description": "Video ID (defaults to current page video)",
+        "position": 0
+      },
+      {
+        "name": "max",
+        "required": false,
+        "description": "Max comments to return (default: 20)",
+        "position": 1
+      }
+    ],
+    "file": "youtube/comments.js"
+  },
+  {
+    "name": "youtube/feed",
+    "platform": "youtube",
+    "command": "feed",
+    "description": "Get YouTube home feed or subscriptions feed",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site youtube/feed subscriptions",
+    "cliExample": "iatlas-browser site youtube/feed subscriptions",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "youtube/feed",
+        "args": {
+          "type": "",
+          "max": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "type",
+        "required": false,
+        "description": "Feed type: 'home' (default) or 'subscriptions'",
+        "position": 0
+      },
+      {
+        "name": "max",
+        "required": false,
+        "description": "Max videos to return (default: 20)",
+        "position": 1
+      }
+    ],
+    "file": "youtube/feed.js"
+  },
+  {
+    "name": "youtube/search",
+    "platform": "youtube",
+    "command": "search",
+    "description": "Search YouTube videos",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site youtube/search 'TypeScript tutorial'",
+    "cliExample": "iatlas-browser site youtube/search 'TypeScript tutorial'",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "youtube/search",
+        "args": {
+          "query": "<query>",
+          "max": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "query",
+        "required": true,
+        "description": "Search query string",
+        "position": 0
+      },
+      {
+        "name": "max",
+        "required": false,
+        "description": "Max results to return (default: 20)",
+        "position": 1
+      }
+    ],
+    "file": "youtube/search.js"
+  },
+  {
+    "name": "youtube/transcript",
+    "platform": "youtube",
+    "command": "transcript",
+    "description": "Get video transcript/captions (must be on the video page)",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site youtube/transcript",
+    "cliExample": "iatlas-browser site youtube/transcript",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "youtube/transcript",
+        "args": {
+          "lang": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "lang",
+        "required": false,
+        "description": "Language code (default: first available, e.g. 'en', 'ja')",
+        "position": 0
+      }
+    ],
+    "file": "youtube/transcript.js"
+  },
+  {
+    "name": "youtube/video",
+    "platform": "youtube",
+    "command": "video",
+    "description": "Get detailed info for a YouTube video (from current page or by video ID)",
+    "domain": "www.youtube.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site youtube/video d56mG7DezGs",
+    "cliExample": "iatlas-browser site youtube/video d56mG7DezGs",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "youtube/video",
+        "args": {
+          "id": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": false,
+        "description": "Video ID (defaults to current page video)",
+        "position": 0
+      }
+    ],
+    "file": "youtube/video.js"
+  },
+  {
+    "name": "zhihu/hot",
+    "platform": "zhihu",
+    "command": "hot",
+    "description": "Get Zhihu hot list (trending topics)",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site zhihu/hot 10",
+    "cliExample": "iatlas-browser site zhihu/hot 10",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "zhihu/hot",
+        "args": {
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of items to return (default: 20, max: 50)",
+        "position": 0
+      }
+    ],
+    "file": "zhihu/hot.js"
+  },
+  {
+    "name": "zhihu/me",
+    "platform": "zhihu",
+    "command": "me",
+    "description": "Get current logged-in Zhihu user info",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site zhihu/me",
+    "cliExample": "iatlas-browser site zhihu/me",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "zhihu/me",
+        "args": {}
+      }
+    },
+    "args": [],
+    "file": "zhihu/me.js"
+  },
+  {
+    "name": "zhihu/question",
+    "platform": "zhihu",
+    "command": "question",
+    "description": "Get a Zhihu question and its top answers",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site zhihu/question 34816524",
+    "cliExample": "iatlas-browser site zhihu/question 34816524",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "zhihu/question",
+        "args": {
+          "id": "<id>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "id",
+        "required": true,
+        "description": "Question ID (numeric)",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of answers to fetch (default: 5, max: 20)",
+        "position": 1
+      }
+    ],
+    "file": "zhihu/question.js"
+  },
+  {
+    "name": "zhihu/search",
+    "platform": "zhihu",
+    "command": "search",
+    "description": "Search Zhihu for questions and answers",
+    "domain": "www.zhihu.com",
+    "readOnly": true,
+    "capabilities": [
+      "network"
+    ],
+    "example": "iatlas-browser site zhihu/search AI",
+    "cliExample": "iatlas-browser site zhihu/search AI",
+    "mcpExample": {
+      "tool": "site_run",
+      "arguments": {
+        "name": "zhihu/search",
+        "args": {
+          "keyword": "<keyword>",
+          "count": ""
+        }
+      }
+    },
+    "args": [
+      {
+        "name": "keyword",
+        "required": true,
+        "description": "Search keyword",
+        "position": 0
+      },
+      {
+        "name": "count",
+        "required": false,
+        "description": "Number of results (default: 10, max: 20)",
+        "position": 1
+      }
+    ],
+    "file": "zhihu/search.js"
+  }
+]

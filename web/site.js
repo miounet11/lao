@@ -1,19 +1,27 @@
-for (const button of document.querySelectorAll(".copy")) {
-  button.addEventListener("click", async () => {
-    const original = button.textContent;
+document.addEventListener("click", async (event) => {
+  const target = event.target;
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
 
-    try {
-      await navigator.clipboard.writeText(button.dataset.copy || "");
-      button.textContent = button.dataset.copiedLabel || "Copied";
-    } catch {
-      button.textContent = button.dataset.failedLabel || "Copy failed";
-    }
+  const button = target.closest(".copy");
+  if (!(button instanceof HTMLElement)) {
+    return;
+  }
 
-    setTimeout(() => {
-      button.textContent = original;
-    }, 1200);
-  });
-}
+  const original = button.textContent;
+
+  try {
+    await navigator.clipboard.writeText(button.dataset.copy || "");
+    button.textContent = button.dataset.copiedLabel || "Copied";
+  } catch {
+    button.textContent = button.dataset.failedLabel || "Copy failed";
+  }
+
+  setTimeout(() => {
+    button.textContent = original;
+  }, 1200);
+});
 
 for (const form of document.querySelectorAll(".signup-form")) {
   form.addEventListener("submit", async (event) => {

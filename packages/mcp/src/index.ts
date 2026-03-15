@@ -30,6 +30,46 @@ function getDaemonPath(): string {
   return resolve(currentDir, "../../daemon/dist/index.js");
 }
 
+function getCliPath(): string {
+  const currentDir = dirname(fileURLToPath(import.meta.url));
+  const sameDirPath = resolve(currentDir, "cli.js");
+  if (existsSync(sameDirPath)) return sameDirPath;
+  return resolve(currentDir, "../../cli/dist/index.js");
+}
+
+async function runCli(args: string[]): Promise<{ code: number; stdout: string; stderr: string }> {
+  return new Promise((resolvePromise) => {
+    const child = spawn(process.execPath, [getCliPath(), ...args], {
+      env: { ...process.env },
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout.on("data", (chunk) => {
+      stdout += chunk.toString();
+    });
+
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+
+    child.on("close", (code) => {
+      resolvePromise({ code: code ?? 0, stdout, stderr });
+    });
+  });
+}
+
+async function runCliJson(args: string[]): Promise<unknown> {
+  const result = await runCli([...args, "--json"]);
+  if (result.code !== 0) {
+    throw new Error(result.stderr.trim() || result.stdout.trim() || "CLI command failed");
+  }
+
+  return JSON.parse(result.stdout);
+}
+
 async function isDaemonRunning(): Promise<boolean> {
   try {
     const controller = new AbortController();
@@ -109,13 +149,64 @@ Key capabilities:
 - browser_screenshot: Visual page capture
 - browser_tab_list/tab_new: Multi-tab support — use tab parameter for concurrent operations
 
-Site adapters (pre-built commands for popular sites):
+Site adapters (pre-built commands for popular sites from miounet11/lao-s):
 - Run via CLI: iatlas-browser site <name> [args]
 - Available: reddit, twitter, github, hackernews, xiaohongshu, zhihu, bilibili, weibo, douban, youtube
 - Update: iatlas-browser site update
 - List all: iatlas-browser site list
 
 To create a new site adapter, run: iatlas-browser guide` },
+);
+
+server.tool(
+  "site_list",
+  "List all installed site adapters",
+  {},
+  async () => {
+    try {
+      const result = await runCliJson(["site", "list"]);
+      return textResult(result);
+    } catch (error) {
+      return errorResult(error instanceof Error ? error.message : "Failed to list site adapters");
+    }
+  }
+);
+
+server.tool(
+  "site_search",
+  "Search installed site adapters by name, description, or domain",
+  {
+    query: z.string().describe("Search query"),
+  },
+  async ({ query }) => {
+    try {
+      const result = await runCliJson(["site", "search", query]);
+      return textResult(result);
+    } catch (error) {
+      return errorResult(error instanceof Error ? error.message : "Failed to search site adapters");
+    }
+  }
+);
+
+server.tool(
+  "site_run",
+  "Run a site adapter through the local iatlas-browser runtime",
+  {
+    name: z.string().describe("Adapter name, such as github/repo or twitter/search"),
+    args: z.record(z.string(), z.string()).optional().describe("Adapter arguments as key/value pairs"),
+  },
+  async ({ name, args }) => {
+    try {
+      const cliArgs = ["site", "run", name];
+      for (const [key, value] of Object.entries(args ?? {})) {
+        cliArgs.push(`--${key}`, value);
+      }
+      const result = await runCliJson(cliArgs);
+      return textResult(result);
+    } catch (error) {
+      return errorResult(error instanceof Error ? error.message : "Failed to run site adapter");
+    }
+  }
 );
 
 server.tool(

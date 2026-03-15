@@ -670,23 +670,23 @@ async function main(): Promise<void> {
 
 5. CONTRIBUTE
    Option A (with gh CLI):
-     git clone https://github.com/epiral/bb-sites && cd bb-sites
+     git clone https://github.com/miounet11/lao-s && cd lao-s
      git checkout -b feat-platform
      # add adapter files
      git push -u origin feat-platform
-     gh pr create --repo epiral/bb-sites
+     gh pr create --repo miounet11/lao-s
 
    Option B (without gh CLI, using iatlas-browser itself):
-     iatlas-browser site github/fork epiral/bb-sites
-     git clone https://github.com/YOUR_USER/bb-sites && cd bb-sites
+     iatlas-browser site github/fork miounet11/lao-s
+     git clone https://github.com/YOUR_USER/lao-s && cd lao-s
      git checkout -b feat-platform
      # add adapter files
      git push -u origin feat-platform
-     iatlas-browser site github/pr-create epiral/bb-sites --title "feat(platform): add adapters" --head "YOUR_USER:feat-platform"
+     iatlas-browser site github/pr-create miounet11/lao-s --title "feat(platform): add adapters" --head "YOUR_USER:feat-platform"
 
 Private adapters:  ~/.iatlas-browser/sites/<platform>/<command>.js
 Community:         ~/.iatlas-browser/bb-sites/ (via iatlas-browser site update)
-Full guide:        https://github.com/epiral/bb-sites/blob/main/SKILL.md`);
+Full guide:        https://github.com/miounet11/lao-s/blob/main/SKILL.md`);
         break;
       }
 

@@ -556,6 +556,10 @@ thead th {
   gap: 18px;
 }
 
+.hero.hero-slim {
+  grid-template-columns: minmax(0, 1.22fr) minmax(280px, 0.78fr);
+}
+
 .demo-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -643,6 +647,45 @@ thead th {
 
 #lab-result {
   min-height: 360px;
+}
+
+.article-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+}
+
+.article-rail,
+.article-body {
+  min-width: 0;
+}
+
+.article-body {
+  display: grid;
+  gap: 18px;
+}
+
+.article-section {
+  padding: 22px;
+  border: 1px solid rgba(20, 35, 29, 0.08);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.article-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-card h3 a:hover {
+  color: var(--accent);
+}
+
+.article-cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
 }
 
 .mode-grid,
@@ -890,6 +933,8 @@ thead th {
   .signup-card,
   .demo-panel,
   .lab-panel,
+  .article-shell,
+  .article-cta,
   .grid.two,
   .grid.three,
   .faq-list {

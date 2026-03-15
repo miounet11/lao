@@ -17,6 +17,7 @@
   "scripts": {
     "build": "turbo run build && pnpm build:release",
     "build:release": "tsup && pnpm build:extension",
+    "build:web-seo": "node scripts/generate-seo-content.mjs",
     "build:extension": "rm -rf extension && mkdir -p extension && cp -R packages/extension/dist/. extension/",
     "dev": "turbo run dev",
     "test": "turbo run test",

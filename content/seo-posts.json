@@ -1,0 +1,587 @@
+[
+  {
+    "slug": "browser-automation-with-login-state",
+    "title": "Browser Automation With Login State: When Your Real Chrome Session Matters",
+    "description": "Need browser automation that keeps cookies, tabs, and authenticated page state? Learn when a local browser bridge is a better fit than a fresh headless browser.",
+    "publishDate": "2026-03-15",
+    "status": "published",
+    "cluster": "authenticated browser automation",
+    "intent": "informational",
+    "audience": "automation engineers and AI agent builders",
+    "keywords": [
+      "browser automation with login state",
+      "authenticated browser automation",
+      "chrome automation with cookies",
+      "real browser session automation"
+    ],
+    "intro": "A large share of browser automation pain comes from rebuilding state that already exists in your daily browser. If the target site depends on active cookies, loaded tabs, client-side stores, or multi-step navigation history, fresh headless sessions create unnecessary friction.",
+    "problem": [
+      "Teams often search for browser automation with login state because their actual requirement is not just clicking buttons. They need to work inside a browser context that is already authenticated, already trusted, and already holding the right page state.",
+      "That is especially common with internal dashboards, admin tools, social platforms, and SaaS products where a new browser instance triggers more login prompts, stricter anti-automation checks, or extra setup work before the task even begins."
+    ],
+    "solution": [
+      "A local browser bridge changes the starting point. Instead of launching a separate browser, it exposes the Chrome session you are already using through CLI commands, MCP tools, and a local HTTP layer. That preserves the user context that matters for real work.",
+      "iatlas-browser is built around that model. The local daemon, Chrome extension, and MCP server all point back to your own browser, so automation can operate on live tabs, current cookies, and the exact page state you already have."
+    ],
+    "takeaways": [
+      "Use the local runtime when the task depends on a real logged-in browser session.",
+      "Avoid rebuilding authentication unless the workflow is fully public and stateless.",
+      "Treat browser tabs and page state as part of the execution environment, not as disposable details.",
+      "Use hosted APIs only for the narrow subset of tasks that are safe to run remotely."
+    ],
+    "steps": [
+      "Install iatlas-browser with `curl -fsSL https://miaoda.vip/install.sh | bash`.",
+      "Load the unpacked extension from `~/.iatlas-browser/extension` in Chrome.",
+      "Start the local daemon with `iatlas-browser daemon` and confirm health with `iatlas-browser doctor`.",
+      "Run browser commands such as `iatlas-browser open`, `snapshot`, and `site` against your live session."
+    ],
+    "ctaLabel": "Install iatlas-browser",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "mcp-browser-server-for-cursor-and-claude",
+    "title": "MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide",
+    "description": "Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.",
+    "publishDate": "2026-03-15",
+    "status": "published",
+    "cluster": "mcp browser server",
+    "intent": "commercial",
+    "audience": "AI coding tool users and agent platform builders",
+    "keywords": [
+      "mcp browser server",
+      "cursor browser mcp",
+      "claude desktop browser mcp",
+      "browser tools for AI agents"
+    ],
+    "intro": "As more teams adopt MCP-compatible tools, a common question appears quickly: how do you give the assistant browser access without reducing everything to stale HTML or fake APIs?",
+    "problem": [
+      "A lot of people searching for an MCP browser server actually want a practical bridge between a coding assistant and a real browser environment. They need the assistant to inspect pages, interact with authenticated websites, or run repeatable browser tools from the same machine the user trusts.",
+      "If the browser layer is detached from the user's real session, the MCP integration may look correct on paper but still fail in real workflows because the assistant cannot reach the tabs, cookies, and account state the user already has."
+    ],
+    "solution": [
+      "The stronger pattern is to keep browser execution local and expose it through MCP. That lets the assistant call structured tools while still landing inside the same Chrome session that the user is actively using.",
+      "iatlas-browser supports that model with generated MCP snippets for generic clients, Cursor, and Claude Desktop. The same local runtime is then shared by terminal commands, MCP tools, and the local daemon API."
+    ],
+    "takeaways": [
+      "MCP is most useful when the browser tool actually points to your real browser context.",
+      "Generated config snippets lower setup friction for Cursor and Claude Desktop.",
+      "Local MCP avoids the mismatch between a user's live session and a remote browser sandbox.",
+      "The local daemon remains the system of record for browser actions, even when MCP is the entry point."
+    ],
+    "steps": [
+      "Run `iatlas-browser mcp-config cursor` or download the generated JSON snippet after setup.",
+      "Start the daemon and confirm `extension connected: OK` with `iatlas-browser doctor`.",
+      "Launch `iatlas-browser --mcp` or use the provided launcher from setup.",
+      "Test a browser-aware MCP tool such as `browser_snapshot` or `site_list` from the client."
+    ],
+    "ctaLabel": "Open MCP docs",
+    "ctaHref": "/mcp/cursor.json"
+  },
+  {
+    "slug": "local-browser-api-for-authenticated-websites",
+    "title": "Local Browser API for Authenticated Websites: Why 127.0.0.1 Still Matters",
+    "description": "A local browser API is often the safest way to script authenticated websites. Learn when local HTTP control beats a hosted browser endpoint.",
+    "publishDate": "2026-03-15",
+    "status": "published",
+    "cluster": "local browser api",
+    "intent": "informational",
+    "audience": "tool builders and internal platform teams",
+    "keywords": [
+      "local browser api",
+      "browser api on localhost",
+      "authenticated website automation api",
+      "chrome local control api"
+    ],
+    "intro": "Browser automation does not always need a cloud endpoint. In many cases, the cleanest architecture is a local browser API that lets scripts and services operate on the user's actual browser through localhost.",
+    "problem": [
+      "Teams that automate authenticated websites often discover that hosted APIs are awkward for workflows tied to a specific person, machine, or browser state. A remote endpoint cannot safely inherit the user's current tabs, stored cookies, or transient page state without turning into a much more complex system.",
+      "That is why searches for a browser API often split into two needs: a local control layer for stateful workflows, and a hosted API for public, read-only retrieval. Mixing the two usually creates confusion."
+    ],
+    "solution": [
+      "A local browser API keeps state where it already exists. The daemon can expose browser commands on `127.0.0.1:19824`, while the browser itself remains under the user's control. That is a better fit for shell scripts, local services, and team-specific tooling running on the same machine.",
+      "iatlas-browser uses that pattern directly. You can call `/status` and `/command` over localhost, while still reserving `miaoda.vip` for the hosted subset that is safe to expose remotely."
+    ],
+    "takeaways": [
+      "Use localhost for workflows bound to a person's active browser session.",
+      "Use hosted APIs for public retrieval, not personal browser state.",
+      "Local HTTP control is easier to integrate with scripts and orchestrators than raw CDP alone.",
+      "A local daemon is a cleaner architecture boundary than turning every workflow into a remote browser service."
+    ],
+    "steps": [
+      "Start the daemon locally with `iatlas-browser daemon`.",
+      "Check health via `curl -s http://127.0.0.1:19824/status`.",
+      "Send browser commands through `POST /command` using JSON payloads.",
+      "Keep hosted `miaoda.vip` usage for public URL open requests and hosted adapters only."
+    ],
+    "ctaLabel": "Download API examples",
+    "ctaHref": "/api/examples.sh"
+  },
+  {
+    "slug": "webpage-metadata-api-for-public-urls",
+    "title": "Webpage Metadata API for Public URLs: A Fast Way to Open, Inspect, and Extract",
+    "description": "Need a simple webpage metadata API for public URLs? This guide explains how to use a hosted endpoint for metadata, text, and HTML without confusing it with full browser automation.",
+    "publishDate": "2026-03-15",
+    "status": "published",
+    "cluster": "webpage metadata api",
+    "intent": "transactional",
+    "audience": "developers building retrieval, indexing, and enrichment pipelines",
+    "keywords": [
+      "webpage metadata api",
+      "url metadata api",
+      "open webpage api",
+      "public url text extraction api"
+    ],
+    "intro": "Not every browser-related task requires full browser control. A lot of teams just need a clean hosted endpoint that can fetch a public page and return metadata, stripped text, or HTML.",
+    "problem": [
+      "Searches for a webpage metadata API usually come from teams building indexing, enrichment, summarization, or content-monitoring flows. They want a simple request model and do not need personal tabs or authenticated browser state.",
+      "The mistake is treating that need as if it were the same as real browser automation. It is not. A public retrieval API and a local browser runtime solve different layers of the stack."
+    ],
+    "solution": [
+      "The hosted `miaoda.vip/v1/open` endpoint is designed for that narrow public retrieval use case. It accepts a public URL and can return metadata, text, or HTML with key usage metrics and a predictable API key model.",
+      "That makes it a useful complement to the local iatlas-browser core. The hosted endpoint handles public fetches cleanly, while the local runtime remains the answer for stateful browser work."
+    ],
+    "takeaways": [
+      "Use a hosted metadata endpoint for public URLs, not for personal browser sessions.",
+      "Keep the response model narrow: metadata, text, or HTML.",
+      "API keys and daily usage controls make the public layer easier to operate.",
+      "Hosted retrieval and local browser control should be positioned as complementary tools."
+    ],
+    "steps": [
+      "Register an API key at `POST https://miaoda.vip/v1/register`.",
+      "Call `POST https://miaoda.vip/v1/open` with `mode=metadata`, `text`, or `html`.",
+      "Use `GET /v1/usage` to monitor remaining daily quota.",
+      "Switch to the local runtime if the task requires tabs, login state, or interactive page context."
+    ],
+    "ctaLabel": "Open API docs",
+    "ctaHref": "/openapi/"
+  },
+  {
+    "slug": "hosted-site-adapters-vs-local-runtime",
+    "title": "Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path",
+    "description": "Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.",
+    "publishDate": "2026-03-15",
+    "status": "published",
+    "cluster": "site adapters",
+    "intent": "commercial",
+    "audience": "teams evaluating adapter-based browser workflows",
+    "keywords": [
+      "hosted site adapters",
+      "browser adapter catalog",
+      "site_run api",
+      "local runtime vs hosted api"
+    ],
+    "intro": "The `site` adapter model is one of the most useful parts of iatlas-browser, but it only works well when teams understand which adapters can run remotely and which ones must stay local.",
+    "problem": [
+      "People often want a simple rule for adapter execution. In practice, the rule is about state. If an adapter only needs public data and read-only requests, it can often run as a hosted subset. If it needs your browser context, it belongs on the local runtime.",
+      "Without that boundary, teams either overcomplicate the hosted layer or underuse the local runtime, and both paths lead to brittle integrations."
+    ],
+    "solution": [
+      "The hosted subset at `miaoda.vip` is intentionally narrow. It includes public, read-only, server-safe adapters that can run without personal tabs, cookies, or user-specific browser state.",
+      "The full local adapter model is broader. It can take advantage of your live browser session, extension bridge, and page state, which is why it remains the center of the product."
+    ],
+    "takeaways": [
+      "Hosted adapters are for public, read-only, remote-safe tasks.",
+      "Local adapters are for session-aware tasks tied to your real browser context.",
+      "The adapter catalog should describe execution mode clearly.",
+      "A good architecture uses both layers without pretending they are the same."
+    ],
+    "steps": [
+      "Browse the adapter catalog at `/sites/` to understand available commands.",
+      "Check `GET /v1/sites/hosted` for the hosted subset that can run remotely.",
+      "Use `POST /v1/sites/run` for hosted read-only adapters.",
+      "Use `iatlas-browser site ...` locally whenever the command depends on your actual browser state."
+    ],
+    "ctaLabel": "Browse adapters",
+    "ctaHref": "/sites/"
+  },
+  {
+    "slug": "chrome-automation-without-rebuilding-cookies",
+    "title": "Chrome Automation Without Rebuilding Cookies: A Better Local Workflow",
+    "description": "If you are tired of recreating cookies and login flows in automation, this guide explains a local-first Chrome automation pattern that starts from your real session.",
+    "publishDate": "2026-03-16",
+    "status": "scheduled",
+    "cluster": "chrome automation",
+    "intent": "informational",
+    "audience": "engineers automating browser-heavy workflows",
+    "keywords": [
+      "chrome automation without cookies",
+      "reuse chrome session automation",
+      "chrome automation logged in",
+      "browser automation without relogin"
+    ],
+    "intro": "A lot of automation projects waste time reconstructing state that already exists in Chrome. If the browser is already logged in and trusted, the question becomes how to automate from there instead of starting over.",
+    "problem": [
+      "Fresh browser sessions break down when the target workflow depends on live storage, session history, active tabs, or anti-bot systems that respond differently to new sessions.",
+      "That is why many teams start searching for ways to automate Chrome without manually exporting cookies or rebuilding the same login state over and over again."
+    ],
+    "solution": [
+      "A local browser bridge uses the user's real Chrome session as the execution target. That avoids the complexity of cookie transfer and helps keep automation aligned with the environment the user already trusts.",
+      "The key is to expose that browser session in a disciplined way through a daemon, extension, and tool interface rather than relying on fragile one-off browser scripting."
+    ],
+    "takeaways": [
+      "Reusing a trusted local browser is often simpler than exporting session artifacts.",
+      "Cookie reuse is only part of the problem; live page state matters too.",
+      "A controlled local bridge is safer than ad hoc browser automation hacks.",
+      "The remote API layer should stay focused on public retrieval, not stateful Chrome control."
+    ],
+    "steps": [
+      "Keep Chrome as the system of record for your authenticated session.",
+      "Use a local browser bridge to expose commands into that session.",
+      "Reserve hosted endpoints for public fetches that do not depend on local state.",
+      "Measure success by reduced setup friction, not by headless purity."
+    ],
+    "ctaLabel": "Install local runtime",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "browser-agent-for-admin-dashboards",
+    "title": "Browser Agent for Admin Dashboards: Why Local Control Beats Detached Scraping",
+    "description": "Admin dashboards and internal tools are a strong fit for a local browser agent. Learn why stateful interfaces change the architecture choice.",
+    "publishDate": "2026-03-16",
+    "status": "scheduled",
+    "cluster": "browser agent",
+    "intent": "commercial",
+    "audience": "ops teams and internal tooling builders",
+    "keywords": [
+      "browser agent for admin dashboard",
+      "ai agent internal tools browser",
+      "dashboard automation with login state",
+      "stateful browser agent"
+    ],
+    "intro": "Admin dashboards usually look simple from the outside, but they are one of the hardest categories to automate well because the live user context matters so much.",
+    "problem": [
+      "A detached scraper can read HTML, but many admin tools rely on active sessions, dynamic frontends, role-based navigation, and internal request flows that are hard to replay cleanly.",
+      "Teams therefore search for a browser agent that can work where the user already works, instead of forcing every task into a clean-room browser instance."
+    ],
+    "solution": [
+      "A local browser agent approach keeps the task close to the real session. The assistant or script can then inspect pages, trigger actions, and gather context from the actual admin interface rather than an approximation.",
+      "That is exactly where a tool like iatlas-browser is useful: it bridges agents and scripts into the browser the operator already has open."
+    ],
+    "takeaways": [
+      "Admin dashboards are usually a local-runtime problem, not a hosted API problem.",
+      "Role-based state and live navigation paths are part of the execution context.",
+      "MCP plus a local daemon is often a better fit than a generic scraping stack.",
+      "The browser itself becomes part of the trusted internal workflow."
+    ],
+    "steps": [
+      "Map the admin tasks that truly need live browser state.",
+      "Connect your assistant or script to the local runtime instead of a remote scraper.",
+      "Use snapshots, network inspection, and site adapters to structure the workflow.",
+      "Keep hosted APIs for public support tasks, not for internal dashboard control."
+    ],
+    "ctaLabel": "Open learn hub",
+    "ctaHref": "/learn/"
+  },
+  {
+    "slug": "cli-browser-automation-for-engineers",
+    "title": "CLI Browser Automation for Engineers Who Want Fast Feedback Loops",
+    "description": "CLI browser automation is still the fastest way to inspect, test, and iterate. Learn how to use a terminal-first browser workflow without losing session state.",
+    "publishDate": "2026-03-16",
+    "status": "scheduled",
+    "cluster": "cli browser automation",
+    "intent": "informational",
+    "audience": "developers and SREs",
+    "keywords": [
+      "cli browser automation",
+      "browser automation from terminal",
+      "chrome terminal commands",
+      "browser cli with login state"
+    ],
+    "intro": "Even when teams adopt agents and GUI tools, a terminal-first browser workflow remains valuable because it provides faster iteration, better scriptability, and easier debugging.",
+    "problem": [
+      "Many browser tools become slower to use as soon as the workflow leaves the terminal. Engineers then lose the speed of shell history, pipelines, local scripts, and quick command retries.",
+      "At the same time, terminal workflows are often paired with disposable browser sessions, which removes the exact state engineers need when debugging real web flows."
+    ],
+    "solution": [
+      "CLI browser automation works best when it points to a live browser session instead of a blank one. That keeps terminal speed while preserving real tabs, auth state, and page context.",
+      "With iatlas-browser, commands like `open`, `snapshot`, `click`, `fetch`, and `site` become a stable command layer that still lands inside your current browser context."
+    ],
+    "takeaways": [
+      "Terminal speed is still a strong advantage for browser workflows.",
+      "Live browser state makes CLI automation more useful, not less.",
+      "A good browser CLI should support both one-off commands and repeatable adapters.",
+      "CLI, MCP, and local API should share one runtime instead of diverging."
+    ],
+    "steps": [
+      "Install the runtime and extension locally.",
+      "Start with `iatlas-browser open` and `snapshot -i` to confirm connection.",
+      "Add shell aliases or scripts for the browser tasks you repeat often.",
+      "Promote stable flows into `site` adapters or MCP-based tool calls."
+    ],
+    "ctaLabel": "View install command",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "website-data-extraction-real-session-vs-scraping",
+    "title": "Website Data Extraction: Real Browser Session vs HTML Scraping",
+    "description": "Data extraction changes when the target site depends on session state. This guide compares live-session extraction with traditional scraping approaches.",
+    "publishDate": "2026-03-16",
+    "status": "scheduled",
+    "cluster": "website data extraction",
+    "intent": "informational",
+    "audience": "research teams and workflow builders",
+    "keywords": [
+      "website data extraction with browser session",
+      "html scraping vs browser session",
+      "authenticated data extraction",
+      "browser-based data extraction"
+    ],
+    "intro": "HTML scraping still has a place, but it is not the right answer for every site. Once the target page depends on active state, the data extraction strategy has to change.",
+    "problem": [
+      "Many sites load content dynamically, gate responses behind a real session, or reveal useful data only after navigation steps that are tightly coupled to the current tab state.",
+      "That means the old question of scraping vs API is incomplete. The real comparison is often scraping vs live-session extraction."
+    ],
+    "solution": [
+      "Live-session extraction starts from the browser that already holds the needed context. It can inspect rendered pages, read the current DOM, observe network requests, and run in-page logic where the data actually appears.",
+      "A tool like iatlas-browser makes that accessible through CLI, MCP, and a local daemon, while still leaving room for hosted APIs when the target is public and state-free."
+    ],
+    "takeaways": [
+      "Session-sensitive pages are a poor fit for plain HTML scraping alone.",
+      "Live-session extraction is often the shortest path to reliable data.",
+      "Network inspection and DOM evaluation belong in the extraction toolkit.",
+      "Keep the hosted layer narrow and let the local runtime handle stateful extraction."
+    ],
+    "steps": [
+      "Identify whether the target data depends on login, tabs, or rendered client state.",
+      "Use the local browser runtime for rendered or authenticated extraction paths.",
+      "Watch network calls and page snapshots to confirm where the data is exposed.",
+      "Only fall back to hosted public retrieval when the target is truly stateless."
+    ],
+    "ctaLabel": "Explore local tools",
+    "ctaHref": "/"
+  },
+  {
+    "slug": "github-repo-adapter-and-hosted-api-examples",
+    "title": "GitHub Repo Adapter and Hosted API Examples for Fast Public Lookups",
+    "description": "Need a public GitHub repo lookup without building your own wrapper? Learn how hosted adapters fit into a broader browser automation stack.",
+    "publishDate": "2026-03-16",
+    "status": "scheduled",
+    "cluster": "hosted adapter examples",
+    "intent": "transactional",
+    "audience": "developers building repo, issue, and metadata workflows",
+    "keywords": [
+      "github repo api adapter",
+      "hosted github repo lookup",
+      "site_run github repo",
+      "github repo metadata api"
+    ],
+    "intro": "Public GitHub metadata is a good example of a task that belongs in the hosted adapter layer instead of the local browser runtime.",
+    "problem": [
+      "Teams often need repo, issue, or metadata lookups as part of content, indexing, or operational workflows. The task is simple, public, and read-only, so spinning up a full browser stack is unnecessary.",
+      "At the same time, many teams still want one consistent interface across hosted tasks and local browser tasks, rather than maintaining completely separate tool models."
+    ],
+    "solution": [
+      "Hosted adapters solve that nicely. The same `site` naming pattern can be used, but the execution shifts to a remote-safe API path such as `POST /v1/sites/run` when the target is public and stateless.",
+      "That means GitHub repo lookups can stay lightweight, while the broader local browser runtime is reserved for workflows where browser state genuinely matters."
+    ],
+    "takeaways": [
+      "Public GitHub metadata is a strong fit for hosted adapters.",
+      "Shared naming across local and hosted tools reduces mental overhead.",
+      "A hosted adapter layer works best when the task is read-only and predictable.",
+      "The local browser runtime stays focused on stateful interaction, not public metadata calls."
+    ],
+    "steps": [
+      "Register or reuse an API key for the hosted layer.",
+      "Discover current hosted adapters through `GET /v1/sites/hosted`.",
+      "Call `POST /v1/sites/run` with `name=github/repo` and the repo argument.",
+      "Use the same adapter catalog page to compare hosted and local execution modes."
+    ],
+    "ctaLabel": "Open hosted adapter catalog",
+    "ctaHref": "/sites/"
+  },
+  {
+    "slug": "mcp-browser-tools-for-coding-agents",
+    "title": "MCP Browser Tools for Coding Agents: A Better Bridge Into Real Web Context",
+    "description": "Coding agents become more useful when browser tools point to a real session. This guide explains the role of MCP browser tools in practical engineering workflows.",
+    "publishDate": "2026-03-17",
+    "status": "scheduled",
+    "cluster": "coding agent browser tools",
+    "intent": "commercial",
+    "audience": "teams building AI-assisted engineering workflows",
+    "keywords": [
+      "mcp browser tools",
+      "coding agent browser tools",
+      "browser tools for cursor",
+      "real browser tools for AI agents"
+    ],
+    "intro": "Coding agents are useful for code, but many engineering tasks also depend on the browser. That is where MCP browser tools can move from demo value to real operational value.",
+    "problem": [
+      "If a coding agent cannot reach the browser context that the human already uses, it often falls back to stale assumptions, unverified HTML, or incomplete web context.",
+      "This creates a gap between code changes and browser-side validation, especially in debugging, QA, reverse engineering, and authenticated workflow automation."
+    ],
+    "solution": [
+      "MCP browser tools close that gap by exposing structured browser capabilities into the assistant. The important detail is that those tools should target a real local browser session when the workflow depends on current state.",
+      "iatlas-browser follows that pattern by sharing one runtime across CLI, MCP, and local API, while still separating the hosted public subset on miaoda.vip."
+    ],
+    "takeaways": [
+      "Coding agents need real browser context for many web-heavy tasks.",
+      "MCP is stronger when it lands inside the user's actual local browser environment.",
+      "One runtime across CLI, MCP, and local API reduces duplicated integration work.",
+      "Hosted public APIs remain useful, but they do not replace stateful local browser tools."
+    ],
+    "steps": [
+      "Connect the local browser runtime first.",
+      "Add the MCP config to the coding assistant.",
+      "Verify tool calling against browser-aware actions such as snapshots and adapter listing.",
+      "Use hosted endpoints only for public remote-safe requests that do not need session state."
+    ],
+    "ctaLabel": "Get MCP config",
+    "ctaHref": "/mcp/cursor.json"
+  },
+  {
+    "slug": "browser-automation-for-internal-tools-behind-sso",
+    "title": "Browser Automation for Internal Tools Behind SSO",
+    "description": "SSO-heavy internal tools usually need local browser automation, not generic scraping. Learn how to automate them without rebuilding trust and login state.",
+    "publishDate": "2026-03-17",
+    "status": "scheduled",
+    "cluster": "internal tool automation",
+    "intent": "informational",
+    "audience": "enterprise teams and internal platform engineers",
+    "keywords": [
+      "browser automation behind sso",
+      "internal tool browser automation",
+      "authenticated company tool automation",
+      "browser automation with enterprise login"
+    ],
+    "intro": "Internal tools behind SSO are one of the clearest cases where local browser automation wins. They depend on trust, identity, and session context that is difficult to reconstruct in detached environments.",
+    "problem": [
+      "SSO redirects, short-lived tokens, device trust rules, and browser-specific state make internal tools frustrating to automate through generic remote workflows.",
+      "Teams frequently spend more time reproducing the login environment than solving the actual business task they wanted to automate."
+    ],
+    "solution": [
+      "A local browser bridge starts from the session that already cleared SSO. That makes it much easier to automate navigation, extract context, or structure repeatable actions without fighting the entire login stack first.",
+      "The result is not only a working automation path, but also a cleaner separation between internal stateful work and public hosted retrieval."
+    ],
+    "takeaways": [
+      "Internal SSO tools are a strong fit for local browser automation.",
+      "Identity and browser trust are part of the execution environment.",
+      "Remote-safe hosted APIs should not pretend to solve stateful internal workflows.",
+      "A local browser bridge is often the least risky architecture for these tasks."
+    ],
+    "steps": [
+      "Log in normally in Chrome and confirm the internal tool works in the real browser.",
+      "Attach the local extension and daemon to that session.",
+      "Prototype the workflow with browser commands and snapshots.",
+      "Package stable sequences as local scripts, adapters, or MCP tools."
+    ],
+    "ctaLabel": "Read setup guide",
+    "ctaHref": "/"
+  },
+  {
+    "slug": "url-to-text-api-for-indexing-and-summarization",
+    "title": "URL to Text API for Indexing and Summarization Pipelines",
+    "description": "If your use case is public retrieval rather than browser control, a URL-to-text API is often the right layer. Learn where it fits in the iatlas-browser model.",
+    "publishDate": "2026-03-17",
+    "status": "scheduled",
+    "cluster": "url to text api",
+    "intent": "transactional",
+    "audience": "search, indexing, and knowledge pipeline builders",
+    "keywords": [
+      "url to text api",
+      "webpage to text api",
+      "public page text extraction api",
+      "url summarization api"
+    ],
+    "intro": "Some browser-related searches are really about retrieval, not control. If the task is to turn a public page into text for indexing or summarization, the correct tool is usually a hosted extraction API.",
+    "problem": [
+      "Teams building retrieval pipelines do not always need a browser with clicks and tabs. They need a stable way to open a public URL, strip it into a useful form, and move on.",
+      "Problems start when that need is merged with stateful browser automation requirements, because the product surface becomes harder to reason about."
+    ],
+    "solution": [
+      "The hosted `/v1/open` path is the right fit for this category. It can return text from public pages without dragging browser-session semantics into the request model.",
+      "That keeps the local browser runtime free for genuinely interactive, stateful tasks while letting indexing and summarization workloads stay simple."
+    ],
+    "takeaways": [
+      "URL-to-text is a retrieval problem, not a full browser-control problem.",
+      "Hosted endpoints are appropriate when the target is public and stateless.",
+      "Keeping retrieval separate from local browser control improves clarity.",
+      "A shared product can support both layers if the boundary is explicit."
+    ],
+    "steps": [
+      "Register an API key for the hosted layer.",
+      "Send a public URL to `POST /v1/open` with `mode=text`.",
+      "Store the returned text in your indexing or summarization pipeline.",
+      "Escalate to the local runtime only if the page needs active session state."
+    ],
+    "ctaLabel": "Try the hosted lab",
+    "ctaHref": "/"
+  },
+  {
+    "slug": "hosted-read-only-adapters-for-public-research-sources",
+    "title": "Hosted Read-Only Adapters for Public Research Sources",
+    "description": "Public research sources are ideal for hosted read-only adapters. Learn why this pattern works well for search, metadata, and lightweight knowledge workflows.",
+    "publishDate": "2026-03-17",
+    "status": "scheduled",
+    "cluster": "research adapters",
+    "intent": "informational",
+    "audience": "research automation builders and knowledge teams",
+    "keywords": [
+      "hosted read only adapters",
+      "research source api adapters",
+      "public source adapter api",
+      "knowledge workflow adapters"
+    ],
+    "intro": "Public research sources such as arXiv, Wikipedia, PubMed, and Stack Exchange fit naturally into a hosted adapter layer because the data is public and the workflows are usually read-only.",
+    "problem": [
+      "Teams often want a uniform interface for public research lookups, but they do not need a full browser runtime for every one of those tasks. At the same time, they still want the same product to handle heavier local browser work elsewhere.",
+      "That creates a strong case for a hosted adapter subset that complements, rather than replaces, the local browser core."
+    ],
+    "solution": [
+      "Hosted read-only adapters provide that middle layer. They expose public-source lookups through a consistent API surface while avoiding the cost and confusion of unnecessary local browser control.",
+      "This works best when the adapter catalog clearly marks which adapters are hosted and when teams can switch back to local runtime for stateful tasks."
+    ],
+    "takeaways": [
+      "Public research sources are strong candidates for hosted adapters.",
+      "Consistency of naming matters across local and hosted tools.",
+      "The adapter catalog should explain execution mode, not just function names.",
+      "Hosted read-only adapters extend the platform without distorting the local browser core."
+    ],
+    "steps": [
+      "Check the hosted subset via `/v1/sites/hosted`.",
+      "Pick a public source adapter such as `arxiv/search` or `wikipedia/summary`.",
+      "Run it through `/v1/sites/run` with a simple JSON payload.",
+      "Move to the local runtime only when the workflow requires live browser context."
+    ],
+    "ctaLabel": "Open site runner",
+    "ctaHref": "/"
+  },
+  {
+    "slug": "playwright-vs-real-browser-local-bridge",
+    "title": "Playwright vs a Real-Browser Local Bridge: What Actually Changes",
+    "description": "Playwright is powerful, but it solves a different starting point. This guide explains when a real-browser local bridge is the better architecture choice.",
+    "publishDate": "2026-03-17",
+    "status": "scheduled",
+    "cluster": "playwright comparison",
+    "intent": "comparison",
+    "audience": "technical evaluators choosing an automation stack",
+    "keywords": [
+      "playwright vs real browser session",
+      "playwright vs browser bridge",
+      "real browser local bridge",
+      "browser automation architecture comparison"
+    ],
+    "intro": "Playwright is an excellent automation framework, but many teams evaluating it are actually solving a different problem: how to automate the browser session that already exists on the user's machine.",
+    "problem": [
+      "Playwright assumes you are comfortable starting from a fresh browser context that your code controls. That is often the right answer for testing and reproducible automation, but it is not always the right answer for authenticated, stateful workflows tied to a user's real session.",
+      "The confusion starts when teams compare feature lists instead of comparing starting assumptions."
+    ],
+    "solution": [
+      "A real-browser local bridge starts from the user's current browser and exposes that environment to tools. It is not a replacement for every test framework. It is a different answer to a different architecture problem.",
+      "iatlas-browser is built around that local bridge model. It is strongest when you care about live session state, current tabs, and tooling surfaces such as CLI, MCP, and a local daemon."
+    ],
+    "takeaways": [
+      "Playwright and a real-browser bridge do not start from the same assumptions.",
+      "Fresh controlled sessions are ideal for testing; live sessions are ideal for certain operational workflows.",
+      "Compare architectures by execution context, not just by command coverage.",
+      "A mature stack can use both approaches for different layers of work."
+    ],
+    "steps": [
+      "Choose Playwright when deterministic clean sessions are the goal.",
+      "Choose a local browser bridge when real session state is the goal.",
+      "Keep hosted APIs narrow and public even if the local runtime is broader.",
+      "Document the boundary clearly so teams do not misuse the wrong layer."
+    ],
+    "ctaLabel": "Read product overview",
+    "ctaHref": "/"
+  }
+]

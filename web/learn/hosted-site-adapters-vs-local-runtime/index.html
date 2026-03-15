@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path | iatlas-browser Learn</title>
+  <meta name="description" content="Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.">
+  <meta name="keywords" content="hosted site adapters,browser adapter catalog,site_run api,local runtime vs hosted api">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/learn/hosted-site-adapters-vs-local-runtime/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path">
+  <meta property="og:description" content="Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.">
+  <meta property="og:url" content="https://miaoda.vip/learn/hosted-site-adapters-vs-local-runtime/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path">
+  <meta name="twitter:description" content="Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path","description":"Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.","datePublished":"2026-03-15","dateModified":"2026-03-15","author":{"@type":"Organization","name":"iatlas-browser"},"publisher":{"@type":"Organization","name":"iatlas-browser"},"mainEntityOfPage":"https://miaoda.vip/learn/hosted-site-adapters-vs-local-runtime/","keywords":"hosted site adapters, browser adapter catalog, site_run api, local runtime vs hosted api"}</script>
+</head>
+<body>
+  <main class="page">
+    
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Primary links">
+        <a href="/">Home</a><a href="/openapi/">Open API</a><a href="/sites/">Sites</a><a class="is-active" href="/learn/">Learn</a>
+      </nav>
+    </header>
+  
+
+    <section class="hero hero-slim">
+      <div class="hero-copy">
+        <p class="eyebrow">Learn · site adapters</p>
+        <h1>Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path</h1>
+        <p class="lede">Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.</p>
+        <div class="badge-row">
+          <span>March 15, 2026</span>
+          <span>commercial</span>
+          <span>teams evaluating adapter-based browser workflows</span>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">Search focus</p>
+        <ul class="compact-list">
+          <li>hosted site adapters</li><li>browser adapter catalog</li><li>site_run api</li><li>local runtime vs hosted api</li>
+        </ul>
+        <div class="hero-actions">
+          <a class="button primary" href="/sites/">Browse adapters</a>
+          <a class="button" href="/learn/">Back to Learn</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="article-shell">
+        <aside class="panel article-rail">
+          <p class="panel-label">Quick summary</p>
+          <p class="subtle">The `site` adapter model is one of the most useful parts of iatlas-browser, but it only works well when teams understand which adapters can run remotely and which ones must stay local.</p>
+          <p class="panel-label">Cluster</p>
+          <p>site adapters</p>
+          <p class="panel-label">Intent</p>
+          <p>commercial</p>
+        </aside>
+        <article class="panel article-body">
+          <section class="article-section">
+            <p class="kicker">Why This Search Exists</p>
+            <p>People often want a simple rule for adapter execution. In practice, the rule is about state. If an adapter only needs public data and read-only requests, it can often run as a hosted subset. If it needs your browser context, it belongs on the local runtime.</p><p>Without that boundary, teams either overcomplicate the hosted layer or underuse the local runtime, and both paths lead to brittle integrations.</p>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Recommended Approach</p>
+            <p>The hosted subset at `miaoda.vip` is intentionally narrow. It includes public, read-only, server-safe adapters that can run without personal tabs, cookies, or user-specific browser state.</p><p>The full local adapter model is broader. It can take advantage of your live browser session, extension bridge, and page state, which is why it remains the center of the product.</p>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Key Takeaways</p>
+            <ul>
+              <li>Hosted adapters are for public, read-only, remote-safe tasks.</li><li>Local adapters are for session-aware tasks tied to your real browser context.</li><li>The adapter catalog should describe execution mode clearly.</li><li>A good architecture uses both layers without pretending they are the same.</li>
+            </ul>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Fast Start</p>
+            <ol>
+              <li>Browse the adapter catalog at `/sites/` to understand available commands.</li><li>Check `GET /v1/sites/hosted` for the hosted subset that can run remotely.</li><li>Use `POST /v1/sites/run` for hosted read-only adapters.</li><li>Use `iatlas-browser site ...` locally whenever the command depends on your actual browser state.</li>
+            </ol>
+          </section>
+          <section class="cta article-cta">
+            <div>
+              <p class="kicker">Next Action</p>
+              <h2>Browse adapters</h2>
+              <p>Move from research to implementation with the relevant iatlas-browser entry point.</p>
+            </div>
+            <div class="hero-actions">
+              <a class="button primary" href="/sites/">Browse adapters</a>
+              <a class="button ghost" href="/openapi/">Hosted API docs</a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Related Guides</p>
+        <h2>More pages around the same buyer and builder intent</h2>
+      </div>
+      <div class="grid three article-list">
+        
+          <article class="card article-card">
+            <p class="kicker">authenticated browser automation</p>
+            <h3><a href="/learn/browser-automation-with-login-state/">Browser Automation With Login State: When Your Real Chrome Session Matters</a></h3>
+            <p>Need browser automation that keeps cookies, tabs, and authenticated page state? Learn when a local browser bridge is a better fit than a fresh headless browser.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+          <article class="card article-card">
+            <p class="kicker">local browser api</p>
+            <h3><a href="/learn/local-browser-api-for-authenticated-websites/">Local Browser API for Authenticated Websites: Why 127.0.0.1 Still Matters</a></h3>
+            <p>A local browser API is often the safest way to script authenticated websites. Learn when local HTTP control beats a hosted browser endpoint.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+          <article class="card article-card">
+            <p class="kicker">mcp browser server</p>
+            <h3><a href="/learn/mcp-browser-server-for-cursor-and-claude/">MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide</a></h3>
+            <p>Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><a href="/learn/">Learn hub</a> · <a href="/feed.xml">RSS feed</a></p>
+      <p class="subtle">SEO cluster: site adapters.</p>
+    </footer>
+  </main>
+</body>
+</html>

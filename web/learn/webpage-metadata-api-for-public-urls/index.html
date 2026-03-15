@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webpage Metadata API for Public URLs: A Fast Way to Open, Inspect, and Extract | iatlas-browser Learn</title>
+  <meta name="description" content="Need a simple webpage metadata API for public URLs? This guide explains how to use a hosted endpoint for metadata, text, and HTML without confusing it with full browser automation.">
+  <meta name="keywords" content="webpage metadata api,url metadata api,open webpage api,public url text extraction api">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/learn/webpage-metadata-api-for-public-urls/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Webpage Metadata API for Public URLs: A Fast Way to Open, Inspect, and Extract">
+  <meta property="og:description" content="Need a simple webpage metadata API for public URLs? This guide explains how to use a hosted endpoint for metadata, text, and HTML without confusing it with full browser automation.">
+  <meta property="og:url" content="https://miaoda.vip/learn/webpage-metadata-api-for-public-urls/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Webpage Metadata API for Public URLs: A Fast Way to Open, Inspect, and Extract">
+  <meta name="twitter:description" content="Need a simple webpage metadata API for public URLs? This guide explains how to use a hosted endpoint for metadata, text, and HTML without confusing it with full browser automation.">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Webpage Metadata API for Public URLs: A Fast Way to Open, Inspect, and Extract","description":"Need a simple webpage metadata API for public URLs? This guide explains how to use a hosted endpoint for metadata, text, and HTML without confusing it with full browser automation.","datePublished":"2026-03-15","dateModified":"2026-03-15","author":{"@type":"Organization","name":"iatlas-browser"},"publisher":{"@type":"Organization","name":"iatlas-browser"},"mainEntityOfPage":"https://miaoda.vip/learn/webpage-metadata-api-for-public-urls/","keywords":"webpage metadata api, url metadata api, open webpage api, public url text extraction api"}</script>
+</head>
+<body>
+  <main class="page">
+    
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Primary links">
+        <a href="/">Home</a><a href="/openapi/">Open API</a><a href="/sites/">Sites</a><a class="is-active" href="/learn/">Learn</a>
+      </nav>
+    </header>
+  
+
+    <section class="hero hero-slim">
+      <div class="hero-copy">
+        <p class="eyebrow">Learn · webpage metadata api</p>
+        <h1>Webpage Metadata API for Public URLs: A Fast Way to Open, Inspect, and Extract</h1>
+        <p class="lede">Need a simple webpage metadata API for public URLs? This guide explains how to use a hosted endpoint for metadata, text, and HTML without confusing it with full browser automation.</p>
+        <div class="badge-row">
+          <span>March 15, 2026</span>
+          <span>transactional</span>
+          <span>developers building retrieval, indexing, and enrichment pipelines</span>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">Search focus</p>
+        <ul class="compact-list">
+          <li>webpage metadata api</li><li>url metadata api</li><li>open webpage api</li><li>public url text extraction api</li>
+        </ul>
+        <div class="hero-actions">
+          <a class="button primary" href="/openapi/">Open API docs</a>
+          <a class="button" href="/learn/">Back to Learn</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="article-shell">
+        <aside class="panel article-rail">
+          <p class="panel-label">Quick summary</p>
+          <p class="subtle">Not every browser-related task requires full browser control. A lot of teams just need a clean hosted endpoint that can fetch a public page and return metadata, stripped text, or HTML.</p>
+          <p class="panel-label">Cluster</p>
+          <p>webpage metadata api</p>
+          <p class="panel-label">Intent</p>
+          <p>transactional</p>
+        </aside>
+        <article class="panel article-body">
+          <section class="article-section">
+            <p class="kicker">Why This Search Exists</p>
+            <p>Searches for a webpage metadata API usually come from teams building indexing, enrichment, summarization, or content-monitoring flows. They want a simple request model and do not need personal tabs or authenticated browser state.</p><p>The mistake is treating that need as if it were the same as real browser automation. It is not. A public retrieval API and a local browser runtime solve different layers of the stack.</p>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Recommended Approach</p>
+            <p>The hosted `miaoda.vip/v1/open` endpoint is designed for that narrow public retrieval use case. It accepts a public URL and can return metadata, text, or HTML with key usage metrics and a predictable API key model.</p><p>That makes it a useful complement to the local iatlas-browser core. The hosted endpoint handles public fetches cleanly, while the local runtime remains the answer for stateful browser work.</p>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Key Takeaways</p>
+            <ul>
+              <li>Use a hosted metadata endpoint for public URLs, not for personal browser sessions.</li><li>Keep the response model narrow: metadata, text, or HTML.</li><li>API keys and daily usage controls make the public layer easier to operate.</li><li>Hosted retrieval and local browser control should be positioned as complementary tools.</li>
+            </ul>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Fast Start</p>
+            <ol>
+              <li>Register an API key at `POST https://miaoda.vip/v1/register`.</li><li>Call `POST https://miaoda.vip/v1/open` with `mode=metadata`, `text`, or `html`.</li><li>Use `GET /v1/usage` to monitor remaining daily quota.</li><li>Switch to the local runtime if the task requires tabs, login state, or interactive page context.</li>
+            </ol>
+          </section>
+          <section class="cta article-cta">
+            <div>
+              <p class="kicker">Next Action</p>
+              <h2>Open API docs</h2>
+              <p>Move from research to implementation with the relevant iatlas-browser entry point.</p>
+            </div>
+            <div class="hero-actions">
+              <a class="button primary" href="/openapi/">Open API docs</a>
+              <a class="button ghost" href="/openapi/">Hosted API docs</a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Related Guides</p>
+        <h2>More pages around the same buyer and builder intent</h2>
+      </div>
+      <div class="grid three article-list">
+        
+          <article class="card article-card">
+            <p class="kicker">authenticated browser automation</p>
+            <h3><a href="/learn/browser-automation-with-login-state/">Browser Automation With Login State: When Your Real Chrome Session Matters</a></h3>
+            <p>Need browser automation that keeps cookies, tabs, and authenticated page state? Learn when a local browser bridge is a better fit than a fresh headless browser.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+          <article class="card article-card">
+            <p class="kicker">site adapters</p>
+            <h3><a href="/learn/hosted-site-adapters-vs-local-runtime/">Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path</a></h3>
+            <p>Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+          <article class="card article-card">
+            <p class="kicker">local browser api</p>
+            <h3><a href="/learn/local-browser-api-for-authenticated-websites/">Local Browser API for Authenticated Websites: Why 127.0.0.1 Still Matters</a></h3>
+            <p>A local browser API is often the safest way to script authenticated websites. Learn when local HTTP control beats a hosted browser endpoint.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><a href="/learn/">Learn hub</a> · <a href="/feed.xml">RSS feed</a></p>
+      <p class="subtle">SEO cluster: webpage metadata api.</p>
+    </footer>
+  </main>
+</body>
+</html>

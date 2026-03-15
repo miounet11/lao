@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>iatlas-browser Learn</title>
+    <link>https://miaoda.vip/learn/</link>
+    <description>Daily content about browser automation, MCP tools, and hosted API workflows.</description>
+    <language>en-us</language>
+    
+    <item>
+      <title>Browser Automation With Login State: When Your Real Chrome Session Matters</title>
+      <link>https://miaoda.vip/learn/browser-automation-with-login-state/</link>
+      <guid>https://miaoda.vip/learn/browser-automation-with-login-state/</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Need browser automation that keeps cookies, tabs, and authenticated page state? Learn when a local browser bridge is a better fit than a fresh headless browser.</description>
+    </item>
+    <item>
+      <title>Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path</title>
+      <link>https://miaoda.vip/learn/hosted-site-adapters-vs-local-runtime/</link>
+      <guid>https://miaoda.vip/learn/hosted-site-adapters-vs-local-runtime/</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.</description>
+    </item>
+    <item>
+      <title>Local Browser API for Authenticated Websites: Why 127.0.0.1 Still Matters</title>
+      <link>https://miaoda.vip/learn/local-browser-api-for-authenticated-websites/</link>
+      <guid>https://miaoda.vip/learn/local-browser-api-for-authenticated-websites/</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A local browser API is often the safest way to script authenticated websites. Learn when local HTTP control beats a hosted browser endpoint.</description>
+    </item>
+    <item>
+      <title>MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide</title>
+      <link>https://miaoda.vip/learn/mcp-browser-server-for-cursor-and-claude/</link>
+      <guid>https://miaoda.vip/learn/mcp-browser-server-for-cursor-and-claude/</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.</description>
+    </item>
+    <item>
+      <title>Webpage Metadata API for Public URLs: A Fast Way to Open, Inspect, and Extract</title>
+      <link>https://miaoda.vip/learn/webpage-metadata-api-for-public-urls/</link>
+      <guid>https://miaoda.vip/learn/webpage-metadata-api-for-public-urls/</guid>
+      <pubDate>Sun, 15 Mar 2026 00:00:00 GMT</pubDate>
+      <description>Need a simple webpage metadata API for public URLs? This guide explains how to use a hosted endpoint for metadata, text, and HTML without confusing it with full browser automation.</description>
+    </item>
+  </channel>
+</rss>

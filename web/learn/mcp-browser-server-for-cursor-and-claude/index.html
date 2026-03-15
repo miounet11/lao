@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide | iatlas-browser Learn</title>
+  <meta name="description" content="Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.">
+  <meta name="keywords" content="mcp browser server,cursor browser mcp,claude desktop browser mcp,browser tools for AI agents">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <link rel="canonical" href="https://miaoda.vip/learn/mcp-browser-server-for-cursor-and-claude/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide">
+  <meta property="og:description" content="Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.">
+  <meta property="og:url" content="https://miaoda.vip/learn/mcp-browser-server-for-cursor-and-claude/">
+  <meta property="og:site_name" content="iatlas-browser">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide">
+  <meta name="twitter:description" content="Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide","description":"Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.","datePublished":"2026-03-15","dateModified":"2026-03-15","author":{"@type":"Organization","name":"iatlas-browser"},"publisher":{"@type":"Organization","name":"iatlas-browser"},"mainEntityOfPage":"https://miaoda.vip/learn/mcp-browser-server-for-cursor-and-claude/","keywords":"mcp browser server, cursor browser mcp, claude desktop browser mcp, browser tools for AI agents"}</script>
+</head>
+<body>
+  <main class="page">
+    
+    <header class="topbar">
+      <a class="brand" href="/">iatlas-browser</a>
+      <nav class="lang-switch" aria-label="Primary links">
+        <a href="/">Home</a><a href="/openapi/">Open API</a><a href="/sites/">Sites</a><a class="is-active" href="/learn/">Learn</a>
+      </nav>
+    </header>
+  
+
+    <section class="hero hero-slim">
+      <div class="hero-copy">
+        <p class="eyebrow">Learn · mcp browser server</p>
+        <h1>MCP Browser Server for Cursor and Claude Desktop: A Practical Setup Guide</h1>
+        <p class="lede">Looking for an MCP browser server that can work with your real Chrome session? This guide explains when local browser MCP is more useful than a generic scraping tool.</p>
+        <div class="badge-row">
+          <span>March 15, 2026</span>
+          <span>commercial</span>
+          <span>AI coding tool users and agent platform builders</span>
+        </div>
+      </div>
+      <aside class="hero-panel">
+        <p class="panel-label">Search focus</p>
+        <ul class="compact-list">
+          <li>mcp browser server</li><li>cursor browser mcp</li><li>claude desktop browser mcp</li><li>browser tools for AI agents</li>
+        </ul>
+        <div class="hero-actions">
+          <a class="button primary" href="/mcp/cursor.json">Open MCP docs</a>
+          <a class="button" href="/learn/">Back to Learn</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="article-shell">
+        <aside class="panel article-rail">
+          <p class="panel-label">Quick summary</p>
+          <p class="subtle">As more teams adopt MCP-compatible tools, a common question appears quickly: how do you give the assistant browser access without reducing everything to stale HTML or fake APIs?</p>
+          <p class="panel-label">Cluster</p>
+          <p>mcp browser server</p>
+          <p class="panel-label">Intent</p>
+          <p>commercial</p>
+        </aside>
+        <article class="panel article-body">
+          <section class="article-section">
+            <p class="kicker">Why This Search Exists</p>
+            <p>A lot of people searching for an MCP browser server actually want a practical bridge between a coding assistant and a real browser environment. They need the assistant to inspect pages, interact with authenticated websites, or run repeatable browser tools from the same machine the user trusts.</p><p>If the browser layer is detached from the user's real session, the MCP integration may look correct on paper but still fail in real workflows because the assistant cannot reach the tabs, cookies, and account state the user already has.</p>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Recommended Approach</p>
+            <p>The stronger pattern is to keep browser execution local and expose it through MCP. That lets the assistant call structured tools while still landing inside the same Chrome session that the user is actively using.</p><p>iatlas-browser supports that model with generated MCP snippets for generic clients, Cursor, and Claude Desktop. The same local runtime is then shared by terminal commands, MCP tools, and the local daemon API.</p>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Key Takeaways</p>
+            <ul>
+              <li>MCP is most useful when the browser tool actually points to your real browser context.</li><li>Generated config snippets lower setup friction for Cursor and Claude Desktop.</li><li>Local MCP avoids the mismatch between a user's live session and a remote browser sandbox.</li><li>The local daemon remains the system of record for browser actions, even when MCP is the entry point.</li>
+            </ul>
+          </section>
+          <section class="article-section">
+            <p class="kicker">Fast Start</p>
+            <ol>
+              <li>Run `iatlas-browser mcp-config cursor` or download the generated JSON snippet after setup.</li><li>Start the daemon and confirm `extension connected: OK` with `iatlas-browser doctor`.</li><li>Launch `iatlas-browser --mcp` or use the provided launcher from setup.</li><li>Test a browser-aware MCP tool such as `browser_snapshot` or `site_list` from the client.</li>
+            </ol>
+          </section>
+          <section class="cta article-cta">
+            <div>
+              <p class="kicker">Next Action</p>
+              <h2>Open MCP docs</h2>
+              <p>Move from research to implementation with the relevant iatlas-browser entry point.</p>
+            </div>
+            <div class="hero-actions">
+              <a class="button primary" href="/mcp/cursor.json">Open MCP docs</a>
+              <a class="button ghost" href="/openapi/">Hosted API docs</a>
+            </div>
+          </section>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Related Guides</p>
+        <h2>More pages around the same buyer and builder intent</h2>
+      </div>
+      <div class="grid three article-list">
+        
+          <article class="card article-card">
+            <p class="kicker">authenticated browser automation</p>
+            <h3><a href="/learn/browser-automation-with-login-state/">Browser Automation With Login State: When Your Real Chrome Session Matters</a></h3>
+            <p>Need browser automation that keeps cookies, tabs, and authenticated page state? Learn when a local browser bridge is a better fit than a fresh headless browser.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+          <article class="card article-card">
+            <p class="kicker">site adapters</p>
+            <h3><a href="/learn/hosted-site-adapters-vs-local-runtime/">Hosted Site Adapters vs Local Runtime: Choosing the Right iatlas-browser Path</a></h3>
+            <p>Should you use hosted site adapters or the local browser runtime? This guide explains the boundary between remote-safe adapters and browser-state-sensitive workflows.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+          <article class="card article-card">
+            <p class="kicker">local browser api</p>
+            <h3><a href="/learn/local-browser-api-for-authenticated-websites/">Local Browser API for Authenticated Websites: Why 127.0.0.1 Still Matters</a></h3>
+            <p>A local browser API is often the safest way to script authenticated websites. Learn when local HTTP control beats a hosted browser endpoint.</p>
+            <p class="subtle">March 15, 2026</p>
+          </article>
+        
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><a href="/learn/">Learn hub</a> · <a href="/feed.xml">RSS feed</a></p>
+      <p class="subtle">SEO cluster: mcp browser server.</p>
+    </footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,977 @@
+[
+  {
+    "slug": "browser-automation-for-team-dashboards",
+    "title": "Browser Automation for Team Dashboards With Live Session Context",
+    "description": "Team dashboards often depend on saved state, filters, and trusted sessions. Learn why local browser automation is more reliable than detached browser runs.",
+    "publishDate": "2026-04-10",
+    "status": "scheduled",
+    "cluster": "browser automation",
+    "intent": "commercial",
+    "audience": "operations teams and analysts",
+    "keywords": [
+      "browser automation for team dashboards",
+      "dashboard browser automation with login state",
+      "local browser automation for dashboards",
+      "session aware dashboard workflows"
+    ],
+    "intro": "Dashboard work usually depends on the browser state already present in the operator's session, not just on a page URL and a selector list.",
+    "problem": [
+      "Teams automating dashboards often rebuild filters, workspace selection, and login state in fresh sessions before any useful work begins. That adds friction and weakens reliability.",
+      "The actual requirement is usually automation that starts from the same trusted session the team already uses every day."
+    ],
+    "solution": [
+      "A local browser runtime keeps automation inside the live browser context that already has the right tabs, state, and permissions.",
+      "iatlas-browser is designed for this through its daemon, extension bridge, CLI, and MCP support, while the hosted layer stays focused on public retrieval."
+    ],
+    "takeaways": [
+      "Dashboard automation is often a real-session problem.",
+      "Local runtime reduces setup cost in browser-heavy operations.",
+      "Browser state belongs in the architecture decision.",
+      "Hosted APIs should remain for public and remote-safe tasks."
+    ],
+    "steps": [
+      "Pick a dashboard task that currently depends on saved browser state.",
+      "Attach the local runtime to the trusted browser session.",
+      "Use snapshots and browser-aware commands to stabilize the flow.",
+      "Turn the stable sequence into a reusable local tool."
+    ],
+    "ctaLabel": "Install local runtime",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "mcp-browser-tools-for-qa-investigations",
+    "title": "MCP Browser Tools for QA Investigations in Real Browser Sessions",
+    "description": "QA investigations improve when assistants can inspect the same live browser session as the tester. Learn where MCP browser tools fit.",
+    "publishDate": "2026-04-10",
+    "status": "scheduled",
+    "cluster": "mcp browser tools",
+    "intent": "informational",
+    "audience": "QA teams and developers",
+    "keywords": [
+      "mcp browser tools for qa investigations",
+      "qa browser mcp",
+      "assistant browser tools for testing",
+      "real browser session mcp"
+    ],
+    "intro": "A browser-aware assistant is only useful in QA when it can inspect the same page state the tester is already looking at.",
+    "problem": [
+      "Without access to the live browser session, assistants can only reason from screenshots or bug notes and miss the state where the failure appears.",
+      "Teams evaluating browser-aware QA tools need a real-session MCP setup, not another disconnected browser sandbox."
+    ],
+    "solution": [
+      "A local runtime exposed through MCP lets assistants inspect pages, capture snapshots, and navigate within the same browser context as the tester.",
+      "iatlas-browser supports this by sharing one local runtime across CLI, MCP, and the localhost daemon."
+    ],
+    "takeaways": [
+      "QA investigations benefit from shared browser context.",
+      "MCP is strongest when it points to the live local session.",
+      "A shared runtime reduces handoff friction.",
+      "Hosted APIs remain for public retrieval only."
+    ],
+    "steps": [
+      "Start the local runtime before the QA investigation.",
+      "Connect the assistant through the MCP configuration.",
+      "Use snapshots and browser-aware tools against the live issue.",
+      "Keep public-source lookups on the hosted layer."
+    ],
+    "ctaLabel": "Get MCP config",
+    "ctaHref": "/mcp/cursor.json"
+  },
+  {
+    "slug": "local-browser-api-for-operator-scripts",
+    "title": "Local Browser API for Operator Scripts and Stateful Tasks",
+    "description": "Operator scripts often need a browser API on localhost, not a remote browser service. Learn why local browser control is a cleaner fit.",
+    "publishDate": "2026-04-10",
+    "status": "scheduled",
+    "cluster": "local browser api",
+    "intent": "transactional",
+    "audience": "operators and automation engineers",
+    "keywords": [
+      "local browser api for operator scripts",
+      "localhost browser api",
+      "stateful browser control api",
+      "browser daemon for scripts"
+    ],
+    "intro": "Scripts that drive browser work are easier to trust when they call a stable local endpoint instead of a remote abstraction that cannot see the real session.",
+    "problem": [
+      "A remote browser layer cannot naturally inherit the active tabs, cookies, and role-specific context the operator already has on the local machine.",
+      "The need is usually a predictable local control plane for stateful browser work rather than another hosted dependency."
+    ],
+    "solution": [
+      "A localhost browser API keeps stateful execution on the same machine as the browser session and makes it easier to integrate with shell scripts and local services.",
+      "iatlas-browser exposes exactly this through its daemon while reserving the hosted API surface for public retrieval."
+    ],
+    "takeaways": [
+      "Stateful scripts benefit from a local browser API.",
+      "Localhost is a strong control boundary for browser tasks.",
+      "The machine holding browser state should run the task.",
+      "Hosted APIs solve public retrieval, not session-aware control."
+    ],
+    "steps": [
+      "Run the local daemon on the operator machine.",
+      "Test the health and command endpoints from a script.",
+      "Keep session-aware logic local.",
+      "Use hosted APIs only for public stateless work."
+    ],
+    "ctaLabel": "Download API examples",
+    "ctaHref": "/api/examples.sh"
+  },
+  {
+    "slug": "hosted-open-api-for-public-page-analysis",
+    "title": "Hosted Open API for Public Page Analysis and Enrichment",
+    "description": "Public page analysis usually needs hosted retrieval, not a local logged-in browser. Learn why this belongs on the hosted open API surface.",
+    "publishDate": "2026-04-10",
+    "status": "scheduled",
+    "cluster": "open api",
+    "intent": "commercial",
+    "audience": "developers and content teams",
+    "keywords": [
+      "hosted open api for public page analysis",
+      "public page analysis api",
+      "metadata and text retrieval api",
+      "public webpage enrichment api"
+    ],
+    "intro": "Many analysis workflows only need metadata, text, or HTML from public pages, which makes them a hosted retrieval problem rather than a session-aware browser problem.",
+    "problem": [
+      "Teams enriching public pages do not need a browser tied to one operator's session. They need a narrow, predictable interface for public retrieval.",
+      "Using local browser automation for this layer makes the system more complex without improving the retrieval model."
+    ],
+    "solution": [
+      "A hosted open API keeps public retrieval remote-safe and easy to integrate into enrichment pipelines.",
+      "The `miaoda.vip/v1/open` endpoint exists for this while the local runtime remains focused on session-aware browser work."
+    ],
+    "takeaways": [
+      "Public page analysis belongs on the hosted layer.",
+      "The retrieval interface should stay narrow and predictable.",
+      "Local runtime should stay focused on browser-session workflows.",
+      "Clear boundaries make the product easier to understand."
+    ],
+    "steps": [
+      "Register for a hosted API key.",
+      "Send public URLs to `/v1/open` in the needed mode.",
+      "Store the response in the analysis workflow.",
+      "Escalate to local runtime only when a task becomes session-sensitive."
+    ],
+    "ctaLabel": "Open hosted API docs",
+    "ctaHref": "/openapi/"
+  },
+  {
+    "slug": "site-adapters-for-repeatable-browser-jobs",
+    "title": "Site Adapters for Repeatable Browser Jobs Across Teams",
+    "description": "Browser jobs scale better when repeated tasks become site adapters. Learn how reusable commands improve discoverability and execution clarity.",
+    "publishDate": "2026-04-10",
+    "status": "scheduled",
+    "cluster": "site adapters",
+    "intent": "informational",
+    "audience": "platform teams and ops leads",
+    "keywords": [
+      "site adapters for repeatable browser jobs",
+      "reusable browser commands",
+      "browser job adapter catalog",
+      "local vs hosted site adapters"
+    ],
+    "intro": "Repeated browser work becomes easier to scale when it is expressed as named adapters rather than as copied scripts and manual habits.",
+    "problem": [
+      "Without adapters, teams execute the same browser jobs differently and lose track of which ones are safe to host versus which ones depend on local browser state.",
+      "This makes the browser layer harder to discover, document, and improve over time."
+    ],
+    "solution": [
+      "A site adapter model gives repeated jobs stable names, arguments, and execution mode that can be shared across CLI, MCP, and hosted surfaces.",
+      "iatlas-browser already follows this pattern through its site catalog and hosted subset."
+    ],
+    "takeaways": [
+      "Adapters scale better than one-off scripts.",
+      "Execution mode should be explicit in every adapter.",
+      "Hosted adapters are for public remote-safe tasks.",
+      "Session-aware adapters should stay local."
+    ],
+    "steps": [
+      "Inventory the repeatable browser jobs your teams already use.",
+      "Normalize names and arguments for those jobs.",
+      "Separate hosted-safe jobs from local-only ones.",
+      "Publish the resulting adapter catalog clearly."
+    ],
+    "ctaLabel": "Browse adapters",
+    "ctaHref": "/sites/"
+  },
+  {
+    "slug": "browser-operator-for-admin-workflows",
+    "title": "Browser Operator for Admin Workflows That Depend on Live Context",
+    "description": "Admin workflows often depend on trusted sessions and live browser state. Learn why a local browser operator fits better than detached sessions.",
+    "publishDate": "2026-04-11",
+    "status": "scheduled",
+    "cluster": "browser operator",
+    "intent": "commercial",
+    "audience": "admin teams and support leads",
+    "keywords": [
+      "browser operator for admin workflows",
+      "admin portal browser operator",
+      "local browser operator",
+      "session aware admin browser tools"
+    ],
+    "intro": "Admin workflows often rely on the browser state that already exists in the operator's session, not just on the existence of a page to automate.",
+    "problem": [
+      "Detached browser sessions lose the filters, roles, and current navigation context that admin teams depend on every day.",
+      "This makes browser automation spend too much time reconstructing state instead of performing the actual admin task."
+    ],
+    "solution": [
+      "A local browser operator keeps automation inside the same trusted browser environment that the admin already uses.",
+      "iatlas-browser enables this through its live browser bridge, localhost daemon, CLI, and MCP support."
+    ],
+    "takeaways": [
+      "Admin workflows are often session-sensitive.",
+      "A local operator reduces state reconstruction cost.",
+      "Live browser context matters to workflow accuracy.",
+      "Hosted APIs should stay limited to public retrieval."
+    ],
+    "steps": [
+      "Select an admin workflow tied to live browser state.",
+      "Connect the local runtime to that active session.",
+      "Use snapshots and commands to stabilize the path.",
+      "Package the repeatable sequence into a reusable local tool."
+    ],
+    "ctaLabel": "Install local runtime",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "browser-mcp-for-support-triage",
+    "title": "Browser MCP for Support Triage and Investigation Work",
+    "description": "Support triage improves when assistants can inspect the same live browser session as the operator. Learn where browser MCP fits this workflow.",
+    "publishDate": "2026-04-11",
+    "status": "scheduled",
+    "cluster": "browser mcp",
+    "intent": "informational",
+    "audience": "support teams and investigators",
+    "keywords": [
+      "browser mcp for support triage",
+      "support investigation browser tools",
+      "assistant browser tools for support",
+      "real session browser mcp"
+    ],
+    "intro": "Triage work gets faster when the assistant can inspect the same account state and page context the human is already reviewing.",
+    "problem": [
+      "Without access to the live session, assistants are limited to screenshots, notes, and logs, which weakens browser-heavy investigations.",
+      "Teams need browser-aware MCP that connects to the real session instead of a detached environment."
+    ],
+    "solution": [
+      "A local MCP setup tied to the real browser session lets assistants inspect pages, capture snapshots, and navigate within the same account context.",
+      "iatlas-browser supports this through a shared runtime used by CLI, MCP, and the localhost daemon."
+    ],
+    "takeaways": [
+      "Support triage benefits from shared browser context.",
+      "MCP is strongest when it reaches the real local session.",
+      "A shared runtime reduces setup and handoff friction.",
+      "Hosted APIs complement this with public retrieval only."
+    ],
+    "steps": [
+      "Connect the assistant to the local runtime via MCP.",
+      "Use browser-aware tools during a real triage workflow.",
+      "Capture the useful steps for reuse.",
+      "Keep public-source research on the hosted layer."
+    ],
+    "ctaLabel": "Get MCP config",
+    "ctaHref": "/mcp/claude-desktop.json"
+  },
+  {
+    "slug": "local-browser-runtime-for-checklists",
+    "title": "Local Browser Runtime for Checklists and Stateful Operations",
+    "description": "Operational checklists often need a local browser runtime, not a remote browser layer. Learn why this works better for stateful browser tasks.",
+    "publishDate": "2026-04-11",
+    "status": "scheduled",
+    "cluster": "local browser runtime",
+    "intent": "transactional",
+    "audience": "ops teams and SREs",
+    "keywords": [
+      "local browser runtime for checklists",
+      "browser runtime for ops workflows",
+      "localhost browser control plane",
+      "stateful browser checklist automation"
+    ],
+    "intro": "Checklists that involve browser steps are easier to trust when those steps run on the same machine as the live browser session.",
+    "problem": [
+      "A remote browser layer is awkward for tasks that depend on active tabs, role-sensitive context, or current navigation on the operator machine.",
+      "Teams usually need a local control plane for these stateful browser steps rather than another remote dependency."
+    ],
+    "solution": [
+      "A local browser runtime keeps session-aware execution on the operator machine while exposing a stable interface to scripts and checklists.",
+      "iatlas-browser provides this through its daemon and command model."
+    ],
+    "takeaways": [
+      "Checklists benefit from a local browser control plane.",
+      "Session-aware tasks should execute where the session lives.",
+      "Local runtimes are easier to script than raw protocol glue.",
+      "Hosted APIs remain for public and stateless retrieval."
+    ],
+    "steps": [
+      "Run the daemon on the operator machine.",
+      "Wrap the browser step in a small script or checklist item.",
+      "Keep session-aware logic local.",
+      "Use hosted APIs only for public URL retrieval."
+    ],
+    "ctaLabel": "Download API examples",
+    "ctaHref": "/api/examples.sh"
+  },
+  {
+    "slug": "public-metadata-api-for-competitive-monitoring",
+    "title": "Public Metadata API for Competitive Monitoring",
+    "description": "Competitive monitoring usually needs public metadata and text retrieval, not a local browser session. Learn why this belongs on the hosted API layer.",
+    "publishDate": "2026-04-11",
+    "status": "scheduled",
+    "cluster": "metadata api",
+    "intent": "commercial",
+    "audience": "competitive intelligence teams",
+    "keywords": [
+      "public metadata api for monitoring",
+      "competitive monitoring metadata api",
+      "hosted metadata api",
+      "public page text and metadata api"
+    ],
+    "intro": "Competitive monitoring usually works across public pages, which makes it a hosted retrieval problem rather than a browser-session problem.",
+    "problem": [
+      "Teams monitoring public pages need titles, descriptions, and readable text from many sources in a predictable format. They do not need one user's live browser session.",
+      "Using local browser automation for this layer adds complexity without improving the monitoring result."
+    ],
+    "solution": [
+      "A hosted metadata API keeps monitoring workflows remote-safe and easy to integrate with analysis pipelines.",
+      "The `miaoda.vip/v1/open` endpoint is designed for this while the local runtime remains focused on stateful browser work."
+    ],
+    "takeaways": [
+      "Competitive monitoring belongs on the hosted layer.",
+      "The retrieval contract should stay narrow and predictable.",
+      "Local runtime should remain focused on browser-session tasks.",
+      "Clear boundaries help users choose the right surface."
+    ],
+    "steps": [
+      "Register for a hosted API key.",
+      "Send public URLs to `/v1/open` in metadata mode.",
+      "Store the results in the monitoring pipeline.",
+      "Escalate to local runtime only when authentication becomes necessary."
+    ],
+    "ctaLabel": "Open hosted API docs",
+    "ctaHref": "/openapi/"
+  },
+  {
+    "slug": "adapter-strategy-for-shared-browser-workflows",
+    "title": "Adapter Strategy for Shared Browser Workflows",
+    "description": "Shared browser workflows scale better when repeated tasks become adapters with explicit execution mode. Learn how this keeps the platform clean.",
+    "publishDate": "2026-04-11",
+    "status": "scheduled",
+    "cluster": "adapter strategy",
+    "intent": "informational",
+    "audience": "platform teams and operations managers",
+    "keywords": [
+      "adapter strategy for browser workflows",
+      "shared browser workflow adapters",
+      "browser command strategy",
+      "hosted vs local execution"
+    ],
+    "intro": "A browser workflow layer becomes easier to scale when repeated tasks are formalized as adapters rather than informal scripts.",
+    "problem": [
+      "Without an adapter strategy, workflows sprawl into one-off scripts with unclear boundaries around which ones are safe to host and which require local browser state.",
+      "That makes the platform harder to document, discover, and evolve."
+    ],
+    "solution": [
+      "An adapter strategy gives tasks stable names, arguments, and explicit execution mode that can be shared across CLI, MCP, and hosted surfaces.",
+      "iatlas-browser already supports this structure through its `site` surface and hosted subset."
+    ],
+    "takeaways": [
+      "Adapters scale better than one-off scripts.",
+      "Execution mode should always be explicit.",
+      "Hosted-safe tasks belong on the remote layer.",
+      "Session-aware tasks should stay local."
+    ],
+    "steps": [
+      "List the browser workflows shared across teams.",
+      "Normalize their names and arguments.",
+      "Separate hosted-safe from local-only tasks.",
+      "Publish the resulting adapter strategy clearly."
+    ],
+    "ctaLabel": "Browse adapters",
+    "ctaHref": "/sites/"
+  },
+  {
+    "slug": "browser-automation-for-approval-dashboards",
+    "title": "Browser Automation for Approval Dashboards and Live Work Queues",
+    "description": "Approval dashboards often depend on live browser state and current work queues. Learn why local browser automation is more reliable than detached sessions.",
+    "publishDate": "2026-04-12",
+    "status": "scheduled",
+    "cluster": "browser automation",
+    "intent": "commercial",
+    "audience": "ops teams and approvers",
+    "keywords": [
+      "browser automation for approval dashboards",
+      "work queue browser automation",
+      "local browser automation for approvals",
+      "session aware approval workflows"
+    ],
+    "intro": "Approval work often depends on current queue state and recent navigation context that detached browser sessions do not preserve.",
+    "problem": [
+      "Fresh sessions lose queue filters, tenant selection, and browser context that operators already have in their trusted daily workflow.",
+      "That makes detached automation spend too much effort recreating state before it can do useful approval work."
+    ],
+    "solution": [
+      "A local browser runtime starts from the live browser context that already contains the queue state and permissions the workflow needs.",
+      "iatlas-browser supports this through its daemon, CLI, MCP, and browser extension bridge."
+    ],
+    "takeaways": [
+      "Approval dashboards are often session-sensitive.",
+      "Local runtime reduces queue reconstruction cost.",
+      "Browser state matters to workflow correctness.",
+      "Hosted APIs should stay for public retrieval only."
+    ],
+    "steps": [
+      "Pick an approval flow tied to live queue state.",
+      "Attach the local runtime to the active browser session.",
+      "Use snapshots and commands to stabilize the path.",
+      "Package the sequence into a reusable local tool."
+    ],
+    "ctaLabel": "Install local runtime",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "mcp-browser-workflows-for-issue-triage",
+    "title": "MCP Browser Workflows for Issue Triage in Real Sessions",
+    "description": "Issue triage is faster when assistants can inspect the same live browser session as the engineer. Learn where MCP browser workflows help.",
+    "publishDate": "2026-04-12",
+    "status": "scheduled",
+    "cluster": "mcp browser workflows",
+    "intent": "informational",
+    "audience": "developers and QA teams",
+    "keywords": [
+      "mcp browser workflows for issue triage",
+      "issue triage browser mcp",
+      "assistant browser tools for triage",
+      "real session browser workflow"
+    ],
+    "intro": "Triage becomes much more useful when the assistant can inspect the same failing browser state the engineer is already looking at.",
+    "problem": [
+      "Without live browser access, assistants are limited to code, logs, and screenshots, which misses much of the context that causes browser issues.",
+      "Teams need browser-aware MCP tied to the real session instead of a generic browser sandbox."
+    ],
+    "solution": [
+      "A local MCP workflow lets the assistant inspect, snapshot, and navigate the exact browser context the engineer already has open.",
+      "iatlas-browser supports this through one shared runtime across CLI, MCP, and the localhost daemon."
+    ],
+    "takeaways": [
+      "Issue triage benefits from shared browser context.",
+      "MCP is strongest when it points to the real local session.",
+      "A shared runtime lowers context loss across interfaces.",
+      "Hosted APIs remain separate from live debugging."
+    ],
+    "steps": [
+      "Start the local runtime before the triage session.",
+      "Connect the assistant through MCP.",
+      "Use browser-aware tools against the live issue.",
+      "Keep public-source lookups on the hosted layer."
+    ],
+    "ctaLabel": "Get MCP config",
+    "ctaHref": "/mcp/cursor.json"
+  },
+  {
+    "slug": "localhost-browser-api-for-ops-runbooks",
+    "title": "Localhost Browser API for Ops Runbooks and Browser Steps",
+    "description": "Ops runbooks often need browser steps that stay local to the operator machine. Learn why a localhost browser API is a strong fit.",
+    "publishDate": "2026-04-12",
+    "status": "scheduled",
+    "cluster": "localhost browser api",
+    "intent": "transactional",
+    "audience": "ops teams and SREs",
+    "keywords": [
+      "localhost browser api for runbooks",
+      "browser api for ops scripts",
+      "local browser daemon for runbooks",
+      "stateful browser runbook automation"
+    ],
+    "intro": "Runbooks are easier to trust when browser actions are exposed through a stable local API instead of a detached browser service.",
+    "problem": [
+      "Remote browser layers are awkward for tasks that depend on the operator's active session, saved tabs, or current navigation state.",
+      "Teams need a predictable local interface that runbooks and scripts can call directly."
+    ],
+    "solution": [
+      "A localhost browser API keeps stateful browser execution on the machine that already holds the relevant session and exposes a clean integration point for scripts.",
+      "iatlas-browser provides this through its local daemon and command endpoint."
+    ],
+    "takeaways": [
+      "Runbooks benefit from a stable local browser API.",
+      "Session-aware tasks should run where the browser session lives.",
+      "Local APIs are easier to script than low-level protocol glue.",
+      "Hosted APIs are for public and stateless retrieval."
+    ],
+    "steps": [
+      "Run the daemon on the operator machine.",
+      "Test the health and command endpoints from the runbook.",
+      "Keep session-aware logic local.",
+      "Use hosted APIs only for public retrieval."
+    ],
+    "ctaLabel": "Download API examples",
+    "ctaHref": "/api/examples.sh"
+  },
+  {
+    "slug": "webpage-api-for-public-monitoring",
+    "title": "Webpage API for Public Monitoring and Retrieval Pipelines",
+    "description": "Public monitoring pipelines usually need metadata, text, or HTML from public pages. Learn why a hosted webpage API is the right fit.",
+    "publishDate": "2026-04-12",
+    "status": "scheduled",
+    "cluster": "webpage api",
+    "intent": "commercial",
+    "audience": "monitoring teams and developers",
+    "keywords": [
+      "webpage api for public monitoring",
+      "public monitoring retrieval api",
+      "hosted webpage metadata api",
+      "public html text api"
+    ],
+    "intro": "Public monitoring workflows usually need retrieval from public URLs, which makes them a hosted API problem rather than a browser-session problem.",
+    "problem": [
+      "Teams monitoring public pages need metadata, text, or HTML in a predictable format across many URLs. They do not need one operator's live browser session.",
+      "Using local browser automation for this layer adds complexity without improving the monitoring workflow."
+    ],
+    "solution": [
+      "A hosted webpage API keeps public retrieval remote-safe and easy to integrate into monitoring systems.",
+      "The `miaoda.vip/v1/open` endpoint fits this role while the local runtime stays focused on stateful browser workflows."
+    ],
+    "takeaways": [
+      "Public monitoring belongs on the hosted layer.",
+      "The retrieval contract should stay narrow and pipeline-friendly.",
+      "Local runtime should remain focused on session-aware work.",
+      "Clear boundaries reduce architectural confusion."
+    ],
+    "steps": [
+      "Register for the hosted API layer.",
+      "Send public URLs to `/v1/open`.",
+      "Store the results in the monitoring pipeline.",
+      "Move to local runtime only when a task becomes session-sensitive."
+    ],
+    "ctaLabel": "Open hosted API docs",
+    "ctaHref": "/openapi/"
+  },
+  {
+    "slug": "site-adapters-for-team-browser-automation",
+    "title": "Site Adapters for Team Browser Automation",
+    "description": "Team browser automation scales better when repeated tasks become site adapters. Learn how reusable commands keep execution boundaries clear.",
+    "publishDate": "2026-04-12",
+    "status": "scheduled",
+    "cluster": "site adapters",
+    "intent": "informational",
+    "audience": "team leads and platform builders",
+    "keywords": [
+      "site adapters for team browser automation",
+      "browser automation command catalog",
+      "reusable browser tasks",
+      "hosted vs local adapters"
+    ],
+    "intro": "Reusable browser commands make team automation easier to discover and easier to operate consistently.",
+    "problem": [
+      "Without adapters, repeated browser tasks become scattered scripts and copied instructions with unclear boundaries around where they can run.",
+      "This weakens both discoverability and trust in the automation layer."
+    ],
+    "solution": [
+      "A site adapter model gives repeated tasks stable names, arguments, and execution mode that can be shared across interfaces.",
+      "iatlas-browser already follows this pattern through its site catalog and hosted subset."
+    ],
+    "takeaways": [
+      "Reusable adapters scale better than scattered scripts.",
+      "Execution mode should be explicit in every adapter.",
+      "Hosted-safe tasks belong on the hosted layer.",
+      "Session-aware tasks should remain local."
+    ],
+    "steps": [
+      "List the repeated browser tasks used by your team.",
+      "Normalize names and arguments for those tasks.",
+      "Separate hosted-safe from local-only tasks.",
+      "Publish the catalog across your browser surfaces."
+    ],
+    "ctaLabel": "Browse adapters",
+    "ctaHref": "/sites/"
+  },
+  {
+    "slug": "browser-agent-for-operations-portals",
+    "title": "Browser Agent for Operations Portals With Live Session State",
+    "description": "Operations portals often depend on trusted login state and current browser context. Learn why a local browser agent fits better than detached sessions.",
+    "publishDate": "2026-04-13",
+    "status": "scheduled",
+    "cluster": "browser agent",
+    "intent": "commercial",
+    "audience": "operations teams and analysts",
+    "keywords": [
+      "browser agent for operations portals",
+      "operations portal browser automation",
+      "local browser agent",
+      "session aware portal workflows"
+    ],
+    "intro": "Operations portals often rely on live queue state, role-sensitive views, and saved browser context that detached sessions cannot preserve cheaply.",
+    "problem": [
+      "Fresh sessions lose the state operators already rely on in their daily browser, which adds friction before any useful work can happen.",
+      "The actual need is usually a browser agent that begins from the trusted session the operator already has."
+    ],
+    "solution": [
+      "A local browser agent keeps work inside the live browser environment that already has the right state and permissions.",
+      "iatlas-browser supports this through its daemon, extension bridge, CLI, and MCP integrations."
+    ],
+    "takeaways": [
+      "Operations portals are often session-sensitive.",
+      "Local runtime reduces setup friction.",
+      "Browser state matters to task accuracy.",
+      "Hosted APIs should remain for public retrieval only."
+    ],
+    "steps": [
+      "Pick an operations portal task tied to live browser state.",
+      "Attach the local runtime to the current session.",
+      "Use snapshots and guided commands to stabilize the path.",
+      "Convert the stable sequence into a reusable local adapter."
+    ],
+    "ctaLabel": "Install local runtime",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "browser-debugging-mcp-for-real-issues",
+    "title": "Browser Debugging MCP for Real Issues in Live Sessions",
+    "description": "Browser debugging is more useful when assistants can inspect the same live session as the engineer. Learn where debugging-focused MCP helps.",
+    "publishDate": "2026-04-13",
+    "status": "scheduled",
+    "cluster": "mcp debugging",
+    "intent": "informational",
+    "audience": "frontend engineers and QA teams",
+    "keywords": [
+      "browser debugging mcp",
+      "live session browser debugging",
+      "assistant browser debugging tools",
+      "real browser session mcp"
+    ],
+    "intro": "Debugging browser issues becomes substantially more useful when the assistant can inspect the actual state where the issue appears.",
+    "problem": [
+      "Without live browser access, assistants must infer from code, logs, or screenshots and miss the rendered context where many browser bugs live.",
+      "Teams need browser-aware debugging tied to the real session, not a disconnected demo environment."
+    ],
+    "solution": [
+      "A local MCP debugging workflow lets the assistant inspect pages, capture snapshots, and navigate the same live session the engineer is already using.",
+      "iatlas-browser enables this through one shared runtime across CLI, MCP, and the localhost daemon."
+    ],
+    "takeaways": [
+      "Debugging benefits from shared browser context.",
+      "MCP is strongest when it points to the real local session.",
+      "A shared runtime reduces context loss during investigation.",
+      "Hosted APIs remain separate from live debugging."
+    ],
+    "steps": [
+      "Start the local runtime before the debugging session.",
+      "Connect the assistant through MCP.",
+      "Use browser-aware tools against the live issue.",
+      "Keep public-source retrieval on the hosted layer."
+    ],
+    "ctaLabel": "Get MCP config",
+    "ctaHref": "/mcp/cursor.json"
+  },
+  {
+    "slug": "local-browser-daemon-for-check-automation",
+    "title": "Local Browser Daemon for Check Automation and Runbooks",
+    "description": "Operational checks often need a local browser daemon rather than a remote browser dependency. Learn why this is a stronger fit for stateful tasks.",
+    "publishDate": "2026-04-13",
+    "status": "scheduled",
+    "cluster": "local browser runtime",
+    "intent": "transactional",
+    "audience": "SREs and automation teams",
+    "keywords": [
+      "local browser daemon for automation",
+      "browser daemon for runbooks",
+      "stateful browser control plane",
+      "localhost browser daemon"
+    ],
+    "intro": "Operational checks are easier to automate when browser actions are exposed through a stable local daemon that lives next to the active session.",
+    "problem": [
+      "Remote browser dependencies complicate runbooks that depend on live browser state on the operator machine.",
+      "Teams need a local control plane that scripts can call cleanly instead of fragile protocol glue."
+    ],
+    "solution": [
+      "A local browser daemon keeps session-aware execution on the correct machine while exposing a stable endpoint for automation.",
+      "iatlas-browser provides this through its daemon and command model."
+    ],
+    "takeaways": [
+      "Runbooks benefit from a stable local daemon.",
+      "Stateful browser work should stay on the operator machine.",
+      "Daemon APIs are easier to script than low-level browser protocols.",
+      "Hosted APIs are for public and stateless work."
+    ],
+    "steps": [
+      "Run the daemon on the machine holding the browser session.",
+      "Call the health and command endpoints from the runbook.",
+      "Keep session-aware logic local.",
+      "Use hosted APIs only for public retrieval."
+    ],
+    "ctaLabel": "Download API examples",
+    "ctaHref": "/api/examples.sh"
+  },
+  {
+    "slug": "public-html-api-for-competitive-pages",
+    "title": "Public HTML API for Competitive Pages and Public Analysis",
+    "description": "Competitive analysis often needs HTML, text, and metadata from public pages. Learn why this belongs on the hosted API layer, not the local runtime.",
+    "publishDate": "2026-04-13",
+    "status": "scheduled",
+    "cluster": "html api",
+    "intent": "commercial",
+    "audience": "competitive intelligence teams",
+    "keywords": [
+      "public html api for competitive pages",
+      "competitive analysis html api",
+      "hosted public page api",
+      "public html metadata api"
+    ],
+    "intro": "Public competitive analysis is usually a retrieval problem, which makes a hosted API a better fit than a browser runtime tied to one machine.",
+    "problem": [
+      "Teams analyzing public competitor pages need consistent access to HTML, text, and metadata. They do not need a browser attached to an operator's local session.",
+      "Using local browser automation for this layer makes the system more complex than the use case requires."
+    ],
+    "solution": [
+      "A hosted HTML API keeps public retrieval remote-safe and easy to plug into analysis pipelines.",
+      "The `miaoda.vip/v1/open` endpoint is designed for this while the local runtime remains focused on stateful browser workflows."
+    ],
+    "takeaways": [
+      "Public competitive analysis belongs on the hosted layer.",
+      "The interface should stay narrow and pipeline-friendly.",
+      "Local runtime should stay focused on session-aware tasks.",
+      "Clear boundaries simplify the platform story."
+    ],
+    "steps": [
+      "Register for the hosted API surface.",
+      "Send public URLs to `/v1/open` in html or text mode.",
+      "Store the results in the analysis workflow.",
+      "Use local runtime only when a task requires live browser state."
+    ],
+    "ctaLabel": "Open hosted API docs",
+    "ctaHref": "/openapi/"
+  },
+  {
+    "slug": "adapter-catalog-for-browser-operations",
+    "title": "Adapter Catalog for Browser Operations Teams",
+    "description": "Browser operations teams move faster with a shared adapter catalog. Learn how reusable commands improve clarity, reuse, and execution discipline.",
+    "publishDate": "2026-04-13",
+    "status": "scheduled",
+    "cluster": "adapter catalog",
+    "intent": "informational",
+    "audience": "browser operations teams",
+    "keywords": [
+      "adapter catalog for browser operations",
+      "browser operations command catalog",
+      "reusable browser adapters",
+      "execution aware browser commands"
+    ],
+    "intro": "A shared adapter catalog helps browser operations teams standardize repeated tasks instead of letting them drift into person-specific scripts.",
+    "problem": [
+      "Without a catalog, repeated browser tasks become inconsistent and harder to discover. Teams also lose clarity around where those tasks can run safely.",
+      "This makes the platform harder to scale across users and use cases."
+    ],
+    "solution": [
+      "An adapter catalog gives tasks stable names, arguments, and execution rules that can be shared consistently across CLI, MCP, and hosted surfaces.",
+      "iatlas-browser already provides the core model for this through its site surface and hosted subset."
+    ],
+    "takeaways": [
+      "Catalogs scale better than informal browser scripts.",
+      "Execution mode should be explicit in every command.",
+      "Hosted-safe tasks belong on the remote layer.",
+      "Session-aware tasks should stay local."
+    ],
+    "steps": [
+      "Collect the repeated browser tasks your team uses most.",
+      "Normalize command names and inputs.",
+      "Separate hosted-safe and local-only execution modes.",
+      "Publish the catalog across your browser surfaces."
+    ],
+    "ctaLabel": "Browse adapters",
+    "ctaHref": "/sites/"
+  },
+  {
+    "slug": "browser-automation-for-stateful-admin-tools",
+    "title": "Browser Automation for Stateful Admin Tools",
+    "description": "Stateful admin tools often depend on trusted browser sessions and live context. Learn why local browser automation is a better fit than detached sessions.",
+    "publishDate": "2026-04-14",
+    "status": "scheduled",
+    "cluster": "browser automation",
+    "intent": "commercial",
+    "audience": "admin teams and internal tool operators",
+    "keywords": [
+      "browser automation for stateful admin tools",
+      "admin tool browser automation",
+      "local browser automation with live session",
+      "session aware admin workflows"
+    ],
+    "intro": "Admin tools often depend on the exact browser session the operator is already using, including current tabs, roles, and navigation context.",
+    "problem": [
+      "Detached sessions force teams to rebuild context that already exists in the browser, which adds setup time and reduces reliability.",
+      "The actual need is usually automation that begins from the trusted session rather than starting over each time."
+    ],
+    "solution": [
+      "A local browser runtime keeps automation inside the live browser environment that already has the right account state and page context.",
+      "iatlas-browser supports this through its daemon, browser extension bridge, CLI, and MCP interfaces."
+    ],
+    "takeaways": [
+      "Stateful admin tools are a strong fit for local browser automation.",
+      "Local runtime reduces repeated setup and login work.",
+      "Browser context is part of workflow reliability.",
+      "Hosted APIs should stay limited to public retrieval."
+    ],
+    "steps": [
+      "Identify an admin workflow tied to live session state.",
+      "Attach the local runtime to that active browser.",
+      "Use snapshots and commands to stabilize the path.",
+      "Package the stable sequence into a reusable local tool."
+    ],
+    "ctaLabel": "Install local runtime",
+    "ctaHref": "/install.sh"
+  },
+  {
+    "slug": "browser-assistant-mcp-for-real-workflows",
+    "title": "Browser Assistant MCP for Real Workflows and Live Sessions",
+    "description": "Browser assistants are only useful when they can inspect the same live session as the user. Learn why local MCP beats detached browser demos.",
+    "publishDate": "2026-04-14",
+    "status": "scheduled",
+    "cluster": "mcp browser tools",
+    "intent": "informational",
+    "audience": "AI tool users and developers",
+    "keywords": [
+      "browser assistant mcp",
+      "real workflow browser assistant",
+      "local browser mcp tools",
+      "assistant tools for live browser sessions"
+    ],
+    "intro": "A browser assistant only becomes operationally useful when it can inspect the same tabs and state the user is already looking at.",
+    "problem": [
+      "Detached browser demos look interesting but fail in real workflows when they cannot reach the user's actual session and context.",
+      "Teams need a browser assistant architecture built around the real session, not just around generic browser access."
+    ],
+    "solution": [
+      "A local MCP setup lets the assistant operate against the real browser session through a shared runtime.",
+      "iatlas-browser is built for this model through its daemon, CLI, MCP, and browser bridge integration."
+    ],
+    "takeaways": [
+      "Browser assistants need real session context to be useful.",
+      "Local MCP is stronger than detached browser demos.",
+      "One shared runtime simplifies setup across interfaces.",
+      "Hosted APIs remain a narrow complement for public retrieval."
+    ],
+    "steps": [
+      "Connect the assistant to the local runtime via MCP.",
+      "Test browser-aware commands in a real workflow.",
+      "Use snapshots and inspections against the live session.",
+      "Keep public retrieval jobs on the hosted layer."
+    ],
+    "ctaLabel": "Get MCP config",
+    "ctaHref": "/mcp/cursor.json"
+  },
+  {
+    "slug": "local-browser-command-api-for-operators",
+    "title": "Local Browser Command API for Operators and Stateful Browser Tasks",
+    "description": "Operators often need a browser command API on localhost rather than a remote browser dependency. Learn why this architecture is cleaner.",
+    "publishDate": "2026-04-14",
+    "status": "scheduled",
+    "cluster": "local browser api",
+    "intent": "transactional",
+    "audience": "operators and automation teams",
+    "keywords": [
+      "local browser command api for operators",
+      "localhost browser command api",
+      "stateful browser task api",
+      "browser daemon command endpoint"
+    ],
+    "intro": "A localhost command API gives operators a predictable way to drive browser tasks without separating those tasks from the session they depend on.",
+    "problem": [
+      "Remote browser dependencies are awkward for operator workflows that depend on live tabs, cookies, or navigation state already present on the machine.",
+      "The correct abstraction is usually a local command surface rather than a hosted browser."
+    ],
+    "solution": [
+      "A local browser command API keeps stateful execution close to the browser and gives scripts a stable endpoint to call.",
+      "iatlas-browser provides this through its daemon while keeping hosted APIs for public retrieval and remote-safe tasks."
+    ],
+    "takeaways": [
+      "Operators benefit from a local browser command API.",
+      "Stateful browser tasks should stay near the live session.",
+      "Local APIs are easier to script than low-level protocols.",
+      "Hosted APIs are for public and stateless retrieval."
+    ],
+    "steps": [
+      "Run the local daemon on the operator machine.",
+      "Test the command endpoint from a small script.",
+      "Keep session-aware logic on the same machine.",
+      "Use hosted APIs only for public page retrieval."
+    ],
+    "ctaLabel": "Download API examples",
+    "ctaHref": "/api/examples.sh"
+  },
+  {
+    "slug": "public-retrieval-api-for-content-ops",
+    "title": "Public Retrieval API for Content Ops and Monitoring Pipelines",
+    "description": "Content operations usually need public metadata and text retrieval, not a local browser session. Learn why this belongs on the hosted API layer.",
+    "publishDate": "2026-04-14",
+    "status": "scheduled",
+    "cluster": "open api",
+    "intent": "commercial",
+    "audience": "content ops and monitoring teams",
+    "keywords": [
+      "public retrieval api for content ops",
+      "content ops metadata api",
+      "hosted text extraction api",
+      "public page retrieval api"
+    ],
+    "intro": "Content ops pipelines usually work across public pages, which makes them a hosted retrieval problem rather than a session-aware browser problem.",
+    "problem": [
+      "Teams monitoring public pages need predictable metadata, text, and HTML retrieval across many URLs. They do not need one operator's live browser session for that work.",
+      "Using local browser automation for this layer makes the architecture more complex than the use case requires."
+    ],
+    "solution": [
+      "A hosted retrieval API keeps the interface narrow, remote-safe, and easy to integrate into monitoring and enrichment pipelines.",
+      "The `miaoda.vip/v1/open` endpoint exists for this while the local runtime remains focused on stateful browser automation."
+    ],
+    "takeaways": [
+      "Content ops retrieval belongs on the hosted layer.",
+      "The API surface should stay narrow and predictable.",
+      "Local runtime should stay focused on browser-session workflows.",
+      "Separate layers improve product clarity."
+    ],
+    "steps": [
+      "Register for the hosted API surface.",
+      "Send public URLs to `/v1/open` in the needed mode.",
+      "Store the results in the monitoring workflow.",
+      "Use local runtime only when the task becomes session-aware."
+    ],
+    "ctaLabel": "Open hosted API docs",
+    "ctaHref": "/openapi/"
+  },
+  {
+    "slug": "adapter-patterns-for-scalable-browser-work",
+    "title": "Adapter Patterns for Scalable Browser Workflows",
+    "description": "Scalable browser work needs reusable commands with explicit execution boundaries. Learn how adapter patterns keep browser platforms clean as they grow.",
+    "publishDate": "2026-04-14",
+    "status": "scheduled",
+    "cluster": "adapter strategy",
+    "intent": "informational",
+    "audience": "platform builders and engineering leads",
+    "keywords": [
+      "adapter patterns for browser workflows",
+      "scalable browser command patterns",
+      "browser platform adapter strategy",
+      "local vs hosted browser adapters"
+    ],
+    "intro": "As browser platforms grow, adapter patterns become essential for keeping tasks reusable and execution boundaries explicit.",
+    "problem": [
+      "Without adapter patterns, browser work spreads into one-off scripts and undocumented habits, which weakens discoverability and trust.",
+      "Teams also lose clarity around which tasks are hosted-safe and which must stay local because of session sensitivity."
+    ],
+    "solution": [
+      "Adapter patterns provide stable names, arguments, outputs, and execution rules for repeated browser tasks.",
+      "iatlas-browser already has the structure for this through its site surface and hosted subset."
+    ],
+    "takeaways": [
+      "Adapter patterns scale better than scattered scripts.",
+      "Execution boundaries should be explicit, not implied.",
+      "Hosted-safe tasks belong on the remote layer.",
+      "Session-aware tasks should stay local."
+    ],
+    "steps": [
+      "Review the browser tasks your platform exposes today.",
+      "Normalize names, inputs, and outputs into adapter contracts.",
+      "Label hosted-safe and local-only execution clearly.",
+      "Publish the patterns consistently across interfaces."
+    ],
+    "ctaLabel": "Browse adapters",
+    "ctaHref": "/sites/"
+  }
+]

@@ -322,6 +322,26 @@ p {
   margin-top: 28px;
 }
 
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.pill-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(20, 35, 29, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.56);
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
 .button,
 .copy,
 .signup-form button,
@@ -518,6 +538,56 @@ thead th {
   gap: 18px;
   padding: 26px;
   border-radius: var(--radius-xl);
+}
+
+.mode-grid,
+.flow-grid {
+  align-items: stretch;
+}
+
+.mode-card,
+.flow-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.step-no {
+  margin: 0 0 4px;
+  color: var(--sun);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.stat-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.stat-card {
+  padding: 14px 15px;
+  border: 1px solid rgba(20, 35, 29, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.64);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card strong,
+.stat-card span {
+  display: block;
+}
+
+.stat-card strong {
+  margin-bottom: 6px;
+  font-size: 0.92rem;
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.6;
 }
 
 .signup-form,

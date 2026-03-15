@@ -90,6 +90,7 @@
     <header class="topbar">
       <a class="brand" href="/">iatlas-browser</a>
       <nav class="lang-switch" aria-label="Language switcher">
+        <a href="/openapi/">Open API</a>
         <a href="/sites/">Sites</a>
         <a class="is-active" href="/">English</a>
         <a href="/zh-cn/">中文</a>
@@ -108,6 +109,11 @@
           cookies, and page state through a local daemon and extension. <strong>miaoda.vip</strong> is a separate
           hosted service layer for public, curated, server-safe endpoints. It does not replace the local core.
         </p>
+        <div class="pill-row" aria-label="Key promises">
+          <span>Reuse the browser you already trust</span>
+          <span>Expose it through CLI, MCP, and local HTTP</span>
+          <span>Use hosted API only for public server-safe tasks</span>
+        </div>
         <div class="hero-actions">
           <a class="button primary" href="/install.sh">Download install.sh</a>
           <a class="button" href="/downloads/iatlas-browser-extension.zip">Download extension zip</a>
@@ -125,25 +131,53 @@
           <li>Builds the CLI, daemon, MCP entrypoint, and extension bundle</li>
           <li>Creates local MCP snippets and API example files</li>
         </ul>
+        <div class="stat-grid" aria-label="Product summary">
+          <article class="stat-card">
+            <strong>Local-first</strong>
+            <span>Your own Chrome session remains the center of execution.</span>
+          </article>
+          <article class="stat-card">
+            <strong>Agent-ready</strong>
+            <span>Use the same runtime from terminal scripts, MCP clients, and local services.</span>
+          </article>
+          <article class="stat-card">
+            <strong>Hosted-safe</strong>
+            <span>miaoda.vip only handles public read-only requests that belong on a server.</span>
+          </article>
+        </div>
       </aside>
     </section>
 
     <section class="section">
-      <div class="grid two">
-        <article class="card accent">
+      <div class="section-head">
+        <p class="kicker">Product boundary</p>
+        <h2>One local engine, one narrower hosted layer</h2>
+      </div>
+      <div class="grid two mode-grid">
+        <article class="card accent mode-card">
           <h2>Local core mode</h2>
           <p>
             This is the real product center: your own browser, your own login state, your own tabs, and the full
             CLI + MCP + `site` adapter model. If you want the full `lao` + `lao-s` experience, this is the mode that matters.
           </p>
+          <ul class="compact-list">
+            <li>Works with authenticated pages, live tabs, and session state.</li>
+            <li>Runs through the local daemon, browser extension, CLI, and MCP entrypoint.</li>
+            <li>Covers the commands and adapters that need a real user browser context.</li>
+          </ul>
         </article>
-        <article class="card">
+        <article class="card mode-card">
           <h2>Hosted subset mode</h2>
           <p>
             <code>miaoda.vip</code> adds a public API service for browser-open requests and a curated subset of hosted
             adapters. It is intentionally narrower than the local runtime and should be understood as an extension layer,
             not as a replacement for the core engine.
           </p>
+          <ul class="compact-list">
+            <li>Useful for public metadata fetches, catalog lookup, and hosted read-only adapters.</li>
+            <li>Runs on the remote server with API keys and daily usage accounting.</li>
+            <li>Does not aim to mirror the full browser-state-sensitive local experience.</li>
+          </ul>
         </article>
       </div>
     </section>
@@ -156,6 +190,39 @@
       <span>Authenticated browser API</span>
       <span>Local browser API</span>
       <span>Hosted site adapters</span>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">How It Works</p>
+        <h2>The system is a tight loop, not a pile of disconnected tools</h2>
+        <p class="subtle">
+          The original strength of this project is not just command coverage. It is the way a real browser session,
+          a local daemon, an extension bridge, and MCP access all fit into one execution model.
+        </p>
+      </div>
+      <div class="grid two flow-grid">
+        <article class="card flow-card">
+          <p class="step-no">01</p>
+          <h3>The extension bridges into the browser you are already using</h3>
+          <p>That removes the usual friction of rebuilding cookies, page state, and account context from scratch.</p>
+        </article>
+        <article class="card flow-card">
+          <p class="step-no">02</p>
+          <h3>The local daemon turns browser actions into a stable control surface</h3>
+          <p>CLI commands, MCP tools, and local HTTP calls all land on the same runtime instead of diverging.</p>
+        </article>
+        <article class="card flow-card">
+          <p class="step-no">03</p>
+          <h3>The `site` adapter model gives each platform a reusable command interface</h3>
+          <p>That keeps platform-specific logic modular while preserving one common way to discover and run tools.</p>
+        </article>
+        <article class="card flow-card">
+          <p class="step-no">04</p>
+          <h3>The hosted layer only takes the subset that can run safely on a remote server</h3>
+          <p>Public API access expands reach, but the full authenticated browser workflow still stays local by design.</p>
+        </article>
+      </div>
     </section>
 
     <section class="grid three">
@@ -300,6 +367,29 @@ curl -s http://127.0.0.1:19824/command \
             That makes it useful for internal dashboards, admin panels, and websites with complex browser-side flows.
           </p>
         </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta signup-card">
+        <div>
+          <p class="kicker">Decision guide</p>
+          <h2>Choose the right entry point in under a minute</h2>
+          <p>
+            If the task depends on your real login state, personal tabs, or dynamic page context, install the local runtime.
+            If the task is a public fetch or a hosted read-only adapter call, use the Open API. Keeping that boundary clear
+            prevents most integration mistakes.
+          </p>
+        </div>
+        <div>
+          <p class="panel-label">Fast routing</p>
+          <ul class="quota-list">
+            <li><strong>Need your own login session:</strong> use local CLI, daemon, or MCP.</li>
+            <li><strong>Need remote public fetches:</strong> use <a href="/openapi/">the hosted Open API</a>.</li>
+            <li><strong>Need site command discovery:</strong> browse <a href="/sites/">the adapter catalog</a>.</li>
+            <li><strong>Need agent integration:</strong> generate MCP config and connect to the local runtime.</li>
+          </ul>
+        </div>
       </div>
     </section>
 

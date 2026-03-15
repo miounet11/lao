@@ -44,9 +44,13 @@ function parseMeta(filePath, sourceRoot) {
   const positionalUsage = argEntries
     .map((arg) => (arg.required ? `<${arg.name}>` : `[${arg.name}]`))
     .join(" ");
-  const cliExample = meta.example
-    ? String(meta.example).replace(/\bbb-browser\b/g, "iatlas-browser")
-    : `iatlas-browser site ${name}${positionalUsage ? ` ${positionalUsage}` : ""}`;
+  const cliExample = (meta.example
+    ? String(meta.example)
+    : `iatlas-browser site ${name}${positionalUsage ? ` ${positionalUsage}` : ""}`)
+    .replaceAll("epiral/bb-sites", "miounet11/lao-s")
+    .replaceAll("epiral/bb-browser", "miounet11/lao")
+    .replaceAll("epiral/iatlas-browser", "miounet11/lao")
+    .replace(/\bbb-browser\b/g, "iatlas-browser");
 
   const mcpArgs = {};
   for (const arg of argEntries) {

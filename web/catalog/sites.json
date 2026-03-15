@@ -1077,8 +1077,8 @@
     "capabilities": [
       "network"
     ],
-    "example": "iatlas-browser site github/fork epiral/bb-sites",
-    "cliExample": "iatlas-browser site github/fork epiral/bb-sites",
+    "example": "iatlas-browser site github/fork miounet11/lao-s",
+    "cliExample": "iatlas-browser site github/fork miounet11/lao-s",
     "mcpExample": {
       "tool": "site_run",
       "arguments": {
@@ -1108,8 +1108,8 @@
     "capabilities": [
       "network"
     ],
-    "example": "iatlas-browser site github/issue-create epiral/bb-sites --title \"[reddit/me] returns empty\" --body \"Description here\"",
-    "cliExample": "iatlas-browser site github/issue-create epiral/bb-sites --title \"[reddit/me] returns empty\" --body \"Description here\"",
+    "example": "iatlas-browser site github/issue-create miounet11/lao-s --title \"[reddit/me] returns empty\" --body \"Description here\"",
+    "cliExample": "iatlas-browser site github/issue-create miounet11/lao-s --title \"[reddit/me] returns empty\" --body \"Description here\"",
     "mcpExample": {
       "tool": "site_run",
       "arguments": {
@@ -1153,8 +1153,8 @@
     "capabilities": [
       "network"
     ],
-    "example": "iatlas-browser site github/issues epiral/iatlas-browser",
-    "cliExample": "iatlas-browser site github/issues epiral/iatlas-browser",
+    "example": "iatlas-browser site github/issues miounet11/lao",
+    "cliExample": "iatlas-browser site github/issues miounet11/lao",
     "mcpExample": {
       "tool": "site_run",
       "arguments": {
@@ -1213,8 +1213,8 @@
     "capabilities": [
       "network"
     ],
-    "example": "iatlas-browser site github/pr-create epiral/bb-sites --title \"feat(weibo): add hot adapter\" --head myuser:feat-weibo --body \"Adds weibo/hot.js\"",
-    "cliExample": "iatlas-browser site github/pr-create epiral/bb-sites --title \"feat(weibo): add hot adapter\" --head myuser:feat-weibo --body \"Adds weibo/hot.js\"",
+    "example": "iatlas-browser site github/pr-create miounet11/lao-s --title \"feat(weibo): add hot adapter\" --head myuser:feat-weibo --body \"Adds weibo/hot.js\"",
+    "cliExample": "iatlas-browser site github/pr-create miounet11/lao-s --title \"feat(weibo): add hot adapter\" --head myuser:feat-weibo --body \"Adds weibo/hot.js\"",
     "mcpExample": {
       "tool": "site_run",
       "arguments": {
@@ -1272,8 +1272,8 @@
     "capabilities": [
       "network"
     ],
-    "example": "iatlas-browser site github/repo epiral/iatlas-browser",
-    "cliExample": "iatlas-browser site github/repo epiral/iatlas-browser",
+    "example": "iatlas-browser site github/repo miounet11/lao",
+    "cliExample": "iatlas-browser site github/repo miounet11/lao",
     "mcpExample": {
       "tool": "site_run",
       "arguments": {

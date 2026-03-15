@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   APP_DIRNAME,
   APP_NAME,
@@ -31,6 +32,23 @@ interface DoctorReport {
   daemonStatus?: DaemonStatus;
 }
 
+function getPackageRoot(): string {
+  const currentFile = fileURLToPath(import.meta.url);
+  const currentDir = dirname(currentFile);
+  const publishedLayoutRoot = resolve(currentDir, "..");
+  const workspaceLayoutRoot = resolve(currentDir, "../../..");
+
+  if (existsSync(join(publishedLayoutRoot, "extension"))) {
+    return publishedLayoutRoot;
+  }
+
+  if (existsSync(join(workspaceLayoutRoot, "extension"))) {
+    return workspaceLayoutRoot;
+  }
+
+  return publishedLayoutRoot;
+}
+
 async function getDaemonStatus(): Promise<DaemonStatus | null> {
   try {
     const controller = new AbortController();
@@ -49,8 +67,7 @@ async function getDaemonStatus(): Promise<DaemonStatus | null> {
 export async function doctorCommand(
   options: DoctorOptions = {}
 ): Promise<void> {
-  const cwd = process.cwd();
-  const extensionDir = join(cwd, "extension");
+  const extensionDir = join(getPackageRoot(), "extension");
   const appDir = join(homedir(), APP_DIRNAME);
   const daemonPath = getDaemonPath();
   const daemonStatus = await getDaemonStatus();

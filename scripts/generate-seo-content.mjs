@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const webRoot = path.join(repoRoot, "web");
-const contentPath = path.join(repoRoot, "content", "seo-posts.json");
+const contentRoot = path.join(repoRoot, "content");
 const learnRoot = path.join(webRoot, "learn");
 const siteUrl = "https://miaoda.vip";
 const publishDate = process.env.PUBLISH_DATE || new Date().toISOString().slice(0, 10);
@@ -364,8 +364,16 @@ ${items.map((item) => `  <url>
 }
 
 async function main() {
-  const raw = await fs.readFile(contentPath, "utf8");
-  const allPosts = JSON.parse(raw);
+  const contentFiles = (await fs.readdir(contentRoot))
+    .filter((name) => /^seo-posts.*\.json$/.test(name))
+    .sort();
+  const batches = await Promise.all(
+    contentFiles.map(async (name) => {
+      const raw = await fs.readFile(path.join(contentRoot, name), "utf8");
+      return JSON.parse(raw);
+    }),
+  );
+  const allPosts = batches.flat();
   const publishedPosts = sortPosts(allPosts.filter(isPublished));
 
   await fs.rm(learnRoot, { recursive: true, force: true });

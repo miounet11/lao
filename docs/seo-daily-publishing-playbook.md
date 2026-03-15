@@ -6,8 +6,9 @@ Publish five new SEO pages per day around real user demand without hand-editing 
 
 ## Source Of Truth
 
-- content queue: `content/seo-posts.json`
+- content queue: every `content/seo-posts*.json` file
 - generator: `scripts/generate-seo-content.mjs`
+- queue report: `scripts/seo-queue-report.mjs`
 - deploy helper: `scripts/publish-static-site.sh`
 - public hub: `/learn/`
 - feed: `/feed.xml`
@@ -35,6 +36,8 @@ The generator publishes entries when:
 
 This means future content can be committed ahead of time and revealed automatically by date.
 
+The generator reads every matching queue file under `content/seo-posts*.json`, so batches can be appended without rewriting the original queue file.
+
 ## Daily Output Target
 
 Five pages per day, split across these clusters:
@@ -53,6 +56,12 @@ Generate the current publish set:
 node scripts/generate-seo-content.mjs
 ```
 
+Inspect queue health and runway:
+
+```bash
+pnpm seo:report
+```
+
 Generate as if it were a future date:
 
 ```bash
@@ -67,12 +76,13 @@ TARGET_DIR=/srv/miaoda.vip bash scripts/publish-static-site.sh
 
 ## Content Workflow
 
-1. Add at least five new entries to `content/seo-posts.json`.
+1. Add at least five new entries to a queue file such as `content/seo-posts-batch-3.json`.
 2. Set `publishDate` for the target day.
 3. Keep titles close to real search phrasing.
 4. Keep descriptions commercially useful, not generic.
-5. Run the generator locally and verify `/learn/`, `feed.xml`, and `sitemap.xml`.
-6. Deploy the regenerated `web/` directory.
+5. Run `pnpm seo:report` and confirm daily cadence is still intact.
+6. Run the generator locally and verify `/learn/`, `feed.xml`, and `sitemap.xml`.
+7. Deploy the regenerated `web/` directory.
 
 ## Server Automation
 
@@ -109,3 +119,4 @@ After each publish:
 - check `/sitemap.xml`
 - check that the top nav still includes `Learn`
 - confirm live pages return `HTTP 200`
+- check `pnpm seo:report` so the future queue still has runway

@@ -596,6 +596,14 @@ thead th {
   margin-top: 14px;
 }
 
+.playground-note {
+  margin-top: 12px;
+}
+
+#open-playground-result {
+  min-height: 280px;
+}
+
 .mode-grid,
 .flow-grid {
   align-items: stretch;

@@ -289,6 +289,43 @@
 
     <section class="section">
       <div class="section-head">
+        <p class="kicker">Hosted Sandbox</p>
+        <h2>Test the hosted <code>/v1/open</code> endpoint directly from the homepage</h2>
+        <p class="subtle">
+          This is the public remote-safe layer. Use it for public URLs and server-friendly fetches, not for personal
+          tabs, login state, or browser-context-sensitive automation.
+        </p>
+      </div>
+      <div class="cta demo-panel">
+        <div>
+          <form id="open-playground-form" class="catalog-filters">
+            <input id="open-playground-key" type="text" placeholder="Paste API key or create one above" autocomplete="off">
+            <input id="open-playground-url" type="url" placeholder="https://example.com" value="https://example.com" autocomplete="off">
+            <select id="open-playground-mode">
+              <option value="metadata">metadata</option>
+              <option value="text">text</option>
+              <option value="html">html</option>
+            </select>
+            <button type="submit" class="button primary">Run /v1/open</button>
+          </form>
+          <p class="subtle playground-note">
+            If you create a key above, this sandbox will pick it up automatically in the same browser.
+          </p>
+          <ul class="quota-list">
+            <li><strong>Input:</strong> public <code>http</code> or <code>https</code> URL only</li>
+            <li><strong>Auth:</strong> <code>Authorization: Bearer &lt;apiKey&gt;</code></li>
+            <li><strong>Modes:</strong> <code>metadata</code>, <code>text</code>, <code>html</code></li>
+          </ul>
+        </div>
+        <div>
+          <p class="panel-label">Live response</p>
+          <pre id="open-playground-result"><code>Paste an API key, choose a public URL, and run the hosted endpoint.</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
         <p class="kicker">Install and first run</p>
         <h2>Get from zero to first browser command quickly</h2>
       </div>

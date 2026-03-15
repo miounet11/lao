@@ -1,3 +1,26 @@
+const apiKeyStorageKey = "iatlas-browser-api-key";
+
+function saveApiKey(apiKey) {
+  try {
+    localStorage.setItem(apiKeyStorageKey, apiKey);
+  } catch {}
+}
+
+function loadApiKey() {
+  try {
+    return localStorage.getItem(apiKeyStorageKey) || "";
+  } catch {
+    return "";
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
 document.addEventListener("click", async (event) => {
   const target = event.target;
   if (!(target instanceof HTMLElement)) {
@@ -63,6 +86,8 @@ for (const form of document.querySelectorAll(".signup-form")) {
       }
 
       const apiKey = payload.apiKey;
+      saveApiKey(apiKey);
+      document.dispatchEvent(new CustomEvent("iatlas-api-key", { detail: { apiKey } }));
       const example = [
         `API_KEY=${apiKey}`,
         `curl -s https://miaoda.vip/v1/usage -H "Authorization: Bearer $API_KEY"`,
@@ -214,7 +239,94 @@ function initHomepageDemo() {
     });
   }
 
-  renderDemo("local-cli");
+      renderDemo("local-cli");
 }
 
 initHomepageDemo();
+
+function initOpenPlayground() {
+  const form = document.getElementById("open-playground-form");
+  const apiKeyInput = document.getElementById("open-playground-key");
+  const urlInput = document.getElementById("open-playground-url");
+  const modeInput = document.getElementById("open-playground-mode");
+  const result = document.getElementById("open-playground-result");
+
+  if (
+    !(form instanceof HTMLFormElement) ||
+    !(apiKeyInput instanceof HTMLInputElement) ||
+    !(urlInput instanceof HTMLInputElement) ||
+    !(modeInput instanceof HTMLSelectElement) ||
+    !(result instanceof HTMLElement)
+  ) {
+    return;
+  }
+
+  const submitButton = form.querySelector('button[type="submit"]');
+  if (!(submitButton instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  apiKeyInput.value = loadApiKey();
+
+  document.addEventListener("iatlas-api-key", (event) => {
+    if (!(event instanceof CustomEvent) || !event.detail?.apiKey) {
+      return;
+    }
+    apiKeyInput.value = event.detail.apiKey;
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const apiKey = apiKeyInput.value.trim();
+    const url = urlInput.value.trim();
+    const mode = modeInput.value;
+
+    if (!apiKey) {
+      result.textContent = "Create or paste an API key first.";
+      return;
+    }
+
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(url);
+    } catch {
+      result.textContent = "Enter a valid absolute URL.";
+      return;
+    }
+
+    if (!["http:", "https:"].includes(parsedUrl.protocol)) {
+      result.textContent = "Only public http and https URLs are supported here.";
+      return;
+    }
+
+    const originalButtonText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = "Running...";
+    result.textContent = "Running hosted open request...";
+
+    try {
+      const response = await fetch("/v1/open", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: parsedUrl.toString(),
+          mode,
+        }),
+      });
+
+      const payload = await response.json();
+      result.innerHTML = `<code>${escapeHtml(JSON.stringify(payload, null, 2))}</code>`;
+    } catch (error) {
+      result.textContent = error instanceof Error ? error.message : "Hosted open request failed";
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
+  });
+}
+
+initOpenPlayground();

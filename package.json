@@ -17,6 +17,7 @@
   "scripts": {
     "build": "turbo run build && pnpm build:release",
     "build:release": "tsup && pnpm build:extension",
+    "seo:lint": "node scripts/seo-queue-lint.mjs",
     "seo:report": "node scripts/seo-queue-report.mjs",
     "build:web-seo": "node scripts/generate-seo-content.mjs",
     "build:extension": "rm -rf extension && mkdir -p extension && cp -R packages/extension/dist/. extension/",

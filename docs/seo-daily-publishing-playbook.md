@@ -8,6 +8,7 @@ Publish five new SEO pages per day around real user demand without hand-editing 
 
 - content queue: every `content/seo-posts*.json` file
 - generator: `scripts/generate-seo-content.mjs`
+- queue lint: `scripts/seo-queue-lint.mjs`
 - queue report: `scripts/seo-queue-report.mjs`
 - deploy helper: `scripts/publish-static-site.sh`
 - public hub: `/learn/`
@@ -62,6 +63,12 @@ Inspect queue health and runway:
 pnpm seo:report
 ```
 
+Lint the queue for duplicate slugs, missing fields, date gaps, and cadence drift:
+
+```bash
+pnpm seo:lint
+```
+
 Generate as if it were a future date:
 
 ```bash
@@ -80,9 +87,10 @@ TARGET_DIR=/srv/miaoda.vip bash scripts/publish-static-site.sh
 2. Set `publishDate` for the target day.
 3. Keep titles close to real search phrasing.
 4. Keep descriptions commercially useful, not generic.
-5. Run `pnpm seo:report` and confirm daily cadence is still intact.
-6. Run the generator locally and verify `/learn/`, `feed.xml`, and `sitemap.xml`.
-7. Deploy the regenerated `web/` directory.
+5. Run `pnpm seo:lint` to catch structural issues before publishing.
+6. Run `pnpm seo:report` and confirm daily cadence is still intact.
+7. Run the generator locally and verify `/learn/`, `feed.xml`, and `sitemap.xml`.
+8. Deploy the regenerated `web/` directory.
 
 ## Server Automation
 
@@ -119,4 +127,5 @@ After each publish:
 - check `/sitemap.xml`
 - check that the top nav still includes `Learn`
 - confirm live pages return `HTTP 200`
+- check `pnpm seo:lint` before adding the next batch
 - check `pnpm seo:report` so the future queue still has runway

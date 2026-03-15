@@ -1,12 +1,16 @@
 /**
- * bb-browser 共享常量
+ * iatlas-browser 共享常量
  */
+
+export const APP_NAME = "iatlas-browser";
+export const APP_VERSION = "0.5.0";
+export const APP_DIRNAME = ".iatlas-browser";
 
 /** Daemon HTTP 服务端口 */
 export const DAEMON_PORT = 19824;
 
 /** Daemon 主机地址 */
-export const DAEMON_HOST = "localhost";
+export const DAEMON_HOST = "127.0.0.1";
 
 /** Daemon 基础 URL */
 export const DAEMON_BASE_URL = `http://${DAEMON_HOST}:${DAEMON_PORT}`;

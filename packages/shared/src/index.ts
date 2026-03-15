@@ -1,5 +1,5 @@
 /**
- * @bb-browser/shared
+ * @iatlas-browser/shared
  * 共享类型和工具函数
  */
 
@@ -15,6 +15,9 @@ export {
 } from "./protocol.js";
 
 export {
+  APP_DIRNAME,
+  APP_NAME,
+  APP_VERSION,
   COMMAND_TIMEOUT,
   DAEMON_BASE_URL,
   DAEMON_HOST,

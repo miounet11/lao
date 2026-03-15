@@ -1,15 +1,15 @@
 /**
  * tab 命令 - 标签页管理
  * 用法：
- *   bb-browser tab                    列出所有标签页
- *   bb-browser tab new [url]          新建标签页
- *   bb-browser tab <n>                切换到第 n 个标签页（按 index）
- *   bb-browser tab close [n]          关闭标签页（按 index）
- *   bb-browser tab select --id <id>   切换到指定 tabId 的标签页
- *   bb-browser tab close --id <id>    关闭指定 tabId 的标签页
+ *   iatlas-browser tab                    列出所有标签页
+ *   iatlas-browser tab new [url]          新建标签页
+ *   iatlas-browser tab <n>                切换到第 n 个标签页（按 index）
+ *   iatlas-browser tab close [n]          关闭标签页（按 index）
+ *   iatlas-browser tab select --id <id>   切换到指定 tabId 的标签页
+ *   iatlas-browser tab close --id <id>    关闭指定 tabId 的标签页
  */
 
-import { generateId, type Request, type Response, type TabInfo } from "@bb-browser/shared";
+import { generateId, type Request, type Response, type TabInfo } from "@iatlas-browser/shared";
 import { sendCommand } from "../client.js";
 import { ensureDaemonRunning } from "../daemon-manager.js";
 
@@ -57,7 +57,7 @@ function parseTabSubcommand(args: string[], rawArgv?: string[]): {
     if (tabId !== undefined) {
       return { action: "tab_select", tabId };
     }
-    throw new Error("tab select 需要 --id 参数，用法：bb-browser tab select --id <tabId>");
+    throw new Error("tab select 需要 --id 参数，用法：iatlas-browser tab select --id <tabId>");
   }
 
   // tab close [n | --id <tabId>]

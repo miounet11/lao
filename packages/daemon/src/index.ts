@@ -1,10 +1,10 @@
 /**
- * bb-browser Daemon 主入口
+ * iatlas-browser Daemon 主入口
  *
  * HTTP Server + SSE 推送架构
  *
  * 职责：
- * 1. 启动 HTTP 服务器监听 localhost:19824
+ * 1. 启动 HTTP 服务器监听 127.0.0.1:19824
  * 2. 处理 CLI 命令请求 (POST /command)
  * 3. 管理扩展 SSE 连接 (GET /sse)
  * 4. 接收扩展结果回传 (POST /result)
@@ -12,10 +12,10 @@
 
 import { parseArgs } from "node:util";
 import { writeFileSync, unlinkSync, existsSync } from "node:fs";
-import { DAEMON_PORT, DAEMON_HOST } from "@bb-browser/shared";
+import { APP_NAME, DAEMON_PORT, DAEMON_HOST } from "@iatlas-browser/shared";
 import { HttpServer } from "./http-server.js";
 
-const PID_FILE_PATH = "/tmp/bb-browser.pid";
+const PID_FILE_PATH = `/tmp/${APP_NAME}.pid`;
 
 interface DaemonOptions {
   host: string;
@@ -49,10 +49,10 @@ function parseOptions(): DaemonOptions {
 
   if (values.help) {
     console.error(`
-bb-browser-daemon - HTTP Server Daemon for bb-browser
+iatlas-browser-daemon - HTTP Server Daemon for iatlas-browser
 
 Usage:
-  bb-browser-daemon [options]
+  iatlas-browser-daemon [options]
 
 Options:
   -H, --host <host>  HTTP server host (default: ${DAEMON_HOST})

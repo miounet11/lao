@@ -2,18 +2,24 @@
  * site 命令 - 管理和运行社区/私有网站适配器
  *
  * 用法：
- *   bb-browser site list                      列出所有可用 site adapter
- *   bb-browser site search <query>            搜索
- *   bb-browser site <name> [args...]          运行（简写）
- *   bb-browser site run <name> [args...]      运行
- *   bb-browser site update                    更新社区 adapter 库
+ *   iatlas-browser site list                      列出所有可用 site adapter
+ *   iatlas-browser site search <query>            搜索
+ *   iatlas-browser site <name> [args...]          运行（简写）
+ *   iatlas-browser site run <name> [args...]      运行
+ *   iatlas-browser site update                    更新社区 adapter 库
  *
  * 目录：
- *   ~/.bb-browser/sites/       私有 adapter（优先）
- *   ~/.bb-browser/bb-sites/    社区 adapter（bb-browser site update 拉取）
+ *   ~/.iatlas-browser/sites/       私有 adapter（优先）
+ *   ~/.iatlas-browser/bb-sites/    社区 adapter（iatlas-browser site update 拉取）
  */
 
-import { generateId, type Request, type Response, type TabInfo } from "@bb-browser/shared";
+import {
+  APP_DIRNAME,
+  generateId,
+  type Request,
+  type Response,
+  type TabInfo,
+} from "@iatlas-browser/shared";
 import { sendCommand } from "../client.js";
 import { ensureDaemonRunning } from "../daemon-manager.js";
 import { readFileSync, readdirSync, existsSync, mkdirSync } from "node:fs";
@@ -21,9 +27,9 @@ import { join, relative } from "node:path";
 import { homedir } from "node:os";
 import { execSync } from "node:child_process";
 
-const BB_DIR = join(homedir(), ".bb-browser");
-const LOCAL_SITES_DIR = join(BB_DIR, "sites");
-const COMMUNITY_SITES_DIR = join(BB_DIR, "bb-sites");
+const APP_DIR = join(homedir(), APP_DIRNAME);
+const LOCAL_SITES_DIR = join(APP_DIR, "sites");
+const COMMUNITY_SITES_DIR = join(APP_DIR, "bb-sites");
 const COMMUNITY_REPO = "https://github.com/epiral/bb-sites.git";
 
 export interface SiteOptions {
@@ -175,7 +181,7 @@ function siteList(options: SiteOptions): void {
 
   if (sites.length === 0) {
     console.log("未找到任何 site adapter。");
-    console.log("  安装社区 adapter: bb-browser site update");
+    console.log("  安装社区 adapter: iatlas-browser site update");
     console.log(`  私有 adapter 目录: ${LOCAL_SITES_DIR}`);
     return;
   }
@@ -218,7 +224,7 @@ function siteSearch(query: string, options: SiteOptions): void {
 
   if (matches.length === 0) {
     console.log(`未找到匹配 "${query}" 的 adapter。`);
-    console.log("  查看所有: bb-browser site list");
+    console.log("  查看所有: iatlas-browser site list");
     return;
   }
 
@@ -236,7 +242,7 @@ function siteSearch(query: string, options: SiteOptions): void {
 }
 
 function siteUpdate(): void {
-  mkdirSync(BB_DIR, { recursive: true });
+  mkdirSync(APP_DIR, { recursive: true });
 
   if (existsSync(join(COMMUNITY_SITES_DIR, ".git"))) {
     console.log("更新社区 site adapter 库...");
@@ -245,7 +251,7 @@ function siteUpdate(): void {
       console.log("更新完成。");
     } catch (e) {
       console.error(`更新失败: ${e instanceof Error ? e.message : e}`);
-      console.error("  手动修复: cd ~/.bb-browser/bb-sites && git pull");
+      console.error("  手动修复: cd ~/.iatlas-browser/bb-sites && git pull");
       process.exit(1);
     }
   } else {
@@ -255,7 +261,7 @@ function siteUpdate(): void {
       console.log("克隆完成。");
     } catch (e) {
       console.error(`克隆失败: ${e instanceof Error ? e.message : e}`);
-      console.error(`  手动修复: git clone ${COMMUNITY_REPO} ~/.bb-browser/bb-sites`);
+      console.error(`  手动修复: git clone ${COMMUNITY_REPO} ~/.iatlas-browser/bb-sites`);
       process.exit(1);
     }
   }
@@ -278,11 +284,11 @@ async function siteRun(
     if (fuzzy.length > 0) {
       console.error("  Did you mean:");
       for (const s of fuzzy.slice(0, 5)) {
-        console.error(`    bb-browser site ${s.name}`);
+        console.error(`    iatlas-browser site ${s.name}`);
       }
     } else {
-      console.error("  Try: bb-browser site list");
-      console.error("  Or:  bb-browser site update");
+      console.error("  Try: iatlas-browser site list");
+      console.error("  Or:  iatlas-browser site update");
     }
     process.exit(1);
   }
@@ -321,7 +327,7 @@ async function siteRun(
         const def = site.args[a];
         return def.required ? `<${a}>` : `[${a}]`;
       }).join(" ");
-      console.error(`  Usage: bb-browser site ${name} ${usage}`);
+      console.error(`  Usage: iatlas-browser site ${name} ${usage}`);
       if (site.example) console.error(`  Example: ${site.example}`);
       process.exit(1);
     }
@@ -413,7 +419,7 @@ async function siteRun(
       ? `Please log in to https://${site.domain} in your browser first, then retry.`
       : undefined;
     const hint = loginHint || errObj.hint;
-    const reportHint = `If this is an adapter bug, report via: gh issue create --repo epiral/bb-sites --title "[${name}] <description>" OR: bb-browser site github/issue-create epiral/bb-sites --title "[${name}] <description>"`;
+    const reportHint = `If this is an adapter bug, report via: gh issue create --repo epiral/bb-sites --title "[${name}] <description>" OR: iatlas-browser site github/issue-create epiral/bb-sites --title "[${name}] <description>"`;
 
     if (options.json) {
       console.log(JSON.stringify({ id: evalReq.id, success: false, error: errObj.error, hint, reportHint }));
@@ -421,7 +427,7 @@ async function siteRun(
       console.error(`[error] site ${name}: ${errObj.error}`);
       if (hint) console.error(`  Hint: ${hint}`);
       console.error(`  Report: gh issue create --repo epiral/bb-sites --title "[${name}] ..."`);
-      console.error(`     or: bb-browser site github/issue-create epiral/bb-sites --title "[${name}] ..."`);
+      console.error(`     or: iatlas-browser site github/issue-create epiral/bb-sites --title "[${name}] ..."`);
     }
     process.exit(1);
   }
@@ -442,27 +448,27 @@ export async function siteCommand(
   const subCommand = args[0];
 
   if (!subCommand || subCommand === "--help" || subCommand === "-h") {
-    console.log(`bb-browser site - 网站 CLI 化（管理和运行 site adapter）
+    console.log(`iatlas-browser site - 网站 CLI 化（管理和运行 site adapter）
 
 用法:
-  bb-browser site list                      列出所有可用 adapter
-  bb-browser site search <query>            搜索 adapter
-  bb-browser site <name> [args...]          运行 adapter（简写）
-  bb-browser site run <name> [args...]      运行 adapter
-  bb-browser site update                    更新社区 adapter 库 (git clone/pull)
+  iatlas-browser site list                      列出所有可用 adapter
+  iatlas-browser site search <query>            搜索 adapter
+  iatlas-browser site <name> [args...]          运行 adapter（简写）
+  iatlas-browser site run <name> [args...]      运行 adapter
+  iatlas-browser site update                    更新社区 adapter 库 (git clone/pull)
 
 目录:
   ${LOCAL_SITES_DIR}      私有 adapter（优先）
   ${COMMUNITY_SITES_DIR}   社区 adapter
 
 示例:
-  bb-browser site update
-  bb-browser site list
-  bb-browser site reddit/thread https://www.reddit.com/r/LocalLLaMA/comments/...
-  bb-browser site twitter/user yan5xu
-  bb-browser site search reddit
+  iatlas-browser site update
+  iatlas-browser site list
+  iatlas-browser site reddit/thread https://www.reddit.com/r/LocalLLaMA/comments/...
+  iatlas-browser site twitter/user example_user
+  iatlas-browser site search reddit
 
-创建新 adapter: bb-browser guide
+创建新 adapter: iatlas-browser guide
 报告问题: gh issue create --repo epiral/bb-sites --title "[adapter-name] 描述"
 贡献社区: https://github.com/epiral/bb-sites`);
     return;
@@ -473,7 +479,7 @@ export async function siteCommand(
     case "search":
       if (!args[1]) {
         console.error("[error] site search: <query> is required.");
-        console.error("  Usage: bb-browser site search <query>");
+        console.error("  Usage: iatlas-browser site search <query>");
         process.exit(1);
       }
       siteSearch(args[1], options);
@@ -482,8 +488,8 @@ export async function siteCommand(
     case "run":
       if (!args[1]) {
         console.error("[error] site run: <name> is required.");
-        console.error("  Usage: bb-browser site run <name> [args...]");
-        console.error("  Try: bb-browser site list");
+        console.error("  Usage: iatlas-browser site run <name> [args...]");
+        console.error("  Try: iatlas-browser site list");
         process.exit(1);
       }
       await siteRun(args[1], args.slice(2), options);
@@ -494,7 +500,7 @@ export async function siteCommand(
       } else {
         console.error(`[error] site: unknown subcommand "${subCommand}".`);
         console.error("  Available: list, search, run, update");
-        console.error("  Try: bb-browser site --help");
+        console.error("  Try: iatlas-browser site --help");
         process.exit(1);
       }
       break;

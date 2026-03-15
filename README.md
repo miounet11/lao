@@ -1,12 +1,12 @@
 <div align="center">
 
-# bb-browser
+# iatlas-browser
 
-### BadBoy Browser
+### iAtlas Browser
 
 **Your browser is the API. No keys. No bots. No scrapers.**
 
-[![npm](https://img.shields.io/npm/v/bb-browser?color=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/bb-browser)
+[![npm](https://img.shields.io/npm/v/iatlas-browser?color=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/iatlas-browser)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -16,17 +16,17 @@
 
 ---
 
-You're already logged into Twitter, Reddit, YouTube, Zhihu, Bilibili, LinkedIn, GitHub — bb-browser lets AI agents **use that directly**.
+You're already logged into Twitter, Reddit, YouTube, Zhihu, Bilibili, LinkedIn, GitHub — iatlas-browser lets AI agents **use that directly**.
 
 ```bash
-bb-browser site twitter/search "AI agent"       # search tweets
-bb-browser site zhihu/hot                        # trending on Zhihu
-bb-browser site arxiv/search "transformer"       # search papers
-bb-browser site eastmoney/stock "茅台"            # real-time stock quote
-bb-browser site boss/search "AI engineer"        # search jobs
-bb-browser site wikipedia/summary "Python"       # Wikipedia summary
-bb-browser site youtube/transcript VIDEO_ID      # full transcript
-bb-browser site stackoverflow/search "async"     # search SO questions
+iatlas-browser site twitter/search "AI agent"       # search tweets
+iatlas-browser site zhihu/hot                        # trending on Zhihu
+iatlas-browser site arxiv/search "transformer"       # search papers
+iatlas-browser site eastmoney/stock "茅台"            # real-time stock quote
+iatlas-browser site boss/search "AI engineer"        # search jobs
+iatlas-browser site wikipedia/summary "Python"       # Wikipedia summary
+iatlas-browser site youtube/transcript VIDEO_ID      # full transcript
+iatlas-browser site stackoverflow/search "async"     # search SO questions
 ```
 
 **97 commands across 35 platforms.** All using your real browser's login state. [Full list →](https://github.com/epiral/bb-sites)
@@ -35,9 +35,9 @@ bb-browser site stackoverflow/search "async"     # search SO questions
 
 The internet was built for browsers. AI agents have been trying to access it through APIs — but 99% of websites don't offer one.
 
-bb-browser flips this: **instead of forcing websites to provide machine interfaces, let machines use the human interface directly.** The adapter runs `eval` inside your browser tab, calls `fetch()` with your cookies, or invokes the page's own webpack modules. The website thinks it's you. Because it **is** you.
+iatlas-browser flips this: **instead of forcing websites to provide machine interfaces, let machines use the human interface directly.** The adapter runs `eval` inside your browser tab, calls `fetch()` with your cookies, or invokes the page's own webpack modules. The website thinks it's you. Because it **is** you.
 
-| | Playwright / Selenium | Scraping libs | bb-browser |
+| | Playwright / Selenium | Scraping libs | iatlas-browser |
 |---|---|---|---|
 | Browser | Headless, isolated | No browser | Your real Chrome |
 | Login state | None, must re-login | Cookie extraction | Already there |
@@ -49,20 +49,20 @@ bb-browser flips this: **instead of forcing websites to provide machine interfac
 ### Install
 
 ```bash
-npm install -g bb-browser
+npm install -g iatlas-browser
 ```
 
 ### Chrome Extension
 
-1. Download from [Releases](https://github.com/epiral/bb-browser/releases/latest)
+1. Download from [Releases](https://github.com/miounet11/lao/releases/latest)
 2. Unzip → `chrome://extensions/` → Developer Mode → Load unpacked
 
 ### Use
 
 ```bash
-bb-browser site update    # pull 97 community adapters
-bb-browser site list      # see what's available
-bb-browser site zhihu/hot # go
+iatlas-browser site update    # pull 97 community adapters
+iatlas-browser site list      # see what's available
+iatlas-browser site zhihu/hot # go
 ```
 
 ### MCP (Claude Code / Cursor)
@@ -70,9 +70,9 @@ bb-browser site zhihu/hot # go
 ```json
 {
   "mcpServers": {
-    "bb-browser": {
+    "iatlas-browser": {
       "command": "npx",
-      "args": ["-y", "bb-browser", "--mcp"]
+      "args": ["-y", "iatlas-browser", "--mcp"]
     }
   }
 }
@@ -99,7 +99,7 @@ Community-driven via [bb-sites](https://github.com/epiral/bb-sites). One JS file
 ## 10 minutes to add any website
 
 ```bash
-bb-browser guide    # full tutorial
+iatlas-browser guide    # full tutorial
 ```
 
 Tell your AI agent: *"turn XX website into a CLI"*. It reads the guide, reverse-engineers the API with `network --with-body`, writes the adapter, tests it, and submits a PR. All autonomously.
@@ -116,20 +116,20 @@ We tested this: **20 AI agents ran in parallel, each independently reverse-engin
 
 ## What this means for AI agents
 
-Without bb-browser, an AI agent's world is: **files + terminal + a few APIs with keys.**
+Without iatlas-browser, an AI agent's world is: **files + terminal + a few APIs with keys.**
 
-With bb-browser: **files + terminal + the entire internet.**
+With iatlas-browser: **files + terminal + the entire internet.**
 
 An agent can now, in under a minute:
 
 ```bash
 # Cross-platform research on any topic
-bb-browser site arxiv/search "retrieval augmented generation"
-bb-browser site twitter/search "RAG"
-bb-browser site github search rag-framework
-bb-browser site stackoverflow/search "RAG implementation"
-bb-browser site zhihu/search "RAG"
-bb-browser site 36kr/newsflash
+iatlas-browser site arxiv/search "retrieval augmented generation"
+iatlas-browser site twitter/search "RAG"
+iatlas-browser site github search rag-framework
+iatlas-browser site stackoverflow/search "RAG implementation"
+iatlas-browser site zhihu/search "RAG"
+iatlas-browser site 36kr/newsflash
 ```
 
 Six platforms, six dimensions, structured JSON. Faster and broader than any human researcher.
@@ -137,14 +137,14 @@ Six platforms, six dimensions, structured JSON. Faster and broader than any huma
 ## Also a full browser automation tool
 
 ```bash
-bb-browser open https://example.com
-bb-browser snapshot -i                # accessibility tree
-bb-browser click @3                   # click element
-bb-browser fill @5 "hello"            # fill input
-bb-browser eval "document.title"      # run JS
-bb-browser fetch URL --json           # authenticated fetch
-bb-browser network requests --with-body --json  # capture traffic
-bb-browser screenshot                 # take screenshot
+iatlas-browser open https://example.com
+iatlas-browser snapshot -i                # accessibility tree
+iatlas-browser click @3                   # click element
+iatlas-browser fill @5 "hello"            # fill input
+iatlas-browser eval "document.title"      # run JS
+iatlas-browser fetch URL --json           # authenticated fetch
+iatlas-browser network requests --with-body --json  # capture traffic
+iatlas-browser screenshot                 # take screenshot
 ```
 
 All commands support `--json` output and `--tab <id>` for concurrent multi-tab operations.
@@ -155,7 +155,7 @@ All commands support `--json` output and `--tab <id>` for concurrent multi-tab o
 AI Agent (Claude Code, Codex, Cursor, etc.)
        │ CLI or MCP (stdio)
        ▼
-bb-browser CLI ──HTTP──▶ Daemon ──SSE──▶ Chrome Extension
+iatlas-browser CLI ──HTTP──▶ Daemon ──SSE──▶ Chrome Extension
                                               │
                                               ▼ chrome.debugger (CDP)
                                          Your Real Browser

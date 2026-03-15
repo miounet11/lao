@@ -1,12 +1,12 @@
 /**
  * 导航命令 - back/forward/refresh
  * 用法：
- *   bb-browser back      后退
- *   bb-browser forward   前进
- *   bb-browser refresh   刷新页面
+ *   iatlas-browser back      后退
+ *   iatlas-browser forward   前进
+ *   iatlas-browser refresh   刷新页面
  */
 
-import { generateId, type Request, type Response } from "@bb-browser/shared";
+import { generateId, type Request, type Response } from "@iatlas-browser/shared";
 import { sendCommand } from "../client.js";
 import { ensureDaemonRunning } from "../daemon-manager.js";
 

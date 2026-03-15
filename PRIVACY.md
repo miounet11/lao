@@ -1,24 +1,24 @@
-# Privacy Policy — bb-browser
+# Privacy Policy — iatlas-browser
 
 **Last updated:** 2026-03-14
 
-## What bb-browser does
+## What iatlas-browser does
 
-bb-browser is a browser automation tool that lets AI agents control your Chrome browser via the Chrome DevTools Protocol (CDP). It consists of a CLI, an MCP server, a local HTTP daemon, and a Chrome extension.
+iatlas-browser is a browser automation tool that lets AI agents control your Chrome browser via the Chrome DevTools Protocol (CDP). It consists of a CLI, an MCP server, a local HTTP daemon, and a Chrome extension.
 
 ## Data handling
 
 All communication happens **locally on your machine**:
 
 ```
-AI Agent ↔ CLI/MCP ↔ localhost:19824 (daemon) ↔ Chrome Extension
+AI Agent ↔ CLI/MCP ↔ 127.0.0.1:19824 (daemon) ↔ Chrome Extension
 ```
 
 **No data is sent to any external server.** There is no telemetry, no analytics, no cloud service.
 
 ## What data is accessed
 
-When you use bb-browser, the extension may access the following data **locally**:
+When you use iatlas-browser, the extension may access the following data **locally**:
 
 | Data type | How it's used | Stored? |
 |-----------|---------------|---------|
@@ -42,14 +42,14 @@ All data exists only in memory during the browser session. No data is written to
 
 ## Third parties
 
-bb-browser does not share any data with third parties. The extension communicates exclusively with a daemon process running on localhost.
+iatlas-browser does not share any data with third parties. The extension communicates exclusively with a daemon process running on localhost.
 
 ## Open source
 
-bb-browser is fully open source. You can audit the code at:
-https://github.com/epiral/bb-browser
+iatlas-browser is fully open source. You can audit the code at:
+https://github.com/miounet11/lao
 
 ## Contact
 
 For privacy questions, open an issue at:
-https://github.com/epiral/bb-browser/issues
+https://github.com/miounet11/lao/issues

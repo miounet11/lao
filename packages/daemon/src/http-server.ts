@@ -9,8 +9,8 @@
  */
 
 import { createServer, type Server, type IncomingMessage, type ServerResponse } from "node:http";
-import type { Request, Response } from "@bb-browser/shared";
-import { DAEMON_PORT } from "@bb-browser/shared";
+import type { Request, Response } from "@iatlas-browser/shared";
+import { DAEMON_PORT } from "@iatlas-browser/shared";
 import { SSEManager } from "./sse-manager.js";
 import { RequestManager } from "./request-manager.js";
 

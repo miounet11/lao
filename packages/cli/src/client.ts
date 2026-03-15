@@ -2,8 +2,8 @@
  * HTTP 客户端 - 与 Daemon 通信
  */
 
-import type { Request, Response } from "@bb-browser/shared";
-import { DAEMON_BASE_URL, COMMAND_TIMEOUT } from "@bb-browser/shared";
+import type { Request, Response } from "@iatlas-browser/shared";
+import { DAEMON_BASE_URL, COMMAND_TIMEOUT } from "@iatlas-browser/shared";
 
 /**
  * 发送命令到 Daemon 并等待响应
@@ -40,7 +40,7 @@ export async function sendCommand(request: Request): Promise<Response> {
           error: [
             "Chrome extension not connected.",
             "",
-            "1. Download extension: https://github.com/epiral/bb-browser/releases/latest",
+            "1. Download extension: https://github.com/miounet11/lao/releases/latest",
             "2. Unzip the downloaded file",
             "3. Open chrome://extensions/ → Enable Developer Mode",
             "4. Click \"Load unpacked\" → select the unzipped folder",
@@ -75,10 +75,10 @@ export async function sendCommand(request: Request): Promise<Response> {
           "Cannot connect to daemon.",
           "",
           "Start the daemon first:",
-          "  bb-browser daemon",
+          "  iatlas-browser daemon",
           "",
           "Then load the Chrome extension:",
-          "  chrome://extensions/ → Developer Mode → Load unpacked → node_modules/bb-browser/extension/",
+          "  chrome://extensions/ → Developer Mode → Load unpacked → node_modules/iatlas-browser/extension/",
         ].join("\n"));
       }
       throw error;

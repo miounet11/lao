@@ -1,7 +1,13 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { DAEMON_BASE_URL, COMMAND_TIMEOUT, generateId } from "@bb-browser/shared";
-import type { Request, Response } from "@bb-browser/shared";
+import {
+  APP_NAME,
+  APP_VERSION,
+  DAEMON_BASE_URL,
+  COMMAND_TIMEOUT,
+  generateId,
+} from "@iatlas-browser/shared";
+import type { Request, Response } from "@iatlas-browser/shared";
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -11,7 +17,7 @@ import { z } from "zod";
 const EXT_HINT = [
   "Chrome extension not connected.",
   "",
-  "1. Download extension: https://github.com/epiral/bb-browser/releases/latest",
+  "1. Download extension: https://github.com/miounet11/lao/releases/latest",
   "2. Unzip the downloaded file",
   "3. Open chrome://extensions/ → Enable Developer Mode",
   "4. Click \"Load unpacked\" → select the unzipped folder",
@@ -65,7 +71,7 @@ async function sendCommand(request: Request): Promise<Response> {
     return (await response.json()) as Response;
   } catch {
     clearTimeout(timeoutId);
-    return { id: request.id, success: false, error: "Failed to start daemon. Run manually: bb-browser daemon" };
+    return { id: request.id, success: false, error: "Failed to start daemon. Run manually: iatlas-browser daemon" };
   }
 }
 
@@ -90,8 +96,8 @@ async function runCommand(request: Omit<Request, "id">) {
 }
 
 const server = new McpServer(
-  { name: "bb-browser", version: "0.4.0" },
-  { instructions: `bb-browser lets you control the user's real Chrome browser — with their login state, cookies, and sessions.
+  { name: APP_NAME, version: APP_VERSION },
+  { instructions: `iatlas-browser lets you control the user's real Chrome browser — with their login state, cookies, and sessions.
 
 Your browser is the API. No headless browser, no cookie extraction, no anti-bot bypass.
 
@@ -104,12 +110,12 @@ Key capabilities:
 - browser_tab_list/tab_new: Multi-tab support — use tab parameter for concurrent operations
 
 Site adapters (pre-built commands for popular sites):
-- Run via CLI: bb-browser site <name> [args]
+- Run via CLI: iatlas-browser site <name> [args]
 - Available: reddit, twitter, github, hackernews, xiaohongshu, zhihu, bilibili, weibo, douban, youtube
-- Update: bb-browser site update
-- List all: bb-browser site list
+- Update: iatlas-browser site update
+- List all: iatlas-browser site list
 
-To create a new site adapter, run: bb-browser guide` },
+To create a new site adapter, run: iatlas-browser guide` },
 );
 
 server.tool(

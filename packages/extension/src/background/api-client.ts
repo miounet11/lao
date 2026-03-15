@@ -1,5 +1,5 @@
 /**
- * API Client for bb-browser Extension
+ * API Client for iatlas-browser Extension
  * 负责向 Daemon 回传命令执行结果
  */
 

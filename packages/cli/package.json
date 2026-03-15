@@ -1,19 +1,19 @@
 {
-  "name": "@bb-browser/cli",
-  "version": "0.0.1",
+  "name": "@iatlas-browser/cli",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "bb-browser": "./dist/index.js"
+    "iatlas-browser": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "@bb-browser/shared": "workspace:*"
+    "@iatlas-browser/shared": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

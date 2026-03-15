@@ -1,15 +1,15 @@
 /**
- * bb-browser CLI 入口
+ * iatlas-browser CLI 入口
  *
  * 用法：
- *   bb-browser open <url>     打开指定 URL
- *   bb-browser snapshot       获取当前页面快照
- *   bb-browser daemon         前台启动 Daemon
- *   bb-browser start          前台启动 Daemon（别名）
- *   bb-browser stop           停止 Daemon
- *   bb-browser status         查看 Daemon 状态
- *   bb-browser --help         显示帮助信息
- *   bb-browser --version      显示版本号
+ *   iatlas-browser open <url>     打开指定 URL
+ *   iatlas-browser snapshot       获取当前页面快照
+ *   iatlas-browser daemon         前台启动 Daemon
+ *   iatlas-browser start          前台启动 Daemon（别名）
+ *   iatlas-browser stop           停止 Daemon
+ *   iatlas-browser status         查看 Daemon 状态
+ *   iatlas-browser --help         显示帮助信息
+ *   iatlas-browser --version      显示版本号
  *
  * 全局选项：
  *   --json                    以 JSON 格式输出
@@ -42,14 +42,14 @@ import { errorsCommand } from "./commands/errors.js";
 import { traceCommand } from "./commands/trace.js";
 import { fetchCommand } from "./commands/fetch.js";
 import { siteCommand } from "./commands/site.js";
-
-const VERSION = "0.3.0";
+import { doctorCommand } from "./commands/doctor.js";
+import { APP_NAME, APP_VERSION } from "@iatlas-browser/shared";
 
 const HELP_TEXT = `
-bb-browser - AI Agent 浏览器自动化工具
+iatlas-browser - AI Agent 浏览器自动化工具
 
 用法：
-  bb-browser <command> [options]
+  iatlas-browser <command> [options]
 
 网站 CLI 化（把任何网站变成命令行 API）：
   site list            列出所有可用 adapter（50+）
@@ -59,9 +59,9 @@ bb-browser - AI Agent 浏览器自动化工具
   guide                如何创建新 adapter（开发指南）
 
   示例：
-    bb-browser site twitter/search "claude code"
-    bb-browser site reddit/thread <url>
-    bb-browser site github/pr-create owner/repo --title "feat: ..."
+    iatlas-browser site twitter/search "claude code"
+    iatlas-browser site reddit/thread <url>
+    iatlas-browser site github/pr-create owner/repo --title "feat: ..."
 
 页面导航：
   open <url> [--tab]   打开指定 URL（默认新 tab，--tab current 当前 tab）
@@ -113,6 +113,7 @@ Daemon 管理：
   stop                 停止 Daemon
   status               查看 Daemon 状态
   reload               重载扩展（需要 CDP 模式）
+  doctor               检查 daemon / extension / build 状态
 
 选项：
   --json               以 JSON 格式输出
@@ -160,7 +161,8 @@ function parseArgs(argv: string[]): ParsedArgs {
   };
 
   let skipNext = false;
-  for (const arg of args) {
+  for (let index = 0; index < args.length; index++) {
+    const arg = args[index];
     if (skipNext) {
       skipNext = false;
       continue;
@@ -177,15 +179,15 @@ function parseArgs(argv: string[]): ParsedArgs {
       result.flags.compact = true;
     } else if (arg === "--depth" || arg === "-d") {
       skipNext = true;
-      const nextIdx = args.indexOf(arg) + 1;
-      if (nextIdx < args.length) {
-        result.flags.depth = parseInt(args[nextIdx], 10);
+      const nextArg = args[index + 1];
+      if (nextArg !== undefined) {
+        result.flags.depth = parseInt(nextArg, 10);
       }
     } else if (arg === "--selector" || arg === "-s") {
       skipNext = true;
-      const nextIdx = args.indexOf(arg) + 1;
-      if (nextIdx < args.length) {
-        result.flags.selector = args[nextIdx];
+      const nextArg = args[index + 1];
+      if (nextArg !== undefined) {
+        result.flags.selector = nextArg;
       }
     } else if (arg === "--id") {
       // --id 及其值由子命令通过 process.argv 自行解析，这里跳过
@@ -219,7 +221,7 @@ async function main(): Promise<void> {
 
   // 处理全局选项
   if (parsed.flags.version) {
-    console.log(VERSION);
+    console.log(APP_VERSION);
     return;
   }
 
@@ -243,7 +245,7 @@ async function main(): Promise<void> {
         const url = parsed.args[0];
         if (!url) {
           console.error("错误：缺少 URL 参数");
-          console.error("用法：bb-browser open <url> [--tab current|<tabId>]");
+          console.error("用法：iatlas-browser open <url> [--tab current|<tabId>]");
           process.exit(1);
         }
         // 解析 --tab 参数
@@ -269,8 +271,8 @@ async function main(): Promise<void> {
         const ref = parsed.args[0];
         if (!ref) {
           console.error("错误：缺少 ref 参数");
-          console.error("用法：bb-browser click <ref>");
-          console.error("示例：bb-browser click @5");
+          console.error("用法：iatlas-browser click <ref>");
+          console.error("示例：iatlas-browser click @5");
           process.exit(1);
         }
         await clickCommand(ref, { json: parsed.flags.json, tabId: globalTabId });
@@ -281,8 +283,8 @@ async function main(): Promise<void> {
         const ref = parsed.args[0];
         if (!ref) {
           console.error("错误：缺少 ref 参数");
-          console.error("用法：bb-browser hover <ref>");
-          console.error("示例：bb-browser hover @5");
+          console.error("用法：iatlas-browser hover <ref>");
+          console.error("示例：iatlas-browser hover @5");
           process.exit(1);
         }
         await hoverCommand(ref, { json: parsed.flags.json, tabId: globalTabId });
@@ -293,8 +295,8 @@ async function main(): Promise<void> {
         const ref = parsed.args[0];
         if (!ref) {
           console.error("错误：缺少 ref 参数");
-          console.error("用法：bb-browser check <ref>");
-          console.error("示例：bb-browser check @5");
+          console.error("用法：iatlas-browser check <ref>");
+          console.error("示例：iatlas-browser check @5");
           process.exit(1);
         }
         await checkCommand(ref, { json: parsed.flags.json, tabId: globalTabId });
@@ -305,8 +307,8 @@ async function main(): Promise<void> {
         const ref = parsed.args[0];
         if (!ref) {
           console.error("错误：缺少 ref 参数");
-          console.error("用法：bb-browser uncheck <ref>");
-          console.error("示例：bb-browser uncheck @5");
+          console.error("用法：iatlas-browser uncheck <ref>");
+          console.error("示例：iatlas-browser uncheck @5");
           process.exit(1);
         }
         await uncheckCommand(ref, { json: parsed.flags.json, tabId: globalTabId });
@@ -318,14 +320,14 @@ async function main(): Promise<void> {
         const text = parsed.args[1];
         if (!ref) {
           console.error("错误：缺少 ref 参数");
-          console.error("用法：bb-browser fill <ref> <text>");
-          console.error('示例：bb-browser fill @3 "hello world"');
+          console.error("用法：iatlas-browser fill <ref> <text>");
+          console.error('示例：iatlas-browser fill @3 "hello world"');
           process.exit(1);
         }
         if (text === undefined) {
           console.error("错误：缺少 text 参数");
-          console.error("用法：bb-browser fill <ref> <text>");
-          console.error('示例：bb-browser fill @3 "hello world"');
+          console.error("用法：iatlas-browser fill <ref> <text>");
+          console.error('示例：iatlas-browser fill @3 "hello world"');
           process.exit(1);
         }
         await fillCommand(ref, text, { json: parsed.flags.json, tabId: globalTabId });
@@ -337,14 +339,14 @@ async function main(): Promise<void> {
         const text = parsed.args[1];
         if (!ref) {
           console.error("错误：缺少 ref 参数");
-          console.error("用法：bb-browser type <ref> <text>");
-          console.error('示例：bb-browser type @3 "append text"');
+          console.error("用法：iatlas-browser type <ref> <text>");
+          console.error('示例：iatlas-browser type @3 "append text"');
           process.exit(1);
         }
         if (text === undefined) {
           console.error("错误：缺少 text 参数");
-          console.error("用法：bb-browser type <ref> <text>");
-          console.error('示例：bb-browser type @3 "append text"');
+          console.error("用法：iatlas-browser type <ref> <text>");
+          console.error('示例：iatlas-browser type @3 "append text"');
           process.exit(1);
         }
         await typeCommand(ref, text, { json: parsed.flags.json, tabId: globalTabId });
@@ -356,14 +358,14 @@ async function main(): Promise<void> {
         const value = parsed.args[1];
         if (!ref) {
           console.error("错误：缺少 ref 参数");
-          console.error("用法：bb-browser select <ref> <value>");
-          console.error('示例：bb-browser select @4 "option1"');
+          console.error("用法：iatlas-browser select <ref> <value>");
+          console.error('示例：iatlas-browser select @4 "option1"');
           process.exit(1);
         }
         if (value === undefined) {
           console.error("错误：缺少 value 参数");
-          console.error("用法：bb-browser select <ref> <value>");
-          console.error('示例：bb-browser select @4 "option1"');
+          console.error("用法：iatlas-browser select <ref> <value>");
+          console.error('示例：iatlas-browser select @4 "option1"');
           process.exit(1);
         }
         await selectCommand(ref, value, { json: parsed.flags.json, tabId: globalTabId });
@@ -374,8 +376,8 @@ async function main(): Promise<void> {
         const script = parsed.args[0];
         if (!script) {
           console.error("错误：缺少 script 参数");
-          console.error("用法：bb-browser eval <script>");
-          console.error('示例：bb-browser eval "document.title"');
+          console.error("用法：iatlas-browser eval <script>");
+          console.error('示例：iatlas-browser eval "document.title"');
           process.exit(1);
         }
         await evalCommand(script, { json: parsed.flags.json, tabId: globalTabId });
@@ -386,9 +388,9 @@ async function main(): Promise<void> {
         const attribute = parsed.args[0] as GetAttribute | undefined;
         if (!attribute) {
           console.error("错误：缺少属性参数");
-          console.error("用法：bb-browser get <text|url|title> [ref]");
-          console.error("示例：bb-browser get text @5");
-          console.error("      bb-browser get url");
+          console.error("用法：iatlas-browser get <text|url|title> [ref]");
+          console.error("示例：iatlas-browser get text @5");
+          console.error("      iatlas-browser get url");
           process.exit(1);
         }
         if (!["text", "url", "title"].includes(attribute)) {
@@ -416,6 +418,11 @@ async function main(): Promise<void> {
 
       case "status": {
         await statusCommand({ json: parsed.flags.json });
+        break;
+      }
+
+      case "doctor": {
+        await doctorCommand({ json: parsed.flags.json });
         break;
       }
 
@@ -454,9 +461,9 @@ async function main(): Promise<void> {
         const target = parsed.args[0];
         if (!target) {
           console.error("错误：缺少等待目标参数");
-          console.error("用法：bb-browser wait <ms|@ref>");
-          console.error("示例：bb-browser wait 2000");
-          console.error("      bb-browser wait @5");
+          console.error("用法：iatlas-browser wait <ms|@ref>");
+          console.error("示例：iatlas-browser wait 2000");
+          console.error("      iatlas-browser wait @5");
           process.exit(1);
         }
         await waitCommand(target, { json: parsed.flags.json, tabId: globalTabId });
@@ -467,9 +474,9 @@ async function main(): Promise<void> {
         const key = parsed.args[0];
         if (!key) {
           console.error("错误：缺少 key 参数");
-          console.error("用法：bb-browser press <key>");
-          console.error("示例：bb-browser press Enter");
-          console.error("      bb-browser press Control+a");
+          console.error("用法：iatlas-browser press <key>");
+          console.error("示例：iatlas-browser press Enter");
+          console.error("      iatlas-browser press Control+a");
           process.exit(1);
         }
         await pressCommand(key, { json: parsed.flags.json, tabId: globalTabId });
@@ -481,9 +488,9 @@ async function main(): Promise<void> {
         const pixels = parsed.args[1]; // 传 string，scrollCommand 内部解析
         if (!direction) {
           console.error("错误：缺少方向参数");
-          console.error("用法：bb-browser scroll <up|down|left|right> [pixels]");
-          console.error("示例：bb-browser scroll down");
-          console.error("      bb-browser scroll up 500");
+          console.error("用法：iatlas-browser scroll <up|down|left|right> [pixels]");
+          console.error("示例：iatlas-browser scroll down");
+          console.error("      iatlas-browser scroll up 500");
           process.exit(1);
         }
         await scrollCommand(direction, pixels, { json: parsed.flags.json, tabId: globalTabId });
@@ -499,9 +506,9 @@ async function main(): Promise<void> {
         const selectorOrMain = parsed.args[0];
         if (!selectorOrMain) {
           console.error("错误：缺少 selector 参数");
-          console.error("用法：bb-browser frame <selector>");
-          console.error('示例：bb-browser frame "iframe#editor"');
-          console.error("      bb-browser frame main");
+          console.error("用法：iatlas-browser frame <selector>");
+          console.error('示例：iatlas-browser frame "iframe#editor"');
+          console.error("      iatlas-browser frame main");
           process.exit(1);
         }
         if (selectorOrMain === "main") {
@@ -516,10 +523,10 @@ async function main(): Promise<void> {
         const subCommand = parsed.args[0];
         if (!subCommand) {
           console.error("错误：缺少子命令");
-          console.error("用法：bb-browser dialog <accept|dismiss> [text]");
-          console.error("示例：bb-browser dialog accept");
-          console.error('      bb-browser dialog accept "my input"');
-          console.error("      bb-browser dialog dismiss");
+          console.error("用法：iatlas-browser dialog <accept|dismiss> [text]");
+          console.error("示例：iatlas-browser dialog accept");
+          console.error('      iatlas-browser dialog accept "my input"');
+          console.error("      iatlas-browser dialog dismiss");
           process.exit(1);
         }
         const promptText = parsed.args[1]; // accept 时可选的 prompt 文本
@@ -555,10 +562,10 @@ async function main(): Promise<void> {
         const subCmd = parsed.args[0] as 'start' | 'stop' | 'status' | undefined;
         if (!subCmd || !['start', 'stop', 'status'].includes(subCmd)) {
           console.error("错误：缺少或无效的子命令");
-          console.error("用法：bb-browser trace <start|stop|status>");
-          console.error("示例：bb-browser trace start");
-          console.error("      bb-browser trace stop");
-          console.error("      bb-browser trace status");
+          console.error("用法：iatlas-browser trace <start|stop|status>");
+          console.error("示例：iatlas-browser trace start");
+          console.error("      iatlas-browser trace stop");
+          console.error("      iatlas-browser trace status");
           process.exit(1);
         }
         await traceCommand(subCmd, { json: parsed.flags.json, tabId: globalTabId });
@@ -569,8 +576,8 @@ async function main(): Promise<void> {
         const fetchUrl = parsed.args[0];
         if (!fetchUrl) {
           console.error("[error] fetch: <url> is required.");
-          console.error("  Usage: bb-browser fetch <url> [--json] [--method POST] [--body '{...}']");
-          console.error("  Example: bb-browser fetch https://www.reddit.com/api/me.json --json");
+          console.error("  Usage: iatlas-browser fetch <url> [--json] [--method POST] [--body '{...}']");
+          console.error("  Example: iatlas-browser fetch https://www.reddit.com/api/me.json --json");
           process.exit(1);
         }
         // 解析 fetch 特有选项
@@ -599,16 +606,16 @@ async function main(): Promise<void> {
       }
 
       case "guide": {
-        console.log(`How to turn any website into a bb-browser site adapter
+        console.log(`How to turn any website into a ${APP_NAME} site adapter
 =======================================================
 
 1. REVERSE ENGINEER the API
-   bb-browser network clear --tab <tabId>
-   bb-browser refresh --tab <tabId>
-   bb-browser network requests --filter "api" --with-body --json --tab <tabId>
+   iatlas-browser network clear --tab <tabId>
+   iatlas-browser refresh --tab <tabId>
+   iatlas-browser network requests --filter "api" --with-body --json --tab <tabId>
 
 2. TEST if direct fetch works (Tier 1)
-   bb-browser eval "fetch('/api/endpoint',{credentials:'include'}).then(r=>r.json())" --tab <tabId>
+   iatlas-browser eval "fetch('/api/endpoint',{credentials:'include'}).then(r=>r.json())" --tab <tabId>
 
    If it works → Tier 1 (Cookie auth, like Reddit/GitHub/Zhihu/Bilibili)
    If needs extra headers → Tier 2 (like Twitter: Bearer + CSRF token)
@@ -623,7 +630,7 @@ async function main(): Promise<void> {
      "domain": "www.example.com",
      "args": { "query": {"required": true, "description": "Search query"} },
      "readOnly": true,
-     "example": "bb-browser site platform/command value"
+     "example": "iatlas-browser site platform/command value"
    }
    */
    async function(args) {
@@ -634,8 +641,8 @@ async function main(): Promise<void> {
    }
 
 4. TEST it
-   Save to ~/.bb-browser/sites/platform/command.js (private, takes priority)
-   bb-browser site platform/command "test query" --json
+   Save to ~/.iatlas-browser/sites/platform/command.js (private, takes priority)
+   iatlas-browser site platform/command "test query" --json
 
 5. CONTRIBUTE
    Option A (with gh CLI):
@@ -645,23 +652,23 @@ async function main(): Promise<void> {
      git push -u origin feat-platform
      gh pr create --repo epiral/bb-sites
 
-   Option B (without gh CLI, using bb-browser itself):
-     bb-browser site github/fork epiral/bb-sites
+   Option B (without gh CLI, using iatlas-browser itself):
+     iatlas-browser site github/fork epiral/bb-sites
      git clone https://github.com/YOUR_USER/bb-sites && cd bb-sites
      git checkout -b feat-platform
      # add adapter files
      git push -u origin feat-platform
-     bb-browser site github/pr-create epiral/bb-sites --title "feat(platform): add adapters" --head "YOUR_USER:feat-platform"
+     iatlas-browser site github/pr-create epiral/bb-sites --title "feat(platform): add adapters" --head "YOUR_USER:feat-platform"
 
-Private adapters:  ~/.bb-browser/sites/<platform>/<command>.js
-Community:         ~/.bb-browser/bb-sites/ (via bb-browser site update)
+Private adapters:  ~/.iatlas-browser/sites/<platform>/<command>.js
+Community:         ~/.iatlas-browser/bb-sites/ (via iatlas-browser site update)
 Full guide:        https://github.com/epiral/bb-sites/blob/main/SKILL.md`);
         break;
       }
 
       default: {
         console.error(`错误：未知命令 "${parsed.command}"`);
-        console.error("运行 bb-browser --help 查看可用命令");
+        console.error(`运行 ${APP_NAME} --help 查看可用命令`);
         process.exit(1);
       }
     }

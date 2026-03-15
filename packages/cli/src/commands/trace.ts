@@ -2,9 +2,9 @@
  * trace 命令 - 录制用户操作
  * 
  * 用法：
- *   bb-browser trace start   开始录制
- *   bb-browser trace stop    停止录制，输出事件列表
- *   bb-browser trace status  查看录制状态
+ *   iatlas-browser trace start   开始录制
+ *   iatlas-browser trace stop    停止录制，输出事件列表
+ *   iatlas-browser trace status  查看录制状态
  */
 
 import { sendCommand } from "../client.js";
@@ -41,7 +41,7 @@ export async function traceCommand(
       const status = data?.traceStatus;
       console.log("开始录制用户操作");
       console.log(`标签页 ID: ${status?.tabId || 'N/A'}`);
-      console.log("\n在浏览器中进行操作，完成后运行 'bb-browser trace stop' 停止录制");
+      console.log("\n在浏览器中进行操作，完成后运行 'iatlas-browser trace stop' 停止录制");
       break;
     }
 

@@ -6,7 +6,7 @@ import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
-import { DAEMON_BASE_URL } from "@bb-browser/shared";
+import { DAEMON_BASE_URL } from "@iatlas-browser/shared";
 
 /** 获取 daemon dist 路径 */
 export function getDaemonPath(): string {
@@ -97,7 +97,7 @@ export async function ensureDaemonRunning(): Promise<void> {
 
   if (!ready) {
     throw new Error(
-      "无法启动 Daemon。请手动运行 bb-browser daemon 或 bb-daemon 启动服务"
+      "无法启动 Daemon。请手动运行 iatlas-browser daemon 或 iatlas-browser-daemon 启动服务"
     );
   }
 }

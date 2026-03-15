@@ -1,15 +1,15 @@
 /**
  * screenshot 命令 - 截取当前页面
  * 用法：
- *   bb-browser screenshot              # 保存到临时目录
- *   bb-browser screenshot ./page.png   # 保存到指定路径
- *   bb-browser screenshot --json       # 返回 { path, base64 }
+ *   iatlas-browser screenshot              # 保存到临时目录
+ *   iatlas-browser screenshot ./page.png   # 保存到指定路径
+ *   iatlas-browser screenshot --json       # 返回 { path, base64 }
  */
 
 import fs from "fs";
 import path from "path";
 import os from "os";
-import { generateId, type Request, type Response } from "@bb-browser/shared";
+import { generateId, type Request, type Response } from "@iatlas-browser/shared";
 import { sendCommand } from "../client.js";
 import { ensureDaemonRunning } from "../daemon-manager.js";
 

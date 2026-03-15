@@ -1,9 +1,9 @@
 /**
- * bb-browser Extension Constants
+ * iatlas-browser Extension Constants
  */
 
 export const DEFAULT_DAEMON_PORT = 19824;
-export const DEFAULT_DAEMON_HOST = 'localhost';
+export const DEFAULT_DAEMON_HOST = '127.0.0.1';
 export const DEFAULT_DAEMON_BASE_URL = `http://${DEFAULT_DAEMON_HOST}:${DEFAULT_DAEMON_PORT}`;
 
 // 保持向后兼容的导出

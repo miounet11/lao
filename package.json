@@ -1,11 +1,11 @@
 {
-  "name": "bb-browser",
-  "version": "0.4.5",
+  "name": "iatlas-browser",
+  "version": "0.5.0",
   "description": "Your browser is the API. CLI + MCP server for AI agents to control Chrome with your login state.",
   "type": "module",
   "bin": {
-    "bb-browser": "./dist/cli.js",
-    "bb-browser-mcp": "./dist/mcp.js"
+    "iatlas-browser": "./dist/cli.js",
+    "iatlas-browser-mcp": "./dist/mcp.js"
   },
   "main": "./dist/cli.js",
   "files": [
@@ -41,12 +41,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/epiral/bb-browser.git"
+    "url": "git+https://github.com/miounet11/lao.git"
   },
   "bugs": {
-    "url": "https://github.com/epiral/bb-browser/issues"
+    "url": "https://github.com/miounet11/lao/issues"
   },
-  "homepage": "https://github.com/epiral/bb-browser#readme",
+  "homepage": "https://github.com/miounet11/lao#readme",
   "engines": {
     "node": ">=18.0.0"
   },

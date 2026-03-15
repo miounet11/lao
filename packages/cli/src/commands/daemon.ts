@@ -1,9 +1,9 @@
 /**
  * daemon 命令 - Daemon 管理
  * 用法：
- *   bb-browser daemon    前台启动 Daemon
- *   bb-browser start     前台启动 Daemon（别名）
- *   bb-browser stop      停止 Daemon
+ *   iatlas-browser daemon    前台启动 Daemon
+ *   iatlas-browser start     前台启动 Daemon（别名）
+ *   iatlas-browser stop      停止 Daemon
  */
 
 import { spawn } from "node:child_process";

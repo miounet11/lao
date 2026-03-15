@@ -38,11 +38,12 @@
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Hosted browser open api + hosted site api</p>
-        <h1>Create an API key and call <code>/v1/open</code> and <code>/v1/sites/run</code>.</h1>
+        <h1>Use the hosted subset on <code>miaoda.vip</code> without confusing it with the local core engine.</h1>
         <p class="lede">
           The hosted interface is designed for simple programmatic use. Register with email, receive an API key,
           then call the public endpoints to open public URLs, inspect the adapter catalog, and execute the hosted
-          subset of site adapters directly on the server.
+          subset of site adapters directly on the server. The full authenticated browser-control model still belongs
+          to the local <code>iatlas-browser</code> runtime with extension, daemon, and MCP.
         </p>
       </div>
       <aside class="hero-panel">
@@ -127,7 +128,7 @@
           <h3>What still stays local</h3>
           <p>
             Adapters that rely on a personal browser session, login, Pinia stores, tabs, or user-specific cookies
-            remain local by design and should be used through CLI or MCP.
+            remain local by design and should be used through CLI or MCP. That is the core mode of the product, not a fallback.
           </p>
           <p><a href="/sites/">Browse the full sites page</a></p>
         </article>

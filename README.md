@@ -26,6 +26,18 @@ Typical use cases:
 - build site-specific adapters on top of your live session
 - expose browser control through MCP for agent runtimes
 
+## Verified Status
+
+Verified on March 15, 2026:
+
+- hosted API on `https://miaoda.vip` is live and usable
+- MCP server starts and responds correctly over stdio
+- local daemon and extension handshake works
+- direct browser commands such as `open` and `snapshot` work against a real connected browser
+- local `site_run` works for adapters that are compatible with page-context execution
+
+This was verified with real end-to-end calls, not just static code review.
+
 ## Core Capabilities
 
 ### 1. Direct browser operations
@@ -148,6 +160,12 @@ The unpacked extension output will be in `extension/`.
    - `~/.iatlas-browser/extension` after `iatlas-browser setup`
    - or the local repo `extension/` directory if building from source
 
+Important:
+
+- automated `--load-extension` startup is blocked by branded Google Chrome on some machines
+- manual loading via `chrome://extensions/` always works
+- for isolated automated testing, prefer Chromium or Chrome for Testing instead of the normal Google Chrome app
+
 ### Start the daemon
 
 ```bash
@@ -159,6 +177,13 @@ In another terminal, verify the local setup:
 ```bash
 iatlas-browser doctor
 ```
+
+Expected healthy output:
+
+- `daemon reachable: OK`
+- `extension connected: OK`
+
+If `extension connected` is `NO`, MCP browser tools and local `/command` execution will fail until the extension is attached.
 
 ### First commands
 
@@ -197,6 +222,15 @@ Example configuration:
 }
 ```
 
+To verify MCP end to end after setup:
+
+1. start the daemon with `iatlas-browser daemon`
+2. confirm `iatlas-browser doctor` shows `extension connected: OK`
+3. connect your MCP client using the generated config
+4. run `site_list` or `browser_snapshot`
+
+The project has been verified with the official MCP SDK client against the built stdio server.
+
 ## Local API Setup
 
 The daemon is also a local HTTP API.
@@ -215,6 +249,16 @@ That prints ready-made `curl` examples for:
 Generated example file after `iatlas-browser setup`:
 
 - `~/.iatlas-browser/api/examples.sh`
+
+Hosted public API:
+
+- docs page: `https://miaoda.vip/openapi/`
+- docs endpoint: `https://miaoda.vip/v1/docs`
+- registration: `POST https://miaoda.vip/v1/register`
+- usage: `GET https://miaoda.vip/v1/usage`
+- browser open: `POST https://miaoda.vip/v1/open`
+- hosted sites: `GET https://miaoda.vip/v1/sites/hosted`
+- hosted site execution: `POST https://miaoda.vip/v1/sites/run`
 
 ## Command Groups
 
@@ -258,6 +302,13 @@ iatlas-browser site update
 iatlas-browser site search github
 iatlas-browser site run github/issues owner/repo
 ```
+
+Adapter behavior note:
+
+- `site_run` being available does not mean every adapter will succeed on every site
+- some adapters work cleanly in page context, such as `wikipedia/summary` and `duckduckgo/search`
+- some adapters may fail because the target site blocks or alters browser-context fetch behavior
+- hosted adapters on `miaoda.vip` are separately curated for server-safe execution
 
 To create a new adapter:
 
@@ -307,6 +358,49 @@ Chrome Manifest V3 service workers can sleep. The extension includes reconnect a
 iatlas-browser doctor
 ```
 
+### Browser choice for local verification
+
+For manual day-to-day usage, normal Chrome is fine once the unpacked extension is loaded.
+
+For automated local verification from a clean profile:
+
+- prefer Chromium
+- or use Chrome for Testing
+- avoid relying on branded Google Chrome startup flags for unpacked extension injection
+
+This matters because some Chrome builds ignore `--load-extension`, which can make automation look broken even when the daemon, MCP server, and extension code are correct.
+
+## Verification Checklist
+
+Minimal local acceptance test:
+
+```bash
+iatlas-browser doctor
+iatlas-browser open https://example.com
+iatlas-browser tab
+iatlas-browser snapshot -i --tab <tabId>
+iatlas-browser site run wikipedia/summary "Node.js" --json
+iatlas-browser site run duckduckgo/search "mcp browser" --json
+```
+
+Minimal hosted acceptance test:
+
+```bash
+curl -s https://miaoda.vip/v1/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com"}'
+
+curl -s https://miaoda.vip/v1/open \
+  -H "Authorization: Bearer <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com","mode":"metadata"}'
+
+curl -s https://miaoda.vip/v1/sites/run \
+  -H "Authorization: Bearer <API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"github/repo","args":{"repo":"miounet11/lao"}}'
+```
+
 ## Development
 
 From the repository root:
@@ -327,6 +421,7 @@ Key packages:
 Internal engineering notes:
 
 - `docs/iatlas-browser-architecture-and-iteration-guide.md`
+- `docs/runtime-verification-and-release-checklist.md`
 
 ## License
 

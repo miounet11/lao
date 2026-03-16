@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser | 浏览器自动化、MCP 浏览器服务、本地浏览器 API</title>
+  <title>iatlas-browser | 把你登录中的 Chrome 变成 API</title>
   <meta
     name="description"
-    content="iatlas-browser 是面向 AI Agent、终端工作流和自动化工程的浏览器自动化工具。直接连接你正在使用的 Chrome，会话、Cookie、标签页和页面状态都能复用，并可通过 MCP 或本地 API 调用。"
+    content="iatlas-browser 把你正在使用的 Chrome 会话变成 CLI、MCP 服务和本地 HTTP API。适合登录态复杂、页面状态复杂、需要真实浏览器上下文的网站自动化。"
   >
   <meta
     name="keywords"
-    content="浏览器自动化,MCP浏览器,MCP服务,AI Agent 浏览器工具,Chrome 自动化,本地浏览器API,登录态自动化,终端浏览器控制"
+    content="登录态浏览器自动化,浏览器API,MCP浏览器服务,Chrome登录态API,真实浏览器会话自动化,本地浏览器API,AI Agent 浏览器工具"
   >
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://miaoda.vip/zh-cn/">
@@ -20,10 +20,10 @@
   <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
   <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="iatlas-browser | 面向 AI Agent 的真实浏览器自动化">
+  <meta property="og:title" content="iatlas-browser | 把你登录中的 Chrome 变成 API">
   <meta
     property="og:description"
-    content="连接真实 Chrome 会话，把浏览器暴露为终端命令、MCP 服务和本地 HTTP API，适合登录态复杂、页面状态复杂的网站自动化。"
+    content="把真实 Chrome 会话暴露为 CLI、MCP 服务和本地 HTTP API，用于登录态自动化和真实浏览器上下文控制。"
   >
   <meta property="og:url" content="https://miaoda.vip/zh-cn/">
   <meta property="og:site_name" content="iatlas-browser">
@@ -46,28 +46,55 @@
 
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">面向 AI Agent、MCP 客户端与终端工作流的浏览器自动化</p>
-        <h1>把你正在使用的 Chrome 变成一个本地浏览器 API。</h1>
+        <p class="eyebrow">面向 AI Agent、工程师、MCP 客户端的登录态浏览器自动化</p>
+        <h1>把你登录中的 Chrome 直接变成 API。</h1>
         <p class="lede">
-          <strong>iatlas-browser</strong> 不是再起一个全新的无头浏览器，而是直接连接你已经在使用的
-          浏览器上下文。这样你现有的登录态、Cookie、标签页、页面状态和用户环境都可以直接复用。
+          <strong>iatlas-browser</strong> 不从一个全新的无头浏览器开始，而是直接接管你已经在使用的
+          Chrome 会话。真实标签页、真实 Cookie、真实页面状态、真实登录上下文都能直接复用。<strong>miaoda.vip</strong>
+          只承载较小的托管 API 子集，真正依赖浏览器上下文的工作仍然应该走本地运行时。
         </p>
+        <div class="pill-row" aria-label="Key promises">
+          <span>不需要导出 Cookie</span>
+          <span>CLI + MCP + 本地 HTTP 共用一套运行时</span>
+          <span>托管 API 只做远程安全的子集</span>
+        </div>
         <div class="hero-actions">
           <a class="button primary" href="/install.sh">下载安装脚本</a>
-          <a class="button" href="/downloads/iatlas-browser-extension.zip">下载扩展压缩包</a>
+          <a class="button" href="/sites/">查看适配器目录</a>
           <a class="button" href="/openapi/">Open API 文档</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">下载扩展压缩包</a>
           <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
         </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">一键安装</p>
-        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
-        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">复制命令</button>
+        <p class="panel-label">3 分钟完成第一次成功</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i">复制命令</button>
         <ul class="compact-list">
-          <li>安装到 <code>~/.iatlas-browser/src</code></li>
-          <li>自动构建 CLI、Daemon、MCP 入口和扩展</li>
-          <li>生成 MCP 配置示例与 API 示例脚本</li>
+          <li>安装到 <code>~/.iatlas-browser/src</code> 并构建本地运行时</li>
+          <li>自动生成 CLI、Daemon、MCP 入口、扩展包和配置示例</li>
+          <li>无需重建登录环境，直接拿到第一次真实浏览器快照</li>
         </ul>
+        <div class="stat-grid" aria-label="Product summary">
+          <article class="stat-card">
+            <strong>真实会话</strong>
+            <span>直接操作你已经在使用的浏览器上下文、Cookie、标签页和页面状态。</span>
+          </article>
+          <article class="stat-card">
+            <strong>统一接入</strong>
+            <span>终端脚本、MCP 客户端、本地 HTTP 都走同一套执行模型。</span>
+          </article>
+          <article class="stat-card">
+            <strong>边界清晰</strong>
+            <span>浏览器敏感任务留在本地，公开安全的任务再交给托管 API。</span>
+          </article>
+        </div>
       </aside>
     </section>
 

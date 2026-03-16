@@ -58,6 +58,9 @@ function renderTopbar(active) {
     { href: "/openapi/", label: "Open API" },
     { href: "/sites/", label: "Sites" },
     { href: "/learn/", label: "Learn" },
+    { href: "/zh-cn/", label: "中文" },
+    { href: "/ja/", label: "日本語" },
+    { href: "/es/", label: "Español" },
   ];
 
   return `
@@ -132,9 +135,15 @@ function renderArticlePage(post, relatedPosts) {
         <ul class="compact-list">
           ${post.keywords.map((keyword) => `<li>${escapeHtml(keyword)}</li>`).join("")}
         </ul>
+        <p class="panel-label">Product boundary</p>
+        <ul class="compact-list">
+          <li>Use the local runtime when the task depends on login state, tabs, or live page context.</li>
+          <li>Use the hosted API only for public retrieval and hosted read-only adapters.</li>
+        </ul>
         <div class="hero-actions">
           <a class="button primary" href="${post.ctaHref}">${escapeHtml(post.ctaLabel)}</a>
-          <a class="button" href="/learn/">Back to Learn</a>
+          <a class="button" href="/">Local runtime homepage</a>
+          <a class="button ghost" href="/learn/">Back to Learn</a>
         </div>
       </aside>
     </section>
@@ -174,10 +183,11 @@ function renderArticlePage(post, relatedPosts) {
             <div>
               <p class="kicker">Next Action</p>
               <h2>${escapeHtml(post.ctaLabel)}</h2>
-              <p>Move from research to implementation with the relevant iatlas-browser entry point.</p>
+              <p>Move from research to implementation by choosing the correct boundary: local runtime for real-session work, hosted API for public-safe retrieval.</p>
             </div>
             <div class="hero-actions">
               <a class="button primary" href="${post.ctaHref}">${escapeHtml(post.ctaLabel)}</a>
+              <a class="button" href="/">Local runtime homepage</a>
               <a class="button ghost" href="/openapi/">Hosted API docs</a>
             </div>
           </section>
@@ -203,8 +213,8 @@ function renderArticlePage(post, relatedPosts) {
     </section>
 
     <footer class="footer">
-      <p><a href="/learn/">Learn hub</a> · <a href="/feed.xml">RSS feed</a></p>
-      <p class="subtle">SEO cluster: ${escapeHtml(post.cluster)}.</p>
+      <p><a href="/learn/">Learn hub</a> · <a href="/">Homepage</a> · <a href="/feed.xml">RSS feed</a></p>
+      <p class="subtle">SEO cluster: ${escapeHtml(post.cluster)}. Core thesis: use your logged-in Chrome as an API for real-session browser work.</p>
     </footer>
   </main>
 </body>
@@ -227,19 +237,19 @@ function renderLearnIndex(publishedPosts) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser Learn | Browser Automation Guides, MCP Content, and API Use Cases</title>
-  <meta name="description" content="Read iatlas-browser guides about browser automation with login state, MCP browser servers, hosted APIs, local browser APIs, and site adapters.">
-  <meta name="keywords" content="browser automation guides,mcp browser server,local browser api,webpage metadata api,site adapters,authenticated browser automation">
+  <title>iatlas-browser Learn | Guides for Authenticated Browser Automation and Hosted Retrieval</title>
+  <meta name="description" content="Read iatlas-browser guides about authenticated browser automation, login-state browser workflows, MCP browser servers, hosted public retrieval, and local browser APIs.">
+  <meta name="keywords" content="authenticated browser automation,login state browser automation,mcp browser server,local browser api,webpage metadata api,site adapters">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="${siteUrl}/learn/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="iatlas-browser Learn">
-  <meta property="og:description" content="Daily content around browser automation, MCP browser tools, local browser APIs, and hosted adapters.">
+  <meta property="og:title" content="iatlas-browser Learn | Authenticated Browser Automation Guides">
+  <meta property="og:description" content="Guides about the boundary between real-session browser automation and hosted public retrieval.">
   <meta property="og:url" content="${siteUrl}/learn/">
   <meta property="og:site_name" content="iatlas-browser">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="iatlas-browser Learn">
-  <meta name="twitter:description" content="Daily browser automation content for user needs and integration decisions.">
+  <meta name="twitter:title" content="iatlas-browser Learn | Authenticated Browser Automation Guides">
+  <meta name="twitter:description" content="Guides about local real-session browser control, MCP tooling, and hosted public retrieval.">
   <link rel="stylesheet" href="/styles.css">
   <script type="application/ld+json">${JSON.stringify(blogLd)}</script>
 </head>
@@ -249,20 +259,33 @@ function renderLearnIndex(publishedPosts) {
 
     <section class="hero hero-slim">
       <div class="hero-copy">
-        <p class="eyebrow">Learn Hub</p>
-        <h1>Daily SEO content around the problems users actually search for</h1>
+        <p class="eyebrow">Learn hub for real-session browser automation and hosted retrieval</p>
+        <h1>Research the boundary between hosted API work and real browser-session work.</h1>
         <p class="lede">
-          This hub is designed to expand around real browser-automation demand: login-state workflows, MCP browser tools,
-          local browser APIs, public hosted retrieval, and adapter-driven automation. The publishing system is built to
-          release five new pages per day from a scheduled queue.
+          This hub is built around the problems users actually have: browser automation with login state, MCP browser tools,
+          local browser APIs, public hosted retrieval, and adapter-driven workflows. The publishing system ships five new pages
+          per day, but the core thesis stays consistent: use the local runtime when the browser context matters, and use the
+          hosted API when the task is public and remote-safe.
         </p>
+        <div class="pill-row">
+          <span>Authenticated browser automation</span>
+          <span>Hosted public retrieval</span>
+          <span>Local runtime vs hosted API boundary</span>
+        </div>
         <div class="hero-actions">
           <a class="button primary" href="/install.sh">Install local runtime</a>
           <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button" href="/">Homepage</a>
           <a class="button ghost" href="/feed.xml">RSS feed</a>
         </div>
       </div>
       <aside class="hero-panel">
+        <p class="panel-label">What this hub explains</p>
+        <ul class="compact-list">
+          <li>When to keep the work in your own Chrome session</li>
+          <li>When a hosted public endpoint is the right abstraction</li>
+          <li>How MCP, CLI, adapters, and local HTTP fit together</li>
+        </ul>
         <p class="panel-label">Publishing model</p>
         <ul class="compact-list">
           <li>Five scheduled SEO pages per day</li>
@@ -279,7 +302,7 @@ function renderLearnIndex(publishedPosts) {
     <section class="section">
       <div class="section-head">
         <p class="kicker">Featured</p>
-        <h2>The latest content driving long-tail search coverage</h2>
+        <h2>The latest guides users actually need before integrating</h2>
       </div>
       <div class="grid three article-list">
         ${featured.map((post) => `
@@ -296,7 +319,7 @@ function renderLearnIndex(publishedPosts) {
     <section class="section">
       <div class="section-head">
         <p class="kicker">All Guides</p>
-        <h2>Current published articles</h2>
+        <h2>Current published guides</h2>
       </div>
       <div class="grid two article-list">
         ${publishedPosts.map((post) => `
@@ -311,8 +334,8 @@ function renderLearnIndex(publishedPosts) {
     </section>
 
     <footer class="footer">
-      <p><a href="/feed.xml">RSS feed</a> · <a href="/sitemap.xml">Sitemap</a></p>
-      <p class="subtle">SEO focus: browser automation, MCP browser tools, local browser API, hosted adapter API, authenticated browser workflows.</p>
+      <p><a href="/">Homepage</a> · <a href="/feed.xml">RSS feed</a> · <a href="/sitemap.xml">Sitemap</a></p>
+      <p class="subtle">SEO focus: authenticated browser automation, MCP browser tools, local browser API, hosted public retrieval, and hosted adapter boundaries.</p>
     </footer>
   </main>
 </body>

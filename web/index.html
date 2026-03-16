@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser | Local Browser Core + Hosted API Service</title>
+  <title>iatlas-browser | Use Your Logged-In Chrome as an API</title>
   <meta
     name="description"
-    content="iatlas-browser is a local browser core for AI agents and terminal workflows. Control your real Chrome session through a daemon, extension, and MCP, while miaoda.vip provides a separate hosted API subset."
+    content="iatlas-browser turns your real Chrome session into a CLI, MCP server, and local HTTP runtime. Use your current login state for authenticated browser automation, then use miaoda.vip for the smaller hosted API subset."
   >
   <meta
     name="keywords"
-    content="browser automation,mcp browser,mcp server chrome,ai agent browser tool,chrome automation,authenticated browser api,local browser api,hosted api subset,chrome extension automation"
+    content="authenticated browser automation,browser use api,mcp browser server,chrome login state api,ai agent browser tool,real browser session automation,local browser api,chrome extension automation,hosted site adapters"
   >
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://miaoda.vip/">
@@ -20,18 +20,18 @@
   <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
   <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="iatlas-browser | Local Browser Core and Hosted API Subset">
+  <meta property="og:title" content="iatlas-browser | Use Your Logged-In Chrome as an API">
   <meta
     property="og:description"
-    content="Install iatlas-browser for full local browser control with real login state, then use miaoda.vip for the separate hosted API subset."
+    content="Turn your real Chrome session into a CLI, MCP server, and local HTTP runtime for authenticated browser automation."
   >
   <meta property="og:url" content="https://miaoda.vip/">
   <meta property="og:site_name" content="iatlas-browser">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="iatlas-browser | Local Browser Core + Hosted API Service">
+  <meta name="twitter:title" content="iatlas-browser | Use Your Logged-In Chrome as an API">
   <meta
     name="twitter:description"
-    content="Use your real Chrome session as the core engine, and use miaoda.vip for the curated hosted API subset."
+    content="Authenticated browser automation for AI agents and engineers. Keep the real-session work local and use miaoda.vip for the hosted subset."
   >
   <link rel="stylesheet" href="/styles.css">
   <script type="application/ld+json">
@@ -43,9 +43,9 @@
           "name": "iatlas-browser",
           "applicationCategory": "DeveloperApplication",
           "operatingSystem": "macOS, Linux, Windows",
-          "description": "A browser automation tool that connects AI agents and terminal workflows to a real Chrome session through a local daemon, browser extension, MCP server, and local browser API.",
+          "description": "A browser automation tool that turns a real Chrome session into a CLI, MCP server, and local HTTP API for authenticated browser automation.",
           "downloadUrl": "https://miaoda.vip/install.sh",
-          "softwareVersion": "0.5.0",
+          "softwareVersion": "0.5.1",
           "offers": {
             "@type": "Offer",
             "price": "0",
@@ -60,7 +60,7 @@
               "name": "What is iatlas-browser?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "iatlas-browser is a local browser automation layer that lets terminal tools and AI agents control your real Chrome session instead of launching a separate headless browser."
+                "text": "iatlas-browser turns your real Chrome session into a CLI, MCP server, and local HTTP runtime instead of forcing you to start from a separate clean browser."
               }
             },
             {
@@ -102,67 +102,118 @@
 
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Local browser core for AI agents, MCP clients, and terminal workflows</p>
-        <h1>Turn your real Chrome session into the core engine, then add a hosted API layer only where it makes sense.</h1>
+        <p class="eyebrow">Authenticated browser automation for AI agents, engineers, and MCP clients</p>
+        <h1>Use your logged-in Chrome as an API.</h1>
         <p class="lede">
-          <strong>iatlas-browser</strong> connects terminal tools and AI agents to the browser session you
-          already use. Instead of rebuilding authentication in headless Chrome, it works with your live tabs,
-          cookies, and page state through a local daemon and extension. <strong>miaoda.vip</strong> is a separate
-          hosted service layer for public, curated, server-safe endpoints. It does not replace the local core.
+          <strong>iatlas-browser</strong> turns the browser session you already trust into a CLI, an MCP server,
+          and a local HTTP runtime. It is built for the hard part most browser tools avoid: authenticated websites,
+          live tabs, real cookies, and dynamic page state. <strong>miaoda.vip</strong> remains the narrower hosted
+          API layer for public, server-safe work only.
         </p>
         <div class="pill-row" aria-label="Key promises">
-          <span>Reuse the browser you already trust</span>
-          <span>Expose it through CLI, MCP, and local HTTP</span>
-          <span>Use hosted API only for public server-safe tasks</span>
+          <span>No cookie export required</span>
+          <span>CLI + MCP + local HTTP on one runtime</span>
+          <span>Hosted API only for server-safe tasks</span>
         </div>
         <div class="hero-actions">
           <a class="button primary" href="/install.sh">Download install.sh</a>
-          <a class="button" href="/downloads/iatlas-browser-extension.zip">Download extension zip</a>
           <a class="button" href="/sites/">Browse site adapters</a>
           <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">Download extension zip</a>
           <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
         </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">One-line install</p>
-        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
-        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copy command</button>
+        <p class="panel-label">3-minute first win</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i">Copy commands</button>
         <ul class="compact-list">
-          <li>Installs into <code>~/.iatlas-browser/src</code></li>
-          <li>Builds the CLI, daemon, MCP entrypoint, and extension bundle</li>
-          <li>Creates local MCP snippets and API example files</li>
+          <li>Installs into <code>~/.iatlas-browser/src</code> and builds the local runtime</li>
+          <li>Creates the CLI, daemon, MCP entrypoint, extension bundle, and setup artifacts</li>
+          <li>Gets you to the first authenticated browser snapshot without rebuilding login state</li>
         </ul>
         <div class="stat-grid" aria-label="Product summary">
           <article class="stat-card">
-            <strong>Local-first</strong>
-            <span>Your own Chrome session remains the center of execution.</span>
+            <strong>Real-session</strong>
+            <span>Operate on the same browser context, cookies, tabs, and page state you already use.</span>
           </article>
           <article class="stat-card">
-            <strong>Agent-ready</strong>
-            <span>Use the same runtime from terminal scripts, MCP clients, and local services.</span>
+            <strong>Unified runtime</strong>
+            <span>Use one local engine from terminal scripts, MCP clients, and local HTTP integrations.</span>
           </article>
           <article class="stat-card">
-            <strong>Hosted-safe</strong>
-            <span>miaoda.vip only handles public read-only requests that belong on a server.</span>
+            <strong>Clear boundary</strong>
+            <span>Keep browser-sensitive work local and use the hosted layer only for public-safe requests.</span>
           </article>
         </div>
       </aside>
     </section>
 
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">Why it matters</p>
+        <h2>Most automation starts from a clean browser. iatlas-browser starts from yours.</h2>
+        <p class="subtle">
+          That difference is the whole product. It changes how fast users reach a first win on authenticated websites,
+          internal dashboards, social platforms, and browser-native agent workflows.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Fresh headless browser</th>
+              <th>iatlas-browser</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Use a site you are already logged into</td>
+              <td>Recreate auth, cookies, and browser state in a separate environment</td>
+              <td>Reuse the current session directly through your existing Chrome</td>
+            </tr>
+            <tr>
+              <td>Debug a broken flow on a real page</td>
+              <td>Switch between your real browser and an isolated automation browser</td>
+              <td>Inspect and act inside the same browser context you already trust</td>
+            </tr>
+            <tr>
+              <td>Give an MCP agent browser access</td>
+              <td>Expose a separate sandbox that may not match the user session</td>
+              <td>Expose the live local browser through one runtime shared by CLI, MCP, and HTTP</td>
+            </tr>
+            <tr>
+              <td>Run server-safe public fetches</td>
+              <td>Often overuse browser automation for work that should be remote</td>
+              <td>Route those jobs to the smaller hosted API subset on <code>miaoda.vip</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="section">
       <div class="section-head">
         <p class="kicker">Product boundary</p>
-        <h2>One local engine, one narrower hosted layer</h2>
+        <h2>Start with the local runtime. Use the hosted layer only when the task is server-safe.</h2>
       </div>
       <div class="grid two mode-grid">
         <article class="card accent mode-card">
           <h2>Local core mode</h2>
           <p>
-            This is the real product center: your own browser, your own login state, your own tabs, and the full
-            CLI + MCP + `site` adapter model. If you want the full `lao` + `lao-s` experience, this is the mode that matters.
+            This is the real product center: your browser, your login state, your tabs, your page context, and the full
+            CLI + MCP + <code>site</code> adapter model. If the task depends on authenticated state or live browser context,
+            this is the mode that matters.
           </p>
           <ul class="compact-list">
-            <li>Works with authenticated pages, live tabs, and session state.</li>
+            <li>Best for authenticated pages, live tabs, and session-sensitive actions.</li>
             <li>Runs through the local daemon, browser extension, CLI, and MCP entrypoint.</li>
             <li>Covers the commands and adapters that need a real user browser context.</li>
           </ul>
@@ -171,7 +222,7 @@
           <h2>Hosted subset mode</h2>
           <p>
             <code>miaoda.vip</code> adds a public API service for browser-open requests and a curated subset of hosted
-            adapters. It is intentionally narrower than the local runtime and should be understood as an extension layer,
+            adapters. It is intentionally smaller than the local runtime and should be understood as an extension layer,
             not as a replacement for the core engine.
           </p>
           <ul class="compact-list">
@@ -227,22 +278,22 @@
     </section>
 
     <section class="grid three">
-      <article class="card accent">
-        <h2>Why people search for this</h2>
+        <article class="card accent">
+        <h2>Why teams end up needing this</h2>
         <p>
-          Many teams need browser automation that keeps the <strong>real login state</strong>. That usually means
-          dashboards, internal tools, social platforms, or web apps where cookies and dynamic page state matter.
+          Many teams do not actually need "a browser." They need the <strong>current logged-in browser session</strong>
+          they already use for dashboards, internal tools, social platforms, and web apps with dynamic page state.
         </p>
       </article>
       <article class="card">
-        <h2>What problem it solves</h2>
+        <h2>What changes when you use it</h2>
         <p>
           Standard automation tools often start from a clean browser. iatlas-browser starts from the browser you
           already trust, then exposes it as CLI commands, an MCP server, and a local HTTP interface.
         </p>
       </article>
       <article class="card">
-        <h2>Who it is for</h2>
+        <h2>Who gets value fastest</h2>
         <p>
           AI agent builders, automation engineers, browser tool developers, and anyone who needs a practical
           way to interact with authenticated websites from scripts or agent runtimes.

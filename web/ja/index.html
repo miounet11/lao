@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser | ブラウザ自動化、MCP ブラウザサーバー、ローカル Browser API</title>
+  <title>iatlas-browser | ログイン済みの Chrome を API にする</title>
   <meta
     name="description"
-    content="iatlas-browser は、AI エージェントやターミナル自動化から実際の Chrome セッションを操作するためのブラウザ自動化ツールです。既存のログイン状態をそのまま使い、MCP とローカル API にも対応します。"
+    content="iatlas-browser は実際に使っている Chrome セッションを CLI、MCP サーバー、ローカル HTTP API に変えます。ログイン状態やページ文脈が重要なブラウザ自動化向けです。"
   >
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://miaoda.vip/ja/">
@@ -16,10 +16,10 @@
   <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
   <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="iatlas-browser | 実際の Chrome を使うブラウザ自動化">
+  <meta property="og:title" content="iatlas-browser | ログイン済みの Chrome を API にする">
   <meta
     property="og:description"
-    content="AI エージェント、MCP クライアント、ターミナルワークフローから、ログイン済みの Chrome セッションをそのまま操作できます。"
+    content="実際の Chrome セッションを CLI、MCP サーバー、ローカル HTTP API として使い、認証済みブラウザ自動化を行えます。"
   >
   <meta property="og:url" content="https://miaoda.vip/ja/">
   <meta property="og:site_name" content="iatlas-browser">
@@ -42,30 +42,101 @@
 
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">AI エージェント、MCP、ターミナル向けのブラウザ自動化</p>
-        <h1>実際に使っている Chrome をローカル Browser API にする。</h1>
+        <p class="eyebrow">AI エージェント、エンジニア、MCP クライアント向けの認証済みブラウザ自動化</p>
+        <h1>ログイン済みの Chrome をそのまま API にする。</h1>
         <p class="lede">
-          <strong>iatlas-browser</strong> は新しいヘッドレスブラウザを起動するのではなく、
-          すでに使っている Chrome セッションをそのまま扱います。ログイン状態、Cookie、タブ、
-          ページ状態を維持したまま自動化できます。
+          <strong>iatlas-browser</strong> は新しいヘッドレスブラウザから始めません。いま使っている
+          Chrome セッションをそのまま使うので、ログイン状態、Cookie、タブ、ページ状態を保ったまま
+          自動化できます。<strong>miaoda.vip</strong> は公開かつリモート安全な処理だけを担う、
+          より小さなホスト API サブセットです。
         </p>
+        <div class="pill-row" aria-label="Key promises">
+          <span>Cookie の書き出し不要</span>
+          <span>CLI + MCP + ローカル HTTP を 1 つの実行系で共有</span>
+          <span>ホスト API は安全なサブセットだけ</span>
+        </div>
         <div class="hero-actions">
           <a class="button primary" href="/install.sh">install.sh を取得</a>
-          <a class="button" href="/downloads/iatlas-browser-extension.zip">拡張機能 zip</a>
+          <a class="button" href="/sites/">アダプター一覧</a>
           <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">拡張機能 zip</a>
           <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
         </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">クイックインストール</p>
-        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
-        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">コピー</button>
+        <p class="panel-label">3 分で最初の成功</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i">コピー</button>
         <ul class="compact-list">
-          <li>ローカルにインストール</li>
-          <li>CLI と拡張機能をビルド</li>
-          <li>MCP と API の設定ファイルを生成</li>
+          <li><code>~/.iatlas-browser/src</code> にインストールしてローカル実行系を構築</li>
+          <li>CLI、daemon、MCP、拡張機能、設定例をまとめて用意</li>
+          <li>認証状態を作り直さず、最初の実ブラウザ snapshot まで進める</li>
         </ul>
+        <div class="stat-grid" aria-label="Product summary">
+          <article class="stat-card">
+            <strong>実セッション</strong>
+            <span>実際に使っているブラウザの Cookie、タブ、ページ文脈をそのまま扱います。</span>
+          </article>
+          <article class="stat-card">
+            <strong>統一ランタイム</strong>
+            <span>CLI、MCP、ローカル HTTP が同じ実行モデルを共有します。</span>
+          </article>
+          <article class="stat-card">
+            <strong>境界が明確</strong>
+            <span>ブラウザ依存の処理はローカル、公開安全な処理だけをホスト側に送ります。</span>
+          </article>
+        </div>
       </aside>
+    </section>
+
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">違い</p>
+        <h2>多くの自動化はクリーンなブラウザから始まる。iatlas-browser はあなたのブラウザから始まる。</h2>
+        <p class="subtle">
+          この違いが製品の中心です。認証済みサイト、社内ダッシュボード、SNS、実ブラウザ前提のエージェント処理で
+          最初の成功までの距離が大きく変わります。
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>作業</th>
+              <th>通常のヘッドレス</th>
+              <th>iatlas-browser</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>すでにログイン済みのサイトを使う</td>
+              <td>別環境で認証や状態を再構築する必要がある</td>
+              <td>いま使っている Chrome のセッションをそのまま使う</td>
+            </tr>
+            <tr>
+              <td>実ページ上で壊れたフローを調べる</td>
+              <td>実ブラウザと自動化ブラウザを行き来する</td>
+              <td>同じブラウザ文脈の中で確認と操作を行える</td>
+            </tr>
+            <tr>
+              <td>MCP エージェントにブラウザを渡す</td>
+              <td>別のサンドボックスを露出しがち</td>
+              <td>CLI、MCP、HTTP を共有するローカル実行系を渡せる</td>
+            </tr>
+            <tr>
+              <td>公開 URL の遠隔取得を行う</td>
+              <td>不要にブラウザ自動化へ寄りやすい</td>
+              <td><code>miaoda.vip</code> の小さなホスト API サブセットへ分離できる</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section class="section">

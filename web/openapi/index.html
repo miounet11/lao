@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser Open API | Browser Open Endpoint, Hosted Site API, API Key</title>
+  <title>iatlas-browser Open API | Hosted Public Retrieval and Hosted Site API</title>
   <meta
     name="description"
-    content="Get an API key for the iatlas-browser Open API. Use email signup, 1000 requests per day, and public endpoints for /v1/register, /v1/usage, /v1/open, and hosted site execution on miaoda.vip."
+    content="Use the hosted iatlas-browser API on miaoda.vip for public retrieval, metadata extraction, and hosted read-only site adapters. Keep authenticated browser control in the local runtime."
   >
   <meta
     name="keywords"
-    content="browser open api,browser automation api,hosted site api,chrome open api,mcp api,browser metadata api,open webpage api,url open api"
+    content="hosted browser api,webpage metadata api,public url retrieval api,hosted site api,browser open api,read only site adapters,url open api"
   >
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://miaoda.vip/openapi/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="iatlas-browser Open API | API Key, Quota, /v1/open, and Hosted Sites">
-  <meta property="og:description" content="Create an API key by email and call the hosted browser-open and hosted-site interfaces on miaoda.vip.">
+  <meta property="og:title" content="iatlas-browser Open API | Hosted Public Retrieval, Not the Full Browser Runtime">
+  <meta property="og:description" content="Create an API key by email and call the hosted public-retrieval and hosted-site interfaces on miaoda.vip.">
   <meta property="og:url" content="https://miaoda.vip/openapi/">
   <meta property="og:site_name" content="iatlas-browser">
   <link rel="stylesheet" href="/styles.css">
@@ -38,17 +38,35 @@
 
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Hosted browser open api + hosted site api</p>
-        <h1>Use the hosted subset on <code>miaoda.vip</code> without confusing it with the local core engine.</h1>
+        <p class="eyebrow">Hosted API for public-safe retrieval and hosted read-only site adapters</p>
+        <h1>Use <code>miaoda.vip</code> for public retrieval. Use the local runtime for real browser control.</h1>
         <p class="lede">
-          The hosted interface is designed for simple programmatic use. Register with email, receive an API key,
-          then call the public endpoints to open public URLs, inspect the adapter catalog, and execute the hosted
-          subset of site adapters directly on the server. The full authenticated browser-control model still belongs
-          to the local <code>iatlas-browser</code> runtime with extension, daemon, and MCP.
+          The hosted interface is designed for the narrow remote-safe part of the product: public URL retrieval,
+          metadata extraction, and a curated subset of read-only hosted adapters. Register by email, get an API key,
+          and call the server directly. If the task depends on your tabs, login state, cookies, or live page context,
+          that still belongs to the local <code>iatlas-browser</code> runtime with extension, daemon, and MCP.
         </p>
+        <div class="pill-row" aria-label="Hosted API promises">
+          <span>Public URLs only</span>
+          <span>1000 daily requests per email-bound key</span>
+          <span>Hosted subset, not full browser automation</span>
+        </div>
+        <div class="hero-actions">
+          <a class="button primary" href="/v1/docs">Open JSON docs</a>
+          <a class="button" href="/">Local runtime homepage</a>
+          <a class="button" href="/sites/">Sites catalog</a>
+        </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">Get API key</p>
+        <p class="panel-label">60-second quick start</p>
+        <pre><code>curl -s https://miaoda.vip/v1/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"you@example.com"}'
+
+curl -s https://miaoda.vip/v1/open \
+  -H "Authorization: Bearer $API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com","mode":"metadata"}'</code></pre>
         <form
           class="signup-form"
           data-loading-label="Creating key..."
@@ -60,6 +78,11 @@
           <button type="submit">Create API key</button>
         </form>
         <div class="signup-result" data-state="idle"></div>
+        <ul class="compact-list">
+          <li>Best for public metadata, text, HTML, and hosted read-only adapters</li>
+          <li>Not meant to mirror your personal Chrome session</li>
+          <li>Switch to the local runtime when browser state matters</li>
+        </ul>
       </aside>
     </section>
 
@@ -133,6 +156,46 @@
           </p>
           <p><a href="/sites/">Browse the full sites page</a></p>
         </article>
+      </div>
+    </section>
+
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">Decision guide</p>
+        <h2>Choose the hosted API only when the job is remote-safe</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Hosted Open API</th>
+              <th>Local iatlas-browser runtime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fetch metadata or text from a public URL</td>
+              <td>Use <code>/v1/open</code></td>
+              <td>Not required</td>
+            </tr>
+            <tr>
+              <td>Run a public read-only hosted adapter</td>
+              <td>Use <code>/v1/sites/run</code></td>
+              <td>Optional only if you want local consistency</td>
+            </tr>
+            <tr>
+              <td>Work with your own login state or tabs</td>
+              <td>Wrong boundary</td>
+              <td>Use CLI, daemon, or MCP against your own Chrome</td>
+            </tr>
+            <tr>
+              <td>Inspect a live authenticated page</td>
+              <td>Wrong boundary</td>
+              <td>Use local runtime and browser snapshot/network tools</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
 

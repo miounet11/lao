@@ -2,7 +2,7 @@
 
 # iatlas-browser
 
-**A local browser bridge for terminal workflows and AI agents**
+**Use your logged-in Chrome as an API**
 
 [![npm](https://img.shields.io/npm/v/iatlas-browser?color=CB3837&logo=npm&logoColor=white)](https://www.npmjs.com/package/iatlas-browser)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org)
@@ -14,9 +14,17 @@
 
 ## Overview
 
-`iatlas-browser` connects your terminal tools and AI agents to the Chrome session you are already using.
+`iatlas-browser` turns the Chrome session you already use into a CLI, an MCP server, and a local HTTP runtime.
 
-Instead of launching a separate headless browser and recreating authentication, it talks to your real browser through a local daemon and a Chrome extension. That means it can work with the cookies, sessions, tabs, and page state you already have.
+Instead of launching a fresh headless browser and rebuilding authentication, it works with your real tabs, real cookies, real page state, and real login context through a local daemon and a Chrome extension.
+
+What that means in practice:
+
+- use your current browser login state instead of replaying auth
+- drive authenticated pages from the terminal, MCP clients, or local HTTP calls
+- inspect network traffic and browser behavior from the same session you actually use
+- package repeatable site workflows into reusable `site` adapters
+- keep the hard browser-sensitive work local, while using `miaoda.vip` only for the narrower hosted API subset
 
 Typical use cases:
 
@@ -25,6 +33,31 @@ Typical use cases:
 - inspect network calls from real browser traffic
 - build site-specific adapters on top of your live session
 - expose browser control through MCP for agent runtimes
+
+## First Success In 3 Minutes
+
+Install the local runtime:
+
+```bash
+curl -fsSL https://miaoda.vip/install.sh | bash
+```
+
+Start the daemon and verify the browser path:
+
+```bash
+iatlas-browser daemon
+iatlas-browser doctor
+```
+
+Run the first commands:
+
+```bash
+iatlas-browser open https://example.com
+iatlas-browser snapshot -i
+iatlas-browser get title
+```
+
+If the task depends on your own login state, tabs, or dynamic browser context, start with the local runtime. If the task is a public, server-safe fetch, use the hosted API on `https://miaoda.vip`.
 
 ## Verified Status
 
@@ -37,6 +70,20 @@ Verified on March 15, 2026:
 - local `site_run` works for adapters that are compatible with page-context execution
 
 This was verified with real end-to-end calls, not just static code review.
+
+## Why This Is Different
+
+Most browser automation stacks start from a clean browser.
+
+`iatlas-browser` starts from the browser you already trust.
+
+That difference matters most when the hard part is not HTML parsing but session continuity:
+
+- company dashboards behind login
+- admin panels and back offices
+- social platforms with dynamic clients
+- websites where the current page state matters as much as the raw DOM
+- agent workflows that need to act inside the same browser context as the user
 
 ## Core Capabilities
 

@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser Sites Catalog | lao-s Adapters, Hosted API Extensions, MCP Requests</title>
+  <title>iatlas-browser Sites Catalog | lao-s Adapters for Local Runtime and Hosted API</title>
   <meta
     name="description"
-    content="Browse every site adapter from miounet11/lao-s plus hosted API extensions on miaoda.vip. Search commands, inspect arguments, copy CLI examples, generate MCP requests, and call live hosted endpoints."
+    content="Browse the iatlas-browser site adapter catalog from lao-s. Search local-runtime adapters, hosted read-only adapters, CLI examples, MCP payloads, and hosted API execution paths."
   >
   <meta
     name="keywords"
-    content="site adapters,lao-s,iatlas-browser site commands,mcp site tools,hosted api extensions,browser adapter catalog,github repo adapter,twitter search adapter"
+    content="site adapters,lao-s,iatlas-browser site commands,mcp site tools,hosted site adapters,local browser adapters,browser adapter catalog"
   >
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://miaoda.vip/sites/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="iatlas-browser Sites Catalog | lao-s Adapters and Hosted Extensions">
-  <meta property="og:description" content="Browse lao-s adapters and hosted API extensions with CLI, MCP, and catalog API examples.">
+  <meta property="og:title" content="iatlas-browser Sites Catalog | Local Runtime Adapters and Hosted Subset">
+  <meta property="og:description" content="Browse lao-s adapters, inspect which ones are local-only or hosted, and copy CLI, MCP, and API examples.">
   <meta property="og:url" content="https://miaoda.vip/sites/">
   <meta property="og:site_name" content="iatlas-browser">
   <link rel="stylesheet" href="/styles.css">
@@ -31,27 +31,35 @@
         <a class="is-active" href="/sites/">Sites</a>
         <a href="/learn/">Learn</a>
         <a href="/zh-cn/">中文</a>
+        <a href="/ja/">日本語</a>
+        <a href="/es/">Español</a>
       </nav>
     </header>
 
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">adapter catalog + hosted extensions</p>
-        <h1>Browse every callable site interface from <code>miounet11/lao-s</code> and the hosted extension layer.</h1>
+        <p class="eyebrow">Adapter catalog for the local runtime plus the hosted subset</p>
+        <h1>Browse every callable site interface, then choose local runtime or hosted API correctly.</h1>
         <p class="lede">
           This page exposes the full adapter catalog used by <code>iatlas-browser site</code>. You can search by platform,
           inspect arguments, see whether a command is hosted or local-only, copy the exact CLI command, copy an MCP request
-          payload, and call the hosted subset directly through the API. Additional hosted-only extensions are included for
-          high-value public sources that are safe to run on <code>miaoda.vip</code>.
+          payload, and call the hosted subset directly through the API. The key rule is simple: if an adapter depends on
+          your real browser session, use the local runtime. If it is public and remote-safe, use the hosted subset.
         </p>
+        <div class="pill-row" aria-label="Adapter model">
+          <span>One adapter catalog</span>
+          <span>Local runtime is primary</span>
+          <span>Hosted subset is curated and smaller</span>
+        </div>
         <div class="hero-actions">
-          <a class="button primary" href="https://github.com/miounet11/lao-s">View lao-s</a>
-          <a class="button" href="/v1/catalog/sites">Catalog API</a>
+          <a class="button primary" href="/v1/catalog/sites">Catalog API</a>
           <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button" href="/">Local runtime homepage</a>
+          <a class="button ghost" href="https://github.com/miounet11/lao-s">View lao-s</a>
         </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">How to use these adapters</p>
+        <p class="panel-label">Adapter routing</p>
         <ul class="compact-list">
           <li><strong>CLI:</strong> <code>iatlas-browser site &lt;name&gt; ...</code></li>
           <li><strong>MCP:</strong> use <code>site_list</code>, <code>site_search</code>, and <code>site_run</code></li>
@@ -63,6 +71,46 @@
           <code>iatlas-browser</code> runtime and browser session. That local path remains the primary adapter model.
         </p>
       </aside>
+    </section>
+
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">Execution boundary</p>
+        <h2>Not every adapter belongs on the server</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Adapter type</th>
+              <th>Best path</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Public read-only source</td>
+              <td>Hosted API</td>
+              <td>Server-safe, repeatable, and no personal session required</td>
+            </tr>
+            <tr>
+              <td>Authenticated personal workflow</td>
+              <td>Local runtime</td>
+              <td>Needs your own cookies, tabs, login state, or live page context</td>
+            </tr>
+            <tr>
+              <td>Browser-native interaction flow</td>
+              <td>Local runtime</td>
+              <td>Depends on real user session continuity and interactive state</td>
+            </tr>
+            <tr>
+              <td>Catalog discovery and planning</td>
+              <td>Either</td>
+              <td>Use this page or the catalog API to decide the correct execution boundary</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section class="section">

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>iatlas-browser | Automatización de navegador, servidor MCP y API local</title>
+  <title>iatlas-browser | Convierte tu Chrome con sesión iniciada en una API</title>
   <meta
     name="description"
-    content="iatlas-browser conecta agentes de IA y flujos de trabajo de terminal con tu sesión real de Chrome. Reutiliza el estado autenticado del navegador y expone control por CLI, MCP y API local."
+    content="iatlas-browser convierte tu sesión real de Chrome en CLI, servidor MCP y API HTTP local. Está pensado para automatización con login real, pestañas reales y contexto real del navegador."
   >
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="https://miaoda.vip/es/">
@@ -16,10 +16,10 @@
   <link rel="alternate" hreflang="es" href="https://miaoda.vip/es/">
   <link rel="alternate" hreflang="x-default" href="https://miaoda.vip/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="iatlas-browser | Automatización sobre tu sesión real de Chrome">
+  <meta property="og:title" content="iatlas-browser | Convierte tu Chrome con sesión iniciada en una API">
   <meta
     property="og:description"
-    content="Usa tu navegador real como una capa local para agentes, automatización de terminal, MCP y una API HTTP local."
+    content="Usa tu sesión real de Chrome como CLI, servidor MCP y API HTTP local para automatización autenticada."
   >
   <meta property="og:url" content="https://miaoda.vip/es/">
   <meta property="og:site_name" content="iatlas-browser">
@@ -42,24 +42,100 @@
 
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Automatización de navegador para agentes de IA, clientes MCP y terminal</p>
-        <h1>Convierte tu sesión real de Chrome en una API local de navegador.</h1>
+        <p class="eyebrow">Automatización autenticada para agentes de IA, clientes MCP e ingeniería</p>
+        <h1>Convierte tu Chrome con sesión iniciada en una API.</h1>
         <p class="lede">
-          <strong>iatlas-browser</strong> evita el problema típico de recrear autenticación en un navegador nuevo.
-          En su lugar, conecta tus herramientas con el navegador que ya estás usando.
+          <strong>iatlas-browser</strong> no empieza desde un navegador limpio. Empieza desde el Chrome que ya estás
+          usando, con tus pestañas, tus cookies, tu login y tu estado real de página. <strong>miaoda.vip</strong>
+          queda como un subconjunto alojado más pequeño para peticiones públicas y seguras en remoto.
         </p>
+        <div class="pill-row" aria-label="Key promises">
+          <span>Sin exportar cookies</span>
+          <span>CLI + MCP + HTTP local sobre un mismo runtime</span>
+          <span>API alojada solo para tareas seguras en remoto</span>
+        </div>
         <div class="hero-actions">
           <a class="button primary" href="/install.sh">Descargar install.sh</a>
-          <a class="button" href="/downloads/iatlas-browser-extension.zip">Descargar extensión</a>
+          <a class="button" href="/sites/">Ver adaptadores</a>
           <a class="button" href="/openapi/">Open API docs</a>
+          <a class="button" href="/downloads/iatlas-browser-extension.zip">Descargar extensión</a>
           <a class="button ghost" href="https://github.com/miounet11/lao">GitHub</a>
         </div>
       </div>
       <aside class="hero-panel">
-        <p class="panel-label">Instalación rápida</p>
-        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash</code></pre>
-        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash">Copiar</button>
+        <p class="panel-label">Primer éxito en 3 minutos</p>
+        <pre><code>curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i</code></pre>
+        <button class="copy" data-copy="curl -fsSL https://miaoda.vip/install.sh | bash
+iatlas-browser daemon
+iatlas-browser doctor
+iatlas-browser snapshot -i">Copiar</button>
+        <ul class="compact-list">
+          <li>Instala en <code>~/.iatlas-browser/src</code> y monta el runtime local</li>
+          <li>Prepara CLI, daemon, MCP, extensión y ejemplos de configuración</li>
+          <li>Te lleva al primer snapshot real sin reconstruir la autenticación</li>
+        </ul>
+        <div class="stat-grid" aria-label="Product summary">
+          <article class="stat-card">
+            <strong>Sesión real</strong>
+            <span>Opera sobre el mismo contexto del navegador, las mismas cookies y las mismas pestañas que ya usas.</span>
+          </article>
+          <article class="stat-card">
+            <strong>Runtime unificado</strong>
+            <span>Scripts de terminal, clientes MCP y llamadas HTTP locales comparten el mismo motor.</span>
+          </article>
+          <article class="stat-card">
+            <strong>Límite claro</strong>
+            <span>Lo sensible al navegador se queda en local; lo público y seguro va al subconjunto alojado.</span>
+          </article>
+        </div>
       </aside>
+    </section>
+
+    <section class="section compare">
+      <div class="section-head">
+        <p class="kicker">La diferencia</p>
+        <h2>La mayoría de la automatización empieza desde un navegador limpio. iatlas-browser empieza desde el tuyo.</h2>
+        <p class="subtle">
+          Esa diferencia es el producto. Cambia cuánto tardas en conseguir el primer resultado útil cuando el trabajo
+          depende de login real, dashboards internos, plataformas sociales o contexto vivo del navegador.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tarea</th>
+              <th>Navegador headless limpio</th>
+              <th>iatlas-browser</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Usar un sitio donde ya has iniciado sesión</td>
+              <td>Hay que reconstruir auth, cookies y estado en otro entorno</td>
+              <td>Reutiliza directamente tu sesión actual de Chrome</td>
+            </tr>
+            <tr>
+              <td>Depurar un flujo roto en una página real</td>
+              <td>Sueles alternar entre tu navegador real y otro de automatización</td>
+              <td>Inspeccionas y actúas dentro del mismo contexto que ya usas</td>
+            </tr>
+            <tr>
+              <td>Dar acceso de navegador a un agente MCP</td>
+              <td>Normalmente expones otro sandbox distinto a la sesión del usuario</td>
+              <td>Expones un runtime local único compartido por CLI, MCP y HTTP</td>
+            </tr>
+            <tr>
+              <td>Hacer fetch remoto de URLs públicas</td>
+              <td>Se abusa del navegador para tareas que deberían ser remotas</td>
+              <td>Se deriva al subconjunto alojado de <code>miaoda.vip</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section class="section">

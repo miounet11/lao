@@ -1,5 +1,5 @@
 const DEFAULT_HEADERS = {
-  "user-agent": "iatlas-browser-hosted-sites/0.5.0",
+  "user-agent": "iatlas-browser-hosted-sites/0.5.1",
   "accept-language": "en-US,en;q=0.9",
 };
 

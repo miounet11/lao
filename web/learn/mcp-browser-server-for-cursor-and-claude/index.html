@@ -25,7 +25,7 @@
     <header class="topbar">
       <a class="brand" href="/">iatlas-browser</a>
       <nav class="lang-switch" aria-label="Primary links">
-        <a href="/">Home</a><a href="/openapi/">Open API</a><a href="/sites/">Sites</a><a class="is-active" href="/learn/">Learn</a>
+        <a href="/">Home</a><a href="/openapi/">Open API</a><a href="/sites/">Sites</a><a class="is-active" href="/learn/">Learn</a><a href="/zh-cn/">中文</a><a href="/ja/">日本語</a><a href="/es/">Español</a>
       </nav>
     </header>
   
@@ -46,9 +46,15 @@
         <ul class="compact-list">
           <li>mcp browser server</li><li>cursor browser mcp</li><li>claude desktop browser mcp</li><li>browser tools for AI agents</li>
         </ul>
+        <p class="panel-label">Product boundary</p>
+        <ul class="compact-list">
+          <li>Use the local runtime when the task depends on login state, tabs, or live page context.</li>
+          <li>Use the hosted API only for public retrieval and hosted read-only adapters.</li>
+        </ul>
         <div class="hero-actions">
           <a class="button primary" href="/mcp/cursor.json">Open MCP docs</a>
-          <a class="button" href="/learn/">Back to Learn</a>
+          <a class="button" href="/">Local runtime homepage</a>
+          <a class="button ghost" href="/learn/">Back to Learn</a>
         </div>
       </aside>
     </section>
@@ -88,10 +94,11 @@
             <div>
               <p class="kicker">Next Action</p>
               <h2>Open MCP docs</h2>
-              <p>Move from research to implementation with the relevant iatlas-browser entry point.</p>
+              <p>Move from research to implementation by choosing the correct boundary: local runtime for real-session work, hosted API for public-safe retrieval.</p>
             </div>
             <div class="hero-actions">
               <a class="button primary" href="/mcp/cursor.json">Open MCP docs</a>
+              <a class="button" href="/">Local runtime homepage</a>
               <a class="button ghost" href="/openapi/">Hosted API docs</a>
             </div>
           </section>
@@ -131,8 +138,8 @@
     </section>
 
     <footer class="footer">
-      <p><a href="/learn/">Learn hub</a> · <a href="/feed.xml">RSS feed</a></p>
-      <p class="subtle">SEO cluster: mcp browser server.</p>
+      <p><a href="/learn/">Learn hub</a> · <a href="/">Homepage</a> · <a href="/feed.xml">RSS feed</a></p>
+      <p class="subtle">SEO cluster: mcp browser server. Core thesis: use your logged-in Chrome as an API for real-session browser work.</p>
     </footer>
   </main>
 </body>

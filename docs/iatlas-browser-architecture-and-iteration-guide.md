@@ -534,7 +534,7 @@ Rule:
 The current repository has already been upgraded beyond `73c4891` in the following ways:
 
 - rebranded to `iatlas-browser`
-- version unified to `0.5.0`
+- version unified to `0.5.1`
 - CLI parser bug fixed
 - daemon default host normalized to `127.0.0.1`
 - `doctor` command added

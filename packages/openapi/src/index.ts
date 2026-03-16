@@ -413,7 +413,7 @@ async function fetchOpenResult(url: string, mode: OpenMode, timeoutMs: number) {
       redirect: "follow",
       signal: controller.signal,
       headers: {
-        "user-agent": "iatlas-browser-openapi/0.5.0",
+        "user-agent": "iatlas-browser-openapi/0.5.1",
         "accept-language": "en-US,en;q=0.9",
       },
     });
@@ -651,7 +651,7 @@ function handleDocs(response: ServerResponse): void {
   sendJson(response, 200, {
     ok: true,
     service: "iatlas-browser-openapi",
-    version: "0.5.0",
+    version: "0.5.1",
     limitPerDay: DAILY_LIMIT,
     auth: {
       header: "Authorization: Bearer <apiKey>",

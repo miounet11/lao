@@ -179,6 +179,7 @@ Start Chrome with:
 Supported direct-CDP commands today:
 
 - `open`
+- `snapshot`
 - `eval`
 - `get url`
 - `get title`
@@ -191,7 +192,8 @@ Supported direct-CDP commands today:
 Important:
 
 - this is a fallback path for lower-friction local use
-- full DOM ref workflows such as `snapshot`, `click`, `fill`, `type`, and adapter commands that depend on page-context execution still need the extension path
+- `snapshot` works in direct mode for read-only page inspection, including `--interactive`, `--compact`, `--depth`, and `--selector`
+- DOM interaction flows such as `click`, `fill`, `type`, and adapter commands that depend on page-context execution still need the extension path
 - `iatlas-browser doctor` will show whether direct CDP fallback is available
 
 ### Start the daemon

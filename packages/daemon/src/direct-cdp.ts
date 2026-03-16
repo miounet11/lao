@@ -1,5 +1,6 @@
 import WebSocket from "ws";
 import type { Request, Response, ResponseData } from "@iatlas-browser/shared";
+import { formatDirectAXTree } from "./direct-cdp-ax.js";
 
 const DEFAULT_CDP_BASE_URLS = ["http://127.0.0.1:9222", "http://localhost:9222"];
 const CDP_DISCOVERY_TIMEOUT_MS = 1500;
@@ -7,6 +8,7 @@ const CDP_COMMAND_TIMEOUT_MS = 10000;
 
 const DIRECT_CDP_SUPPORTED_ACTIONS = [
   "open",
+  "snapshot",
   "eval",
   "get",
   "screenshot",
@@ -29,6 +31,30 @@ interface CdpTargetInfo {
   url: string;
   type: string;
   webSocketDebuggerUrl?: string;
+}
+
+interface CdpAccessibilityNode {
+  nodeId: string;
+  ignored: boolean;
+  role?: { type: string; value?: string };
+  name?: { type: string; value?: string; sources?: unknown[] };
+  properties?: Array<{
+    name: string;
+    value: { type: string; value?: unknown };
+  }>;
+  childIds?: string[];
+  backendDOMNodeId?: number;
+}
+
+interface CdpDomNode {
+  nodeId: number;
+  backendNodeId: number;
+  nodeType: number;
+  nodeName: string;
+  attributes?: string[];
+  children?: CdpDomNode[];
+  contentDocument?: CdpDomNode;
+  shadowRoots?: CdpDomNode[];
 }
 
 interface DirectCdpStatus {
@@ -250,6 +276,8 @@ export class DirectCdpBridge {
         return this.open(baseUrl, request);
       case "eval":
         return this.eval(baseUrl, request);
+      case "snapshot":
+        return this.snapshot(baseUrl, request);
       case "get":
         return this.get(baseUrl, request);
       case "screenshot":
@@ -389,6 +417,62 @@ export class DirectCdpBridge {
     }
   }
 
+  private async snapshot(baseUrl: string, request: Request): Promise<ResponseData> {
+    const { target, session } = await this.openSessionForSelectedTarget(baseUrl, request);
+    try {
+      await session.send("Page.enable");
+      await session.send("DOM.enable");
+      await session.send("Accessibility.enable");
+
+      let axNodes: CdpAccessibilityNode[];
+      if (request.selector) {
+        const documentResult = await session.send<{ root: { nodeId: number } }>("DOM.getDocument", { depth: 0 });
+        const queryResult = await session.send<{ nodeId: number }>("DOM.querySelector", {
+          nodeId: documentResult.root.nodeId,
+          selector: request.selector,
+        });
+        if (!queryResult.nodeId) {
+          throw new Error(`Selector "${request.selector}" not found`);
+        }
+        const partial = await session.send<{ nodes: CdpAccessibilityNode[] }>("Accessibility.getPartialAXTree", {
+          nodeId: queryResult.nodeId,
+          fetchRelatives: true,
+        });
+        axNodes = partial.nodes;
+      } else {
+        const full = await session.send<{ nodes: CdpAccessibilityNode[] }>("Accessibility.getFullAXTree");
+        axNodes = full.nodes;
+      }
+
+      const linkBackendIds = new Set<number>();
+      for (const node of axNodes) {
+        if (node.role?.value === "link" && node.backendDOMNodeId !== undefined) {
+          linkBackendIds.add(node.backendDOMNodeId);
+        }
+      }
+
+      const urlMap = await this.buildUrlMap(session, linkBackendIds);
+      const formatted = formatDirectAXTree(axNodes, urlMap, {
+        interactive: request.interactive,
+        compact: request.compact,
+        maxDepth: request.maxDepth,
+      });
+
+      this.selectedTargetId = target.id;
+      return {
+        snapshotData: {
+          snapshot: formatted.snapshot,
+          refs: formatted.refs,
+        },
+        tabId: this.ensureSyntheticTabId(target.id),
+        url: target.url,
+        title: target.title,
+      };
+    } finally {
+      await session.close();
+    }
+  }
+
   private async get(baseUrl: string, request: Request): Promise<ResponseData> {
     if (request.attribute === "text") {
       throw new Error("Direct CDP mode does not support get text yet. Use the extension path for ref-based DOM access.");
@@ -502,6 +586,35 @@ export class DirectCdpBridge {
       url: target?.url,
       title: target?.title,
     };
+  }
+
+  private async buildUrlMap(session: CdpSession, linkBackendIds: Set<number>): Promise<Map<number, string>> {
+    if (linkBackendIds.size === 0) {
+      return new Map();
+    }
+
+    const urlMap = new Map<number, string>();
+    try {
+      const result = await session.send<{ root: CdpDomNode }>("DOM.getDocument", { depth: -1, pierce: true });
+      const walk = (node: CdpDomNode): void => {
+        if (linkBackendIds.has(node.backendNodeId)) {
+          const attrs = node.attributes || [];
+          for (let index = 0; index < attrs.length; index += 2) {
+            if (attrs[index] === "href") {
+              urlMap.set(node.backendNodeId, attrs[index + 1]);
+              break;
+            }
+          }
+        }
+        for (const child of node.children || []) walk(child);
+        if (node.contentDocument) walk(node.contentDocument);
+        for (const shadow of node.shadowRoots || []) walk(shadow);
+      };
+      walk(result.root);
+    } catch {
+      // Best-effort URL enrichment only.
+    }
+    return urlMap;
   }
 
   private async openSessionForSelectedTarget(baseUrl: string, request: Request): Promise<{ target: CdpTargetInfo; session: CdpSession }> {

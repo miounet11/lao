@@ -102,6 +102,15 @@ export async function doctorCommand(
           : "Daemon is up, but the Chrome extension is not connected"
         : "Daemon not reachable",
     },
+    {
+      name: "direct CDP fallback",
+      ok: daemonStatus?.directCdpAvailable === true,
+      detail: daemonStatus
+        ? daemonStatus.directCdpAvailable
+          ? `${daemonStatus.directCdpEndpoint}${daemonStatus.directCdpBrowser ? ` (${daemonStatus.directCdpBrowser})` : ""}`
+          : daemonStatus.directCdpReason ?? "Not available"
+        : "Daemon not reachable",
+    },
   ];
 
   const report: DoctorReport = {
@@ -137,6 +146,9 @@ export async function doctorCommand(
     console.log("");
     console.log(`pending requests: ${daemonStatus.pendingRequests}`);
     console.log(`uptime: ${daemonStatus.uptime}s`);
+    if (daemonStatus.directCdpAvailable && daemonStatus.directCdpActions?.length) {
+      console.log(`direct CDP actions: ${daemonStatus.directCdpActions.join(", ")}`);
+    }
   }
 
   if (checks.some((check) => !check.ok)) {
@@ -145,5 +157,6 @@ export async function doctorCommand(
     console.log(`- Start the daemon with: ${APP_NAME} daemon`);
     console.log(`- Load the extension from: ${extensionDir}`);
     console.log("- Open chrome://extensions/ and enable Developer Mode");
+    console.log("- Or launch Chrome with: --remote-debugging-port=9222 for the direct CDP subset");
   }
 }

@@ -13,6 +13,7 @@ import type { Request, Response } from "@iatlas-browser/shared";
 import { DAEMON_PORT } from "@iatlas-browser/shared";
 import { SSEManager } from "./sse-manager.js";
 import { RequestManager } from "./request-manager.js";
+import { DirectCdpBridge } from "./direct-cdp.js";
 
 export interface HttpServerOptions {
   host?: string;
@@ -32,6 +33,7 @@ export class HttpServer {
 
   readonly sseManager = new SSEManager();
   readonly requestManager = new RequestManager();
+  readonly directCdp = new DirectCdpBridge();
 
   constructor(options: HttpServerOptions = {}) {
     this.host = options.host ?? "127.0.0.1";
@@ -129,12 +131,17 @@ export class HttpServer {
       const body = await this.readBody(req);
       const request = JSON.parse(body) as Request;
 
-      // 检查扩展是否连接
       if (!this.sseManager.isConnected) {
+        const directResponse = await this.directCdp.execute(request);
+        if (directResponse) {
+          this.sendJson(res, directResponse.success ? 200 : 503, directResponse);
+          return;
+        }
+
         this.sendJson(res, 503, {
           id: request.id,
           success: false,
-          error: "Extension not connected",
+          error: this.directCdp.unsupportedMessage(),
         });
         return;
       }
@@ -216,12 +223,18 @@ export class HttpServer {
   /**
    * GET /status - 查询状态
    */
-  private handleStatus(_req: IncomingMessage, res: ServerResponse): void {
+  private async handleStatus(_req: IncomingMessage, res: ServerResponse): Promise<void> {
+    const directStatus = await this.directCdp.getStatus();
     this.sendJson(res, 200, {
       running: true,
       extensionConnected: this.sseManager.isConnected,
       pendingRequests: this.requestManager.pendingCount,
       uptime: this.uptime,
+      directCdpAvailable: directStatus.available,
+      directCdpEndpoint: directStatus.endpoint,
+      directCdpBrowser: directStatus.browser,
+      directCdpReason: directStatus.reason,
+      directCdpActions: directStatus.supportedActions,
     });
   }
 

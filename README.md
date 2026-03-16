@@ -166,6 +166,34 @@ Important:
 - manual loading via `chrome://extensions/` always works
 - for isolated automated testing, prefer Chromium or Chrome for Testing instead of the normal Google Chrome app
 
+### Extensionless direct CDP subset
+
+If Chrome is launched with remote debugging enabled, `iatlas-browser` can now run a small local subset even when the extension is not connected.
+
+Start Chrome with:
+
+```bash
+--remote-debugging-port=9222
+```
+
+Supported direct-CDP commands today:
+
+- `open`
+- `eval`
+- `get url`
+- `get title`
+- `screenshot`
+- `tab`
+- `tab new`
+- `tab select`
+- `tab close`
+
+Important:
+
+- this is a fallback path for lower-friction local use
+- full DOM ref workflows such as `snapshot`, `click`, `fill`, `type`, and adapter commands that depend on page-context execution still need the extension path
+- `iatlas-browser doctor` will show whether direct CDP fallback is available
+
 ### Start the daemon
 
 ```bash

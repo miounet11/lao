@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@iatlas-browser/shared": "workspace:*"
+    "@iatlas-browser/shared": "workspace:*",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

@@ -309,6 +309,11 @@ export interface DaemonStatus {
   extensionConnected: boolean;
   pendingRequests: number;
   uptime: number;
+  directCdpAvailable?: boolean;
+  directCdpEndpoint?: string;
+  directCdpBrowser?: string;
+  directCdpReason?: string;
+  directCdpActions?: string[];
 }
 
 /**

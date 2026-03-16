@@ -34,10 +34,11 @@ export async function sendCommand(request: Request): Promise<Response> {
         };
       }
       if (res.status === 503) {
+        const payload = (await res.json().catch(() => null)) as Response | null;
         return {
           id: request.id,
           success: false,
-          error: [
+          error: payload?.error ?? [
             "Chrome extension not connected.",
             "",
             "1. Download extension: https://github.com/miounet11/lao/releases/latest",

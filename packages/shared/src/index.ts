@@ -6,6 +6,7 @@
 export {
   type ActionType,
   type DaemonStatus,
+  type RefInfo,
   type Request,
   type Response,
   type ResponseData,

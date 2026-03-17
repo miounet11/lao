@@ -1,14 +1,26 @@
 import WebSocket from "ws";
-import type { Request, Response, ResponseData } from "@iatlas-browser/shared";
+import type { RefInfo, Request, Response, ResponseData } from "@iatlas-browser/shared";
 import { formatDirectAXTree } from "./direct-cdp-ax.js";
+import { DirectCdpRefStore } from "./direct-cdp-ref-store.js";
 
-const DEFAULT_CDP_BASE_URLS = ["http://127.0.0.1:9222", "http://localhost:9222"];
+const DEFAULT_CDP_BASE_URLS = [
+  "http://127.0.0.1:9222",
+  "http://localhost:9222",
+  "http://127.0.0.1:9223",
+  "http://localhost:9223",
+  "http://127.0.0.1:9333",
+  "http://localhost:9333",
+];
 const CDP_DISCOVERY_TIMEOUT_MS = 1500;
 const CDP_COMMAND_TIMEOUT_MS = 10000;
 
 const DIRECT_CDP_SUPPORTED_ACTIONS = [
   "open",
   "snapshot",
+  "click",
+  "hover",
+  "fill",
+  "type",
   "eval",
   "get",
   "screenshot",
@@ -70,11 +82,20 @@ function isDirectCdpAction(action: string): action is DirectCdpAction {
 }
 
 function discoveryBaseUrls(): string[] {
+  const explicitList = process.env.IATLAS_BROWSER_CDP_BASE_URLS?.trim();
   const explicit = process.env.IATLAS_BROWSER_CDP_BASE_URL?.trim();
-  if (explicit) {
-    return [explicit.replace(/\/+$/, "")];
-  }
-  return DEFAULT_CDP_BASE_URLS;
+  const candidates = [
+    ...(explicitList ? explicitList.split(",") : []),
+    ...(explicit ? [explicit] : []),
+    ...DEFAULT_CDP_BASE_URLS,
+  ];
+
+  return [...new Set(candidates.map((value) => value.trim()).filter(Boolean).map((value) => value.replace(/\/+$/, "")))];
+}
+
+interface StoredRefTarget {
+  targetId: string;
+  ref: RefInfo;
 }
 
 async function fetchJson<T>(url: string, timeoutMs: number): Promise<T> {
@@ -199,6 +220,7 @@ export class DirectCdpBridge {
   private targetIdToSynthetic = new Map<string, number>();
   private syntheticToTargetId = new Map<number, string>();
   private nextSyntheticTabId = 1;
+  private readonly refStore = new DirectCdpRefStore();
 
   async getStatus(): Promise<DirectCdpStatus> {
     try {
@@ -278,6 +300,14 @@ export class DirectCdpBridge {
         return this.eval(baseUrl, request);
       case "snapshot":
         return this.snapshot(baseUrl, request);
+      case "click":
+        return this.click(baseUrl, request);
+      case "hover":
+        return this.hover(baseUrl, request);
+      case "fill":
+        return this.fill(baseUrl, request);
+      case "type":
+        return this.type(baseUrl, request);
       case "get":
         return this.get(baseUrl, request);
       case "screenshot":
@@ -301,6 +331,7 @@ export class DirectCdpBridge {
     for (const target of pages) {
       this.ensureSyntheticTabId(target.id);
     }
+    this.refStore.retain(pages.map((target) => target.id));
     return pages;
   }
 
@@ -384,6 +415,7 @@ export class DirectCdpBridge {
       await session.send("Page.enable");
       await session.send("Page.navigate", { url: request.url });
       await this.waitForLoad(session);
+      this.refStore.clear(targetId);
       const title = await this.evaluateTarget(session, "document.title");
       const url = await this.evaluateTarget(session, "window.location.href");
       this.selectedTargetId = targetId;
@@ -459,6 +491,13 @@ export class DirectCdpBridge {
       });
 
       this.selectedTargetId = target.id;
+      this.refStore.save(target.id, {
+        refs: formatted.refs,
+        tabId: this.ensureSyntheticTabId(target.id),
+        url: target.url,
+        title: target.title,
+        updatedAt: Date.now(),
+      });
       return {
         snapshotData: {
           snapshot: formatted.snapshot,
@@ -475,7 +514,25 @@ export class DirectCdpBridge {
 
   private async get(baseUrl: string, request: Request): Promise<ResponseData> {
     if (request.attribute === "text") {
-      throw new Error("Direct CDP mode does not support get text yet. Use the extension path for ref-based DOM access.");
+      const { target, session, ref } = await this.openSessionForStoredRef(baseUrl, request);
+      try {
+        const value = await this.evaluateOnBackendNode(
+          session,
+          ref.backendDOMNodeId,
+          `function() {
+            return (this.textContent || "").trim();
+          }`,
+        );
+        this.selectedTargetId = target.id;
+        return {
+          value: value === undefined ? "" : String(value),
+          tabId: this.ensureSyntheticTabId(target.id),
+          url: target.url,
+          title: target.title,
+        };
+      } finally {
+        await session.close();
+      }
     }
 
     const { target, session } = await this.openSessionForSelectedTarget(baseUrl, request);
@@ -510,6 +567,88 @@ export class DirectCdpBridge {
         url: target.url,
         title: target.title,
       };
+    } finally {
+      await session.close();
+    }
+  }
+
+  private async click(baseUrl: string, request: Request): Promise<ResponseData> {
+    const { target, session, ref } = await this.openSessionForStoredRef(baseUrl, request);
+    try {
+      const { x, y } = await this.getElementCenter(session, ref.backendDOMNodeId);
+      await session.send("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, button: "left", buttons: 1 });
+      await session.send("Input.dispatchMouseEvent", { type: "mousePressed", x, y, button: "left", clickCount: 1 });
+      await session.send("Input.dispatchMouseEvent", { type: "mouseReleased", x, y, button: "left", clickCount: 1 });
+      this.selectedTargetId = target.id;
+      return {
+        role: ref.role,
+        name: ref.name,
+        tabId: this.ensureSyntheticTabId(target.id),
+        url: target.url,
+        title: target.title,
+      } as ResponseData;
+    } finally {
+      await session.close();
+    }
+  }
+
+  private async hover(baseUrl: string, request: Request): Promise<ResponseData> {
+    const { target, session, ref } = await this.openSessionForStoredRef(baseUrl, request);
+    try {
+      const { x, y } = await this.getElementCenter(session, ref.backendDOMNodeId);
+      await session.send("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, button: "none" });
+      this.selectedTargetId = target.id;
+      return {
+        role: ref.role,
+        name: ref.name,
+        tabId: this.ensureSyntheticTabId(target.id),
+        url: target.url,
+        title: target.title,
+      } as ResponseData;
+    } finally {
+      await session.close();
+    }
+  }
+
+  private async fill(baseUrl: string, request: Request): Promise<ResponseData> {
+    if (request.text === undefined) {
+      throw new Error("Missing text");
+    }
+
+    const { target, session, ref } = await this.openSessionForStoredRef(baseUrl, request);
+    try {
+      await this.focusBackendNode(session, ref.backendDOMNodeId, true);
+      await session.send("Input.insertText", { text: request.text });
+      this.selectedTargetId = target.id;
+      return {
+        role: ref.role,
+        name: ref.name,
+        tabId: this.ensureSyntheticTabId(target.id),
+        url: target.url,
+        title: target.title,
+      } as ResponseData;
+    } finally {
+      await session.close();
+    }
+  }
+
+  private async type(baseUrl: string, request: Request): Promise<ResponseData> {
+    if (request.text === undefined) {
+      throw new Error("Missing text");
+    }
+
+    const { target, session, ref } = await this.openSessionForStoredRef(baseUrl, request);
+    try {
+      await this.focusBackendNode(session, ref.backendDOMNodeId, false);
+      await session.send("Input.insertText", { text: request.text });
+      this.selectedTargetId = target.id;
+      return {
+        role: ref.role,
+        name: ref.name,
+        tabId: this.ensureSyntheticTabId(target.id),
+        url: target.url,
+        title: target.title,
+      } as ResponseData;
     } finally {
       await session.close();
     }
@@ -581,6 +720,7 @@ export class DirectCdpBridge {
     if (this.selectedTargetId === targetId) {
       this.selectedTargetId = null;
     }
+    this.refStore.clear(targetId);
     return {
       tabId: target ? this.ensureSyntheticTabId(target.id) : undefined,
       url: target?.url,
@@ -629,6 +769,173 @@ export class DirectCdpBridge {
     }
     const session = await CdpSession.connect(target.webSocketDebuggerUrl);
     return { target, session };
+  }
+
+  private async openSessionForStoredRef(
+    baseUrl: string,
+    request: Request,
+  ): Promise<{ target: CdpTargetInfo; session: CdpSession; ref: RefInfo }> {
+    if (!request.ref) {
+      throw new Error("Missing ref");
+    }
+
+    const targets = await this.listPageTargets(baseUrl);
+    const stored = this.resolveStoredRef(targets, request);
+    const target = targets.find((entry) => entry.id === stored.targetId);
+
+    if (!target?.webSocketDebuggerUrl) {
+      throw new Error("Selected ref target does not expose a debugger WebSocket URL");
+    }
+
+    const session = await CdpSession.connect(target.webSocketDebuggerUrl);
+    return { target, session, ref: stored.ref };
+  }
+
+  private resolveStoredRef(targets: CdpTargetInfo[], request: Request): StoredRefTarget {
+    if (!request.ref) {
+      throw new Error("Missing ref");
+    }
+
+    const targetId = this.resolveTargetId(targets, request);
+    if (!targetId) {
+      throw new Error("No browser tabs available for direct CDP mode");
+    }
+
+    const refInfo = this.refStore.get(targetId, request.ref);
+    if (!refInfo?.backendDOMNodeId) {
+      const snapshot = this.refStore.getSnapshot(targetId);
+      const knownRefs = snapshot ? Object.keys(snapshot.refs).slice(0, 20).map((ref) => `@${ref}`).join(", ") : "";
+      throw new Error(
+        snapshot
+          ? `Ref "${request.ref}" not found for the selected direct-CDP tab. Known refs: ${knownRefs || "(none)"}`
+          : `Ref "${request.ref}" not found for the selected direct-CDP tab. Run snapshot first to create refs for this tab.`,
+      );
+    }
+
+    return {
+      targetId,
+      ref: refInfo,
+    };
+  }
+
+  private async evaluateOnBackendNode(
+    session: CdpSession,
+    backendNodeId: number | undefined,
+    functionDeclaration: string,
+    args: unknown[] = [],
+  ): Promise<unknown> {
+    if (backendNodeId === undefined) {
+      throw new Error("Stored ref is missing backendDOMNodeId");
+    }
+
+    const resolved = await session.send<{
+      object?: {
+        objectId?: string;
+      };
+    }>("DOM.resolveNode", { backendNodeId });
+
+    const objectId = resolved.object?.objectId;
+    if (!objectId) {
+      throw new Error("Failed to resolve backend DOM node");
+    }
+
+    const response = await session.send<{
+      result?: {
+        value?: unknown;
+        unserializableValue?: string;
+      };
+      exceptionDetails?: {
+        text?: string;
+        exception?: { description?: string };
+      };
+    }>("Runtime.callFunctionOn", {
+      objectId,
+      functionDeclaration,
+      arguments: args.map((value) => ({ value })),
+      awaitPromise: true,
+      returnByValue: true,
+    });
+
+    if (response.exceptionDetails) {
+      throw new Error(
+        response.exceptionDetails.exception?.description
+          || response.exceptionDetails.text
+          || "Runtime.callFunctionOn failed",
+      );
+    }
+
+    if (response.result?.unserializableValue !== undefined) {
+      return response.result.unserializableValue;
+    }
+
+    return response.result?.value;
+  }
+
+  private async getElementCenter(
+    session: CdpSession,
+    backendNodeId: number | undefined,
+  ): Promise<{ x: number; y: number }> {
+    const center = await this.evaluateOnBackendNode(
+      session,
+      backendNodeId,
+      `function() {
+        this.scrollIntoView({ behavior: "auto", block: "center", inline: "center" });
+        const rect = this.getBoundingClientRect();
+        return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+      }`,
+    );
+
+    if (!center || typeof center !== "object") {
+      throw new Error("Failed to get element center");
+    }
+
+    return center as { x: number; y: number };
+  }
+
+  private async focusBackendNode(
+    session: CdpSession,
+    backendNodeId: number | undefined,
+    clearExistingValue: boolean,
+  ): Promise<void> {
+    await this.evaluateOnBackendNode(
+      session,
+      backendNodeId,
+      `function(clearExistingValue) {
+        this.scrollIntoView({ behavior: "auto", block: "center", inline: "center" });
+        this.focus();
+
+        if (!clearExistingValue) {
+          return true;
+        }
+
+        if (this.isContentEditable) {
+          this.textContent = "";
+          this.dispatchEvent(new Event("input", { bubbles: true }));
+          this.dispatchEvent(new Event("change", { bubbles: true }));
+          return true;
+        }
+
+        const tagName = this.tagName || "";
+        if (tagName === "INPUT") {
+          const descriptor = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value");
+          descriptor?.set?.call(this, "");
+          this.dispatchEvent(new Event("input", { bubbles: true }));
+          this.dispatchEvent(new Event("change", { bubbles: true }));
+          return true;
+        }
+
+        if (tagName === "TEXTAREA") {
+          const descriptor = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value");
+          descriptor?.set?.call(this, "");
+          this.dispatchEvent(new Event("input", { bubbles: true }));
+          this.dispatchEvent(new Event("change", { bubbles: true }));
+          return true;
+        }
+
+        return true;
+      }`,
+      [clearExistingValue],
+    );
   }
 
   private async evaluateTarget(session: CdpSession, expression: string, returnByValue = true): Promise<unknown> {

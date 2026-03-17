@@ -215,7 +215,7 @@ Important:
 
 ### Extensionless direct CDP subset
 
-If Chrome is launched with remote debugging enabled, `iatlas-browser` can now run a small local subset even when the extension is not connected.
+If Chrome is launched with remote debugging enabled, `iatlas-browser` can now run a stronger local subset even when the extension is not connected.
 
 Start Chrome with:
 
@@ -227,9 +227,14 @@ Supported direct-CDP commands today:
 
 - `open`
 - `snapshot`
+- `click`
+- `hover`
+- `fill`
+- `type`
 - `eval`
 - `get url`
 - `get title`
+- `get text`
 - `screenshot`
 - `tab`
 - `tab new`
@@ -239,8 +244,10 @@ Supported direct-CDP commands today:
 Important:
 
 - this is a fallback path for lower-friction local use
-- `snapshot` works in direct mode for read-only page inspection, including `--interactive`, `--compact`, `--depth`, and `--selector`
-- DOM interaction flows such as `click`, `fill`, `type`, and adapter commands that depend on page-context execution still need the extension path
+- `snapshot` works in direct mode for page inspection, including `--interactive`, `--compact`, `--depth`, and `--selector`
+- direct-CDP snapshot refs are now persisted by the daemon, so later CLI or MCP calls can reuse them for `click`, `hover`, `fill`, `type`, and `get text`
+- adapter commands and richer browser instrumentation still need the extension path
+- `iatlas-browser doctor` now detects common Chrome-family browsers such as Chrome, Canary, Chromium, Brave, and Arc, and prints remote-debugging launch hints
 - `iatlas-browser doctor` will show whether direct CDP fallback is available
 
 ### Start the daemon

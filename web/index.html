@@ -45,7 +45,7 @@
           "operatingSystem": "macOS, Linux, Windows",
           "description": "A browser automation tool that turns a real Chrome session into a CLI, MCP server, and local HTTP API for authenticated browser automation.",
           "downloadUrl": "https://miaoda.vip/install.sh",
-          "softwareVersion": "0.5.1",
+          "softwareVersion": "0.5.2",
           "offers": {
             "@type": "Offer",
             "price": "0",
@@ -113,6 +113,7 @@
         <div class="pill-row" aria-label="Key promises">
           <span>No cookie export required</span>
           <span>CLI + MCP + local HTTP on one runtime</span>
+          <span>Direct CDP refs persist across commands</span>
           <span>Hosted API only for server-safe tasks</span>
         </div>
         <div class="hero-actions">
@@ -136,6 +137,7 @@ iatlas-browser snapshot -i">Copy commands</button>
         <ul class="compact-list">
           <li>Installs into <code>~/.iatlas-browser/src</code> and builds the local runtime</li>
           <li>Creates the CLI, daemon, MCP entrypoint, extension bundle, and setup artifacts</li>
+          <li>Detects Chrome, Canary, Chromium, Brave, and Arc for faster direct-CDP startup</li>
           <li>Gets you to the first authenticated browser snapshot without rebuilding login state</li>
         </ul>
         <div class="stat-grid" aria-label="Product summary">
@@ -151,8 +153,37 @@ iatlas-browser snapshot -i">Copy commands</button>
             <strong>Clear boundary</strong>
             <span>Keep browser-sensitive work local and use the hosted layer only for public-safe requests.</span>
           </article>
+          <article class="stat-card">
+            <strong>Fallback that still works</strong>
+            <span>Direct CDP can now persist snapshot refs and reuse them for click, fill, type, hover, and text reads.</span>
+          </article>
         </div>
       </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Local runtime upgrade</p>
+        <h2>The extensionless path is now usable for common snapshot-driven flows.</h2>
+        <p class="subtle">
+          Remote debugging mode is no longer just for opening a page and taking a read-only snapshot. The daemon now
+          keeps direct-CDP refs across commands, which makes the fallback path viable for common ref-based actions.
+        </p>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>Persistent direct refs</h3>
+          <p>Run <code>snapshot</code> once, then reuse those refs later for <code>click</code>, <code>hover</code>, <code>fill</code>, <code>type</code>, and <code>get text</code>.</p>
+        </article>
+        <article class="card">
+          <h3>Broader browser detection</h3>
+          <p><code>iatlas-browser doctor</code> now detects Chrome, Beta, Dev, Canary, Chromium, Brave, and Arc, then prints launch hints for remote debugging.</p>
+        </article>
+        <article class="card">
+          <h3>Better MCP continuity</h3>
+          <p>Common MCP browser flows keep moving even when you temporarily fall back to direct CDP instead of the extension path.</p>
+        </article>
+      </div>
     </section>
 
     <section class="section compare">

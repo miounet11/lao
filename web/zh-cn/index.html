@@ -56,6 +56,7 @@
         <div class="pill-row" aria-label="Key promises">
           <span>不需要导出 Cookie</span>
           <span>CLI + MCP + 本地 HTTP 共用一套运行时</span>
+          <span>Direct CDP 的 ref 现在可以跨命令复用</span>
           <span>托管 API 只做远程安全的子集</span>
         </div>
         <div class="hero-actions">
@@ -79,6 +80,7 @@ iatlas-browser snapshot -i">复制命令</button>
         <ul class="compact-list">
           <li>安装到 <code>~/.iatlas-browser/src</code> 并构建本地运行时</li>
           <li>自动生成 CLI、Daemon、MCP 入口、扩展包和配置示例</li>
+          <li>自动识别 Chrome、Canary、Chromium、Brave、Arc，加快 direct CDP 启动</li>
           <li>无需重建登录环境，直接拿到第一次真实浏览器快照</li>
         </ul>
         <div class="stat-grid" aria-label="Product summary">
@@ -94,8 +96,37 @@ iatlas-browser snapshot -i">复制命令</button>
             <strong>边界清晰</strong>
             <span>浏览器敏感任务留在本地，公开安全的任务再交给托管 API。</span>
           </article>
+          <article class="stat-card">
+            <strong>兜底路径也能跑</strong>
+            <span>Direct CDP 现在可以持久化 snapshot refs，并继续执行 click、hover、fill、type 和文本读取。</span>
+          </article>
         </div>
       </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">本轮本地升级</p>
+        <h2>没有扩展时，direct CDP 也能跑通常见的 snapshot 驱动流程。</h2>
+        <p class="subtle">
+          只要开启 remote debugging，daemon 就会保留 direct-CDP 快照里的 refs。后续命令可以继续按 ref
+          点击、悬停、填充、追加输入和读取文本，extensionless 路径不再只是只读检查。
+        </p>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>Direct ref 持久化</h3>
+          <p>先执行一次 <code>snapshot</code>，后续 direct CDP 下继续复用这些 ref 做 <code>click</code>、<code>hover</code>、<code>fill</code>、<code>type</code>、<code>get text</code>。</p>
+        </article>
+        <article class="card">
+          <h3>浏览器识别更全</h3>
+          <p><code>iatlas-browser doctor</code> 现在会识别 Chrome、Beta、Dev、Canary、Chromium、Brave、Arc，并输出 remote debugging 启动提示。</p>
+        </article>
+        <article class="card">
+          <h3>MCP 连续性更强</h3>
+          <p>即使暂时走 direct CDP 兜底路径，常见的 MCP 浏览器流程也不会立刻中断。</p>
+        </article>
+      </div>
     </section>
 
     <section class="badge-row">

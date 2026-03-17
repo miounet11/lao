@@ -9,6 +9,7 @@ import {
   DAEMON_BASE_URL,
   type DaemonStatus,
 } from "@iatlas-browser/shared";
+import { detectBrowsers, type DetectedBrowser } from "../browser-detection.js";
 import { getDaemonPath } from "../daemon-manager.js";
 
 export interface DoctorOptions {
@@ -28,6 +29,7 @@ interface DoctorReport {
   daemonPath: string;
   extensionDir: string;
   appDir: string;
+  detectedBrowsers: DetectedBrowser[];
   checks: CheckResult[];
   daemonStatus?: DaemonStatus;
 }
@@ -71,6 +73,7 @@ export async function doctorCommand(
   const appDir = join(homedir(), APP_DIRNAME);
   const daemonPath = getDaemonPath();
   const daemonStatus = await getDaemonStatus();
+  const detectedBrowsers = detectBrowsers();
 
   const checks: CheckResult[] = [
     {
@@ -120,6 +123,7 @@ export async function doctorCommand(
     daemonPath,
     extensionDir,
     appDir,
+    detectedBrowsers,
     checks,
     daemonStatus: daemonStatus ?? undefined,
   };
@@ -136,6 +140,14 @@ export async function doctorCommand(
   console.log(`ext dir: ${extensionDir}`);
   console.log(`app dir: ${appDir}`);
   console.log("");
+
+  if (detectedBrowsers.length > 0) {
+    console.log("detected browsers:");
+    for (const browser of detectedBrowsers) {
+      console.log(`- ${browser.name}: ${browser.path}`);
+    }
+    console.log("");
+  }
 
   for (const check of checks) {
     const marker = check.ok ? "OK " : "NO ";
@@ -158,5 +170,11 @@ export async function doctorCommand(
     console.log(`- Load the extension from: ${extensionDir}`);
     console.log("- Open chrome://extensions/ and enable Developer Mode");
     console.log("- Or launch Chrome with: --remote-debugging-port=9222 for the direct CDP subset");
+    if (detectedBrowsers.length > 0) {
+      console.log("- Detected browser launch examples:");
+      for (const browser of detectedBrowsers.slice(0, 3)) {
+        console.log(`  ${browser.name}: ${browser.launchCommand}`);
+      }
+    }
   }
 }

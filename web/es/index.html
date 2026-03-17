@@ -52,6 +52,7 @@
         <div class="pill-row" aria-label="Key promises">
           <span>Sin exportar cookies</span>
           <span>CLI + MCP + HTTP local sobre un mismo runtime</span>
+          <span>Los refs de direct CDP persisten entre comandos</span>
           <span>API alojada solo para tareas seguras en remoto</span>
         </div>
         <div class="hero-actions">
@@ -75,6 +76,7 @@ iatlas-browser snapshot -i">Copiar</button>
         <ul class="compact-list">
           <li>Instala en <code>~/.iatlas-browser/src</code> y monta el runtime local</li>
           <li>Prepara CLI, daemon, MCP, extensión y ejemplos de configuración</li>
+          <li>Detecta Chrome, Canary, Chromium, Brave y Arc para arrancar direct CDP más rápido</li>
           <li>Te lleva al primer snapshot real sin reconstruir la autenticación</li>
         </ul>
         <div class="stat-grid" aria-label="Product summary">
@@ -90,8 +92,38 @@ iatlas-browser snapshot -i">Copiar</button>
             <strong>Límite claro</strong>
             <span>Lo sensible al navegador se queda en local; lo público y seguro va al subconjunto alojado.</span>
           </article>
+          <article class="stat-card">
+            <strong>Fallback realmente útil</strong>
+            <span>Direct CDP ahora conserva refs de snapshot y los reutiliza para click, hover, fill, type y lectura de texto.</span>
+          </article>
         </div>
       </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <p class="kicker">Mejora del runtime local</p>
+        <h2>La ruta sin extensión ya sirve para los flujos comunes guiados por snapshot.</h2>
+        <p class="subtle">
+          Si activas remote debugging, el daemon guarda los refs del snapshot directo por CDP. Eso permite seguir usando
+          esos refs en comandos posteriores para hacer click, hover, rellenar, escribir y leer texto, así que la ruta
+          extensionless deja de ser solo una inspección de solo lectura.
+        </p>
+      </div>
+      <div class="grid three">
+        <article class="card">
+          <h3>Refs persistentes</h3>
+          <p>Ejecuta <code>snapshot</code> una vez y luego reutiliza esos refs con <code>click</code>, <code>hover</code>, <code>fill</code>, <code>type</code> y <code>get text</code>.</p>
+        </article>
+        <article class="card">
+          <h3>Más detección de navegadores</h3>
+          <p><code>iatlas-browser doctor</code> ahora detecta Chrome, Beta, Dev, Canary, Chromium, Brave y Arc, y muestra comandos de arranque para remote debugging.</p>
+        </article>
+        <article class="card">
+          <h3>Más continuidad para MCP</h3>
+          <p>Los flujos habituales de navegador vía MCP siguen funcionando mejor aunque temporalmente caigas en la ruta de direct CDP.</p>
+        </article>
+      </div>
     </section>
 
     <section class="section compare">
